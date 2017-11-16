@@ -1,19 +1,18 @@
+EXECUTABLE=sim-city
 CC=g++
-CPPFLAGS=-c -g -std=c++0x -Wall -Wextra -pedantic
 SOURCES=main.cpp
 OBJECTS=main.o
-EXECUTABLE=main
+CPPFLAGS=-c
+LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
 
-all: $(SOURCES) $(EXECUTABLE)
-  
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@ 
+$(OBJECTS): $(SOURCES)
+	$(CC) $(CPPFLAGS) $(SOURCES)
 
-.cc.o:
-	$(CC) $(CPPFLAGS) $< -o $@
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(EXECUTABLE) $(LDFLAGS)
+
+run: $(EXECUTABLE)
+	./$(EXECUTABLE)
 
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
-
-run: main
-	./main
+	rm -f $(OBJECTS) $(EXECUTABLE) 
