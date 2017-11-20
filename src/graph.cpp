@@ -47,6 +47,7 @@ void Graph::setVertexNeighbors()
     return;
 }
 
+
 // Graph::Vertex...
 
 std::pair<int,int> Graph::Vertex::getCoord()
@@ -63,6 +64,57 @@ int Graph::Vertex::getWeight()
 {
     return weight;
 }
+
+
+// Graph::Edge
+
+std::pair<Vertex,Vertex> Graph::Edge::getVertices(){
+    return std::make_pair(vertex_1, vertex_2);
+}
+
+direction Graph::Edge::getDirection(){
+    return dir;
+}
+
+/*
+// Graph::Vehicle
+
+direction Graph::Vehicle::getDirection(){
+    return current_edge.getDirection();
+}
+std::pair<int,int> Graph::Vehicle::getCoordinates(){
+
+    int x = 0;
+    int y = 0;
+    direction dir = getDirection();
+
+    switch(dir){
+    case North:
+        x = lastVertex.getCoord().first;
+        y = lastVertex.getCoord().second + current_position;
+    case South:
+        x = lastVertex.getCoord().first;
+        y = lastVertex.getCoord().second - current_position;
+    case East:
+        x = lastVertex.getCoord().first - current_position;
+        y = lastVertex.getCoord().second;
+    case North:
+        x = lastVertex.getCoord().first + current_position;
+        y = lastVertex.getCoord().second;
+    }
+    return std::make_pair(x, y);
+}
+
+int Graph::Vehicle::getSpeed(){
+    return max_speed;
+}
+
+Edge Graph::Vehicle::getNextEdge(){
+    //TODO. insert some algorithm magic here to decide where the car is of to from the next vertex
+    return current_edge;
+}
+*/
+
 
 // WORK IN PROGRESS:
 
