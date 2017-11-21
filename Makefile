@@ -1,6 +1,6 @@
 MAIN_DIR = src
 
-run:
+run-main:
 	$(MAKE) -C $(MAIN_DIR) run
 
 clean:
