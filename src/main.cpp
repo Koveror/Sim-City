@@ -2,6 +2,10 @@
 #include <vector>
 #include <unordered_set>
 #include <SFML/Graphics.hpp>
+#include "graph.hpp"
+#include "vehicle.hpp"
+#include "graph.cpp" ///Issue?
+#include "vehicle.cpp" ///Issue?
 
 //Placeholder datastructures for nodes in graph
 std::vector<sf::CircleShape> nodes;     //Store shapes directly for drawing?
@@ -29,9 +33,17 @@ int addNode(int x, int y) {
 }
 
 int main(void) {
-    
+
+    //Testing classes
+    Vertex testVertex = Vertex(0, 0, "Grass");
+    std::cout << "testVertex coord: " << testVertex.getCoord().first << ", "
+    << testVertex.getCoord().second << std::endl;
+    std::cout << "testVertex type: " << testVertex.getType() << std::endl;
+    Vehicle testCar = Vehicle(nullptr, nullptr, nullptr, nullptr, 100, "Car");
+    std::cout << "testCar type: " << testCar.getType() << std::endl;
+
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-    
+
     //GUI loop
     while (window.isOpen())
     {
@@ -62,7 +74,7 @@ int main(void) {
             sf::Vertex(sf::Vector2f(16, 32))
         };
         window.draw(line, 2, sf::Lines);
-        
+
         sf::Vertex line2[] =
         {
             sf::Vertex(sf::Vector2f(32, 32)),
