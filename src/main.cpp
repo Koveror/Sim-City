@@ -33,6 +33,15 @@ int addNode(int x, int y) {
 }
 
 int main(void) {
+    
+    //Testing datastructures
+    Graph testGraph(3,3);
+    testGraph.addVertices();
+    std::vector<Vertex> v = testGraph.getVertice();
+    for(Vertex i : v){
+        std::cout << i.getType() << std::endl;
+    }
+    
     //Testing classes
     Vertex testVertex = Vertex(0, 0, "Grass");
     std::cout << "testVertex coord: " << testVertex.getCoord().first << ", "
