@@ -39,16 +39,29 @@ int addNode(int x, int y) {
 
 int main(void) {
 
-    //load textures
-    sf::Texture grass;
-    sf::Texture building;
 
-    if (!grass.loadFromFile("img/grass.png")){
-      std::cout << "grass.png not found" << std::endl;
-    }
-    if (!building.loadFromFile("img/building.png")){
-      std::cout << "building.png not found" << std::endl;
-    }
+
+      //load textures
+      sf::Texture grass;
+      sf::Texture building;
+
+      if (!grass.loadFromFile("img/grass.png")){
+        std::cout << "grass.png not found" << std::endl;
+      }
+      if (!building.loadFromFile("img/building.png")){
+        std::cout << "building.png not found" << std::endl;
+      }
+
+
+
+
+      //Testing datastructures
+      Graph testGraph(3,3);
+      testGraph.addVertices();
+      std::vector<Vertex> v = testGraph.getVertice();
+      for(Vertex i : v){
+          std::cout << i.getType() << std::endl;
+      }
 
 
 

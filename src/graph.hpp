@@ -43,6 +43,7 @@ public:
 	int getSize(); // { return longitude * latitude; }
 	void addVertices();
 	void setVertex(int x, int y, std::string type); //Might change type from std::string to enum
+        std::vector<Vertex>& getVertice();
 
 private:
 	int longitude; //x
