@@ -10,8 +10,8 @@ void Graph::addVertices()
 {
     for (int i = 0; i < longitude; i++) {
         for (int j = 0; j < latitude; j++) {
-            Vertex grass(i,j, "Grass");
-            vertices.push_back(grass);
+            Vertex v1(i,j, grass);
+            vertices.push_back(v1);
             //DEBUG:
             std::cout << "Adding: " << "Grass: " << i << ", " << j << std::endl;
         }
@@ -19,7 +19,7 @@ void Graph::addVertices()
     return;
 }
 
-void Graph::setVertex(int x, int y, std::string type)
+void Graph::setVertex(int x, int y, tileType type)
 {
     for (auto it = vertices.begin(); it != vertices.end();) {
         auto coord = it->getCoord();
@@ -32,8 +32,22 @@ void Graph::setVertex(int x, int y, std::string type)
     return;
 }
 
-std::vector<Vertex>& Graph::getVertice(){
+std::vector<Vertex>& Graph::getVertices(){
     return vertices;
+}
+
+bool Graph::addVertex(int x, int y)
+{
+	for(Vertex vertex : vertices) {
+		int mX = vertex.getCoord().first;
+		int mY = vertex.getCoord().second;	
+		if(x == mX && y == mY) {
+			return false;
+		}
+	}
+	tileType t = grass;
+	vertices.push_back(Vertex(x, y, t));	
+	return true;
 }
 
 
@@ -45,9 +59,10 @@ std::pair<int,int> Vertex::getCoord()
     return std::make_pair(x_loc, y_loc);
 }
 
-const std::string& Vertex::getType() const
+const tileType Vertex::getType() const
 {
-    return vertex_type;
+	const tileType a = vertex_type;    
+	return a;
 }
 
 

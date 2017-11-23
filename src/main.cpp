@@ -7,69 +7,33 @@
 #include "graph.hpp"
 #include "vehicle.hpp"
 
-
-
-//Placeholder datastructures for nodes in graph
-std::vector<sf::CircleShape> nodes;     //Store shapes directly for drawing?
-std::vector<sf::Vector2f> coords;       //Store coordinates and make shapes for drawing on the fly?
-
 //Force coordinates to a grid
 int forceToGrid(int a) {
-    /*
-    int ma;
-    if((a % 16) < 8) {
-        ma = a - (a % 16);
-    } else {
-        ma = a - (a % 16) + 16;
-    }
-    return ma;
-    */
-    return a / 64 * 64;
-}
-
-//Adds nodes to the vector
-int addNode(int x, int y) {
-    sf::CircleShape node(10.f);
-    node.setOrigin(5, 5);
-    node.setFillColor(sf::Color::Green);
-    node.setPosition(x, y);
-    nodes.push_back(node);
-    return 1;
+    return a / 64;
 }
 
 int main(void) {
 
+	//load textures
+	sf::Texture grassTex;
+	sf::Texture buildingTex;
 
+	if (!grassTex.loadFromFile("img/grass.png")){
+	std::cout << "grass.png not found" << std::endl;
+	}
+	if (!buildingTex.loadFromFile("img/building.png")){
+	std::cout << "building.png not found" << std::endl;
+	}
 
-      //load textures
-      sf::Texture grass;
-      sf::Texture building;
-
-      if (!grass.loadFromFile("img/grass.png")){
-        std::cout << "grass.png not found" << std::endl;
-      }
-      if (!building.loadFromFile("img/building.png")){
-        std::cout << "building.png not found" << std::endl;
-      }
-
-
-
-
-      //Testing datastructures
-      Graph testGraph(3,3);
-      testGraph.addVertices();
-      std::vector<Vertex> v = testGraph.getVertice();
-      for(Vertex i : v){
-          std::cout << i.getType() << std::endl;
-      }
-
-
+	//Testing datastructures
+	Graph testGraph(3, 3);
+	testGraph.addVertices();
+	std::vector<Vertex> v = testGraph.getVertices();
+	for(Vertex i : v){
+	  std::cout << i.getType() << std::endl;
+	}
 
     //Testing classes
-    Vertex testVertex = Vertex(0, 0, "Grass");
-    std::cout << "testVertex coord: " << testVertex.getCoord().first << ", "
-    << testVertex.getCoord().second << std::endl;
-    std::cout << "testVertex type: " << testVertex.getType() << std::endl;
     Car cr;
     Truck tr;
     std::vector<Vehicle*> vehicles;
@@ -82,8 +46,6 @@ int main(void) {
 
 
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
-
-
 
     //GUI loop
     while (window.isOpen())
@@ -101,46 +63,24 @@ int main(void) {
                 int y = coord.y;
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
-                sf::Vector2f v1(mx, my);
-                coords.push_back(v1);       //Store coordinates for drawing
-                int res = addNode(mx, my);  //Or store shapes directly
+                bool res = testGraph.addVertex(mx, my);
                 std::cout << "(" << mx << ", " << my << ") " << z << ", added: " << res << std::endl;   //Print debugging info
             }
         }
         //Clear previous
         window.clear();
-        //Draw lines
-        sf::Vertex line[] =
-        {
-            sf::Vertex(sf::Vector2f(16, 16)),
-            sf::Vertex(sf::Vector2f(16, 32))
-        };
-        window.draw(line, 2, sf::Lines);
-
-        sf::Vertex line2[] =
-        {
-            sf::Vertex(sf::Vector2f(32, 32)),
-            sf::Vertex(sf::Vector2f(16, 32))
-        };
-        window.draw(line2, 2, sf::Lines);
+        
         //Draw nodes
-        for(auto vector : coords) {
-            int x = vector.x;
-            int y = vector.y;
-            int radius = 4;
-            //sf::CircleShape node(radius);
-            //node.setOrigin(radius, radius);
-            //node.setFillColor(sf::Color::Green);
-            //node.setPosition(x, y);
+		std::vector<Vertex> v1 = testGraph.getVertices();
+        for(auto vector : v1) {
+            std::pair<int, int> pos = vector.getCoord();
+            int x = pos.first * 64;
+			int y = pos.second * 64;
             sf::Sprite node;
-            node.setTexture(grass);
+            node.setTexture(grassTex);
             node.setPosition(x, y);
             window.draw(node);  //Draw all of the nodes to the screen
         }
-
-        sf::Sprite g;
-        g.setTexture(grass);
-        window.draw(g);
 
         //Show it
         window.display();
