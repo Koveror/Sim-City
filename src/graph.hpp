@@ -16,25 +16,6 @@ enum direction
     West
 };
 
-class Graph
-{
-public:
-	Graph(int n, int m) :
-	longitude(n), latitude(m) { }
-
-	int getSize(); // { return longitude * latitude; }
-	void addVertices();
-	void setVertex(int x, int y, std::string type); //Might change type from std::string to enum
-
-private:
-	int longitude; //x
-	int latitude; //y
-
-	std::vector<Vertex> vertices;
-};
-
-//
-
 class Vertex
 {
 public:
@@ -53,7 +34,22 @@ private:
     std::vector<Vertex> neighbor_vertices;
 };
 
-//
+class Graph
+{
+public:
+	Graph(int n, int m) :
+	longitude(n), latitude(m) { }
+
+	int getSize(); // { return longitude * latitude; }
+	void addVertices();
+	void setVertex(int x, int y, std::string type); //Might change type from std::string to enum
+
+private:
+	int longitude; //x
+	int latitude; //y
+
+	std::vector<Vertex> vertices;
+};
 
 class Edge
 {

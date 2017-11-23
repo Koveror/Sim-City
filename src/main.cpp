@@ -4,8 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include "graph.hpp"
 #include "vehicle.hpp"
-#include "graph.cpp" ///Issue?
-#include "vehicle.cpp" ///Issue?
 
 //Placeholder datastructures for nodes in graph
 std::vector<sf::CircleShape> nodes;     //Store shapes directly for drawing?
