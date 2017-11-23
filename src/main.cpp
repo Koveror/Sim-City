@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_set>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include "graph.hpp"
 #include "vehicle.hpp"
 
@@ -53,8 +54,9 @@ int main(void) {
             //When mouse is clicked, add nodes to vector
             if (event.type == sf::Event::MouseButtonPressed) {
                 int z = event.mouseButton.button;
-                int x = event.mouseButton.x;
-                int y = event.mouseButton.y;
+                sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                int x = coord.x;
+                int y = coord.y;
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 sf::Vector2f v1(mx, my);
