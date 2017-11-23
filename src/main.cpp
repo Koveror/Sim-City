@@ -17,21 +17,27 @@ int main(void) {
 	//load textures
 	sf::Texture grassTex;
 	sf::Texture buildingTex;
+  sf::Texture roadTex;
 
-	if (!grassTex.loadFromFile("img/grass.png")){
-	std::cout << "grass.png not found" << std::endl;
-	}
-	if (!buildingTex.loadFromFile("img/building.png")){
-	std::cout << "building.png not found" << std::endl;
-	}
+  if (!grassTex.loadFromFile("img/grass.png")){
+    std::cout << "grass.png not found" << std::endl;
+  }
+  if (!buildingTex.loadFromFile("img/building.png")){
+    std::cout << "building.png not found" << std::endl;
+  }
+  if (!roadTex.loadFromFile("img/road.png")){
+    std::cout << "road.png not found" << std::endl;
+  }
 
-	//Testing datastructures
-	Graph testGraph(3, 3);
-	testGraph.addVertices();
-	std::vector<Vertex> v = testGraph.getVertices();
-	for(Vertex i : v){
-	  std::cout << i.getType() << std::endl;
-	}
+  //Testing datastructures
+  Graph testGraph(16, 12);
+  testGraph.addVertices();
+  std::vector<Vertex> v = testGraph.getVertices();
+  for(Vertex i : v){
+    std::cout << i.getType() << std::endl;
+  }
+  std::cout << "! " << testGraph.addVertex(0,0) << std::endl;
+  //testGraph.setVertex(0, 0, building);
 
     //Testing classes
     Car cr;
@@ -58,26 +64,39 @@ int main(void) {
             //When mouse is clicked, add nodes to vector
             if (event.type == sf::Event::MouseButtonPressed) {
                 int z = event.mouseButton.button;
+                std::cout << "Button: " << z << std::endl;
                 sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 int x = coord.x;
                 int y = coord.y;
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
-                bool res = testGraph.addVertex(mx, my);
-                std::cout << "(" << mx << ", " << my << ") " << z << ", added: " << res << std::endl;   //Print debugging info
+                if (z == sf::Mouse::Right){
+                  testGraph.setVertex(mx, my, building);
+                } else if (z == sf::Mouse::Left){
+                  testGraph.setVertex(mx, my, road);
+                }
+                //bool res = testGraph.addVertex(mx, my);
+                //std::cout << "(" << mx << ", " << my << ") " << z << ", added: " << res << std::endl;   //Print debugging info
             }
         }
         //Clear previous
         window.clear();
-        
+
         //Draw nodes
 		std::vector<Vertex> v1 = testGraph.getVertices();
         for(auto vector : v1) {
+            tileType t = vector.getType();
             std::pair<int, int> pos = vector.getCoord();
             int x = pos.first * 64;
-			int y = pos.second * 64;
+            int y = pos.second * 64;
             sf::Sprite node;
-            node.setTexture(grassTex);
+            if (t == grass){
+              node.setTexture(grassTex);
+            }else if (t == building){
+              node.setTexture(buildingTex);
+            }else if (t == road){
+              node.setTexture(roadTex);
+            }
             node.setPosition(x, y);
             window.draw(node);  //Draw all of the nodes to the screen
         }

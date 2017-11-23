@@ -21,15 +21,26 @@ void Graph::addVertices()
 
 void Graph::setVertex(int x, int y, tileType type)
 {
-    for (auto it = vertices.begin(); it != vertices.end();) {
-        auto coord = it->getCoord();
+  /*
+  for (auto it = vertices.begin(); it != vertices.end();) {
+    auto coord = it->getCoord();
 		if (coord.first == x && coord.second == y) {
 			it = vertices.erase(it);
 			vertices.emplace(it-1, Vertex(x,y,type));
+      return;
 		}
 		else it++;
 	}
-    return;
+  return;
+    */
+  for (auto it = vertices.begin(); it != vertices.end(); it++) {
+    auto coord = it->getCoord();
+    if (coord.first == x && coord.second == y) {
+      it->setType(type);
+      return;
+    }
+  }
+  return;
 }
 
 std::vector<Vertex>& Graph::getVertices(){
@@ -40,13 +51,13 @@ bool Graph::addVertex(int x, int y)
 {
 	for(Vertex vertex : vertices) {
 		int mX = vertex.getCoord().first;
-		int mY = vertex.getCoord().second;	
+		int mY = vertex.getCoord().second;
 		if(x == mX && y == mY) {
 			return false;
 		}
 	}
 	tileType t = grass;
-	vertices.push_back(Vertex(x, y, t));	
+	vertices.push_back(Vertex(x, y, t));
 	return true;
 }
 
@@ -61,7 +72,7 @@ std::pair<int,int> Vertex::getCoord()
 
 const tileType Vertex::getType() const
 {
-	const tileType a = vertex_type;    
+	const tileType a = vertex_type;
 	return a;
 }
 
@@ -72,6 +83,3 @@ const tileType Vertex::getType() const
 std::pair<Vertex,Vertex> Edge::getVertices(){
     return std::make_pair(*vertex_1, *vertex_2);
 }
-
-
-

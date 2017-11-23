@@ -33,6 +33,7 @@ public:
     const tileType getType() const; // { return vertex_type;}
     //const Vertex& getNeighbor(direction dir);
     //const std::vector<Vertex> getAllNeighbors(); // { return neighbor_vertices; }
+    void setType(tileType t) {vertex_type = t;}
 
 private:
     int x_loc;
