@@ -10,7 +10,8 @@ void Graph::addVertices()
 {
     for (int i = 0; i < longitude; i++) {
         for (int j = 0; j < latitude; j++) {
-            vertices.push_back(Vertex(i,j, "Grass"));
+            Vertex grass(i,j, "Grass");
+            vertices.push_back(grass);
             //DEBUG:
             std::cout << "Adding: " << "Grass: " << i << ", " << j << std::endl;
         }
@@ -29,6 +30,10 @@ void Graph::setVertex(int x, int y, std::string type)
 		else it++;
 	}
     return;
+}
+
+std::vector<Vertex>& Graph::getVertice(){
+    return vertices;
 }
 
 
