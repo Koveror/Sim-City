@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <unordered_set>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -32,14 +33,21 @@ int addNode(int x, int y) {
 }
 
 int main(void) {
-
     //Testing classes
     Vertex testVertex = Vertex(0, 0, "Grass");
     std::cout << "testVertex coord: " << testVertex.getCoord().first << ", "
     << testVertex.getCoord().second << std::endl;
     std::cout << "testVertex type: " << testVertex.getType() << std::endl;
-    Vehicle testCar = Vehicle(nullptr, nullptr, nullptr, nullptr, 100, "Car");
-    std::cout << "testCar type: " << testCar.getType() << std::endl;
+    Car cr;
+    Truck tr;
+    std::vector<Vehicle*> vehicles;
+    vehicles.push_back(&cr);
+    vehicles.push_back(&tr);
+
+    for (auto it : vehicles) {    
+        std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
+    }
+
 
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
 

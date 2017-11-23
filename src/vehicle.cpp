@@ -6,11 +6,6 @@
 //    return current_edge.getDirection();
 //}
 
-const std::string& Vehicle::getType()
-{
-    return vehType;
-}
-
 /// WORK IN PROGRESS
 /*std::pair<int,int> Vehicle::getCoordinates(){
 
@@ -36,11 +31,19 @@ const std::string& Vehicle::getType()
 }
 */
 
-int Vehicle::getSpeed(){
+int Vehicle::getSpeed() const{
     return max_speed;
 }
 
-Edge Vehicle::getNextEdge(){
+int Vehicle::getLength() const{
+    return length;
+}
+
+int Vehicle::getWidth() const{
+    return width;
+}
+
+Edge Vehicle::getNextEdge() const{
     //TODO. insert some algorithm magic here to decide where the car is of to from the next vertex
     return *current_edge;
 }
