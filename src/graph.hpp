@@ -9,14 +9,6 @@
 #include "vertex.hpp"
 #include "edge.hpp"
 
-enum direction
-{
-    north,
-    east,
-    south,
-    west
-};
-
 class Graph
 {
 public:

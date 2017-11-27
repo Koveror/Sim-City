@@ -3,6 +3,16 @@
 
 #include <vector>
 
+/*
+enum direction
+{
+    north,
+    east,
+    south,
+    west
+};
+*/
+
 enum tileType
 {
 	grass,
@@ -17,10 +27,10 @@ public:
     x_loc(x), y_loc(y), vertex_type(type) {}
     //void addEdge(int x, int y);
     std::pair<int,int> getCoord(); // (x,y)
-    const tileType getType(); // { return vertex_type;}
+    const tileType& getType(); // { return vertex_type;}
     //const Vertex& getNeighbor(direction dir);
     //const std::vector<Vertex> getAllNeighbors(); // { return neighbor_vertices; }
-    void setType(tileType t) {vertex_type = t;}
+    void setType(tileType t);
 
 private:
     int x_loc;
