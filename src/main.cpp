@@ -32,9 +32,11 @@ int main(void) {
   //Testing datastructures
   Graph testGraph(3, 3);
   testGraph.addVertices();
-  std::vector<Vertex> v = testGraph.getVertices();
-  for(auto i : v){
-    std::cout << "vertex getType: " << i.getType() << std::endl;
+  std::vector<std::vector<Vertex>> v = testGraph.getVertices();
+  for(auto j : v){
+    for(auto i : j){
+        std::cout << "vertex getType: " << i.getType() << std::endl;
+    }
   }
   std::cout << "! " << testGraph.addVertex(0,0) << std::endl;
   //testGraph.setVertex(0, 0, building);
@@ -83,22 +85,24 @@ int main(void) {
         window.clear();
 
         //Draw nodes
-		std::vector<Vertex> v1 = testGraph.getVertices();
-        for(auto vector : v1) {
-            tileType t = vector.getType();
-            std::pair<int, int> pos = vector.getCoord();
-            int x = pos.first * 64;
-            int y = pos.second * 64;
-            sf::Sprite node;
-            if (t == grass){
-              node.setTexture(grassTex);
-            }else if (t == building){
-              node.setTexture(buildingTex);
-            }else if (t == road){
-              node.setTexture(roadTex);
+		std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+        for(auto row : v1){
+            for(auto vector : row) {
+                tileType t = vector.getType();
+                std::pair<int, int> pos = vector.getCoord();
+                int x = pos.first * 64;
+                int y = pos.second * 64;
+                sf::Sprite node;
+                if (t == grass){
+                node.setTexture(grassTex);
+                }else if (t == building){
+                node.setTexture(buildingTex);
+                }else if (t == road){
+                node.setTexture(roadTex);
+                }
+                node.setPosition(x, y);
+                window.draw(node);  //Draw all of the nodes to the screen
             }
-            node.setPosition(x, y);
-            window.draw(node);  //Draw all of the nodes to the screen
         }
 
         //Show it

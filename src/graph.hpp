@@ -18,13 +18,13 @@ public:
 	int getSize(); // { return longitude * latitude; }
 	void addVertices();
 	void setVertex(int x, int y, tileType type);
-    std::vector<Vertex>& getVertices();
+        std::vector<std::vector<Vertex>>& getVertices();
 
 private:
 	int longitude; //x
 	int latitude; //y
 
-	std::vector<Vertex> vertices;
+	std::vector<std::vector<Vertex>> vertices;
 };
 
 #endif // GRAPH_HPP_INCLUDED

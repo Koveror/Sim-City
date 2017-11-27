@@ -8,12 +8,17 @@ int Graph::getSize()
 
 void Graph::addVertices()
 {
-    for (int i = 0; i < longitude; i++) {
-        for (int j = 0; j < latitude; j++) {
+    for (int j = 0; j < latitude; j++) {
+        std::vector<Vertex> row = {};
+        vertices.push_back(row);
+        for (int i = 0; i < longitude; i++) {
             Vertex v1(i,j, grass);
-            vertices.push_back(v1);
+            std::cout << "--- pushing ---" << std::endl;
+            vertices[j].push_back(v1);
             //DEBUG:
-            std::cout << "Adding: " << "Grass: " << i << ", " << j << std::endl;
+            std::cout << "Adding: " << "Grass: " << j << ", " << i << std::endl;
+            std::cout << "x: " << vertices[j][i].getCoord().first << std::endl;
+            std::cout << "y: " << vertices[j][i].getCoord().second << std::endl;
         }
     }
     return;
@@ -33,31 +38,24 @@ void Graph::setVertex(int x, int y, tileType type)
 	}
   return;
     */
-  for (auto it = vertices.begin(); it != vertices.end(); it++) {
-    auto coord = it->getCoord();
-    if (coord.first == x && coord.second == y) {
-      it->setType(type);
-      return;
+    if(y < latitude){
+        if(x < longitude){
+            vertices[y][x].setType(type);
+            return;
+        }
     }
-  }
-  return;
+    return;
 }
 
-std::vector<Vertex>& Graph::getVertices(){
+std::vector<std::vector<Vertex>>& Graph::getVertices(){
     return vertices;
 }
 
 bool Graph::addVertex(int x, int y)
 {
-	for(Vertex vertex : vertices) {
-		int mX = vertex.getCoord().first;
-		int mY = vertex.getCoord().second;
-		if(x == mX && y == mY) {
-			return false;
-		}
-	}
 	tileType t = grass;
-	vertices.push_back(Vertex(x, y, t));
+        Vertex new_vertex(x,y, t);
+	vertices[y][x] = new_vertex;
 	return true;
 }
 
