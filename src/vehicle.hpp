@@ -1,10 +1,9 @@
 #ifndef VEHICLE_HPP_INCLUDED
 #define VEHICLE_HPP_INCLUDED
 
-#include "graph.hpp"
-
-class Vertex; //forward decl
-class Edge; //forward decl
+#include <memory> //ptr
+#include "vertex.hpp"
+#include "edge.hpp"
 
 class Vehicle
 {
@@ -39,7 +38,7 @@ class Car : public Vehicle
 {
 public:
     Car() : Vehicle(nullptr, nullptr, nullptr, nullptr, 60, 6, 4) { }
-    
+
     virtual std::string getType() const { return "Car"; }
 };
 
@@ -47,7 +46,7 @@ class Truck : public Vehicle
 {
 public:
     Truck() : Vehicle(nullptr, nullptr, nullptr, nullptr, 40, 8, 4) { }
-    
+
     virtual std::string getType() const { return "Truck"; }
 };
 
@@ -55,7 +54,7 @@ class Bike : public Vehicle
 {
 public:
     Bike() : Vehicle(nullptr, nullptr, nullptr, nullptr, 70, 3, 2) { }
-    
+
     virtual std::string getType() const { return "Bike"; }
 };
 

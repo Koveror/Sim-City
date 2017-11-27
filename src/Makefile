@@ -1,7 +1,7 @@
 EXECUTABLE=sim-city
 CC=g++
-SOURCES=main.cpp graph.cpp vehicle.cpp
-OBJECTS=main.o graph.o vehicle.o
+SOURCES=main.cpp graph.cpp vehicle.cpp vertex.cpp edge.cpp
+OBJECTS=main.o graph.o vehicle.o vertex.cpp edge.cpp
 CPPFLAGS=-c -g -std=c++11 -Wall -Wextra -pedantic
 LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
 

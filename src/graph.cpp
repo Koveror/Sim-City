@@ -62,24 +62,3 @@ bool Graph::addVertex(int x, int y)
 }
 
 
-
-// Graph::Vertex
-
-std::pair<int,int> Vertex::getCoord()
-{
-    return std::make_pair(x_loc, y_loc);
-}
-
-const tileType Vertex::getType() const
-{
-	const tileType a = vertex_type;
-	return a;
-}
-
-
-
-// Graph::Edge
-
-std::pair<Vertex,Vertex> Edge::getVertices(){
-    return std::make_pair(*vertex_1, *vertex_2);
-}

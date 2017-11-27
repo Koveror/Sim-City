@@ -30,11 +30,11 @@ int main(void) {
   }
 
   //Testing datastructures
-  Graph testGraph(16, 12);
+  Graph testGraph(3, 3);
   testGraph.addVertices();
   std::vector<Vertex> v = testGraph.getVertices();
-  for(Vertex i : v){
-    std::cout << i.getType() << std::endl;
+  for(auto i : v){
+    std::cout << "vertex getType: " << i.getType() << std::endl;
   }
   std::cout << "! " << testGraph.addVertex(0,0) << std::endl;
   //testGraph.setVertex(0, 0, building);
