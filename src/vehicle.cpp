@@ -1,4 +1,5 @@
 #include "vehicle.hpp"
+#include "tools.hpp"
 
 // Graph::Vehicle
 
@@ -6,34 +7,18 @@
 //    return current_edge.getDirection();
 //}
 
-/// WORK IN PROGRESS
-/*std::pair<int,int> Vehicle::getCoordinates(){
+void Vehicle::moveTowards() {
 
-    int x = 0;
-    int y = 0;
-    direction dir = getDirection();
-
-    switch(dir){
-    case North:
-        x = lastVertex.getCoord().first;
-        y = lastVertex.getCoord().second + current_position;
-    case South:
-        x = lastVertex.getCoord().first;
-        y = lastVertex.getCoord().second - current_position;
-    case East:
-        x = lastVertex.getCoord().first - current_position;
-        y = lastVertex.getCoord().second;
-    case West:
-        x = lastVertex.getCoord().first + current_position;
-        y = lastVertex.getCoord().second;
-    }
-    return std::make_pair(x, y);
 }
-*/
 
-int Vehicle::getSpeed() const{
-    return max_speed;
+void Vehicle::setPosition(Pos givenPos) {
+	position = givenPos;
 }
+
+Pos Vehicle::getPosition() {
+	return position;
+}
+
 
 int Vehicle::getLength() const{
     return length;

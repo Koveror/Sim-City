@@ -4,6 +4,7 @@
 #include <memory> //ptr
 #include "vertex.hpp"
 #include "edge.hpp"
+#include "tools.hpp"
 
 class Vehicle
 {
@@ -14,10 +15,14 @@ public:
         last_vertex(V_last), next_vertex(V_next),
         destination(V_destination), current_edge(cur_edge),
         max_speed(max_spd), length(l), width(w) {}
-    //direction getDirection(); // get the direction the car is attempting to move based on vertex and vertices
-    //std::pair<int,int> getCoordinates(); // returns the exact location based on private data
-    int getSpeed() const; //get current speed
-    Edge getNextEdge() const; // returns the next edge based on destination
+	
+	void moveTowards();
+	
+	void setPosition(Pos givenPos);
+
+    Pos getPosition();
+    
+	Edge getNextEdge() const; // returns the next edge based on destination
     int getLength() const;
     int getWidth() const;
     virtual std::string getType() const {return "(nothing)";}
@@ -27,9 +32,9 @@ private:
     std::shared_ptr<Vertex> next_vertex; //smart pointer?
     std::shared_ptr<Vertex> destination;
     std::shared_ptr<Edge> current_edge;
+	Pos position;
     int max_speed;
-    int current_position = 0;
-    int speed = 0;
+    float speed = 0;
     int length;
     int width;
 };
