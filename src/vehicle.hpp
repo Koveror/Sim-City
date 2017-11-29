@@ -16,7 +16,7 @@ public:
         destination(V_destination), current_edge(cur_edge),
         max_speed(max_spd), length(l), width(w) {}
 	
-	void moveTowards();
+	void moveTowards(Pos givenPos);
 	
 	void setPosition(Pos givenPos);
 
