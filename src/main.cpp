@@ -79,13 +79,25 @@ int main(void) {
                 }
                 //bool res = testGraph.addVertex(mx, my);
                 //std::cout << "(" << mx << ", " << my << ") " << z << ", added: " << res << std::endl;   //Print debugging info
+                
+                //TEST: print all curren addVertices
+                std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+                for(auto row : v1){
+                    for(auto vertex : row) {
+                        std::pair<int,int> coord = vertex.getCoord();
+                        for(auto i : vertex.getEdgesTo()){
+                            std::cout << "FROM x:" << coord.first << " y: "<< coord.second << " TO x: "<< i.x << " y: "<< i.y << std::endl;
+                        }
+                    }
+                }
+                
             }
         }
         //Clear previous
         window.clear();
 
         //Draw nodes
-		std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+        std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
         for(auto row : v1){
             for(auto vector : row) {
                 tileType t = vector.getType();

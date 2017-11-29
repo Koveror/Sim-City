@@ -24,23 +24,38 @@ void Graph::addVertices()
     return;
 }
 
+
 void Graph::setVertex(int x, int y, tileType type)
 {
-  /*
-  for (auto it = vertices.begin(); it != vertices.end();) {
-    auto coord = it->getCoord();
-		if (coord.first == x && coord.second == y) {
-			it = vertices.erase(it);
-			vertices.emplace(it-1, Vertex(x,y,type));
-      return;
-		}
-		else it++;
-	}
-  return;
-    */
     if(y < latitude){
         if(x < longitude){
             vertices[y][x].setType(type);
+            if(type == road){
+                if(y > 0 && vertices[y-1][x].getType() == road){
+                    Pos position1(x,y);
+                    Pos position2(x,y-1);
+                    vertices[y-1][x].addEdge(position1);
+                    vertices[y][x].addEdge(position2);
+                }
+                if(y < latitude-1 && vertices[y+1][x].getType() == road){
+                    Pos position1(x,y);
+                    Pos position2(x,y+1);
+                    vertices[y+1][x].addEdge(position1);
+                    vertices[y][x].addEdge(position2);
+                }
+                if(x > 0 && vertices[y][x-1].getType() == road){
+                    Pos position1(x,y);
+                    Pos position2(x-1,y);
+                    vertices[y][x-1].addEdge(position1);
+                    vertices[y][x].addEdge(position2);
+                }
+                if(x < longitude-1 && vertices[y][x+1].getType() == road){
+                    Pos position1(x,y);
+                    Pos position2(x+1,y);
+                    vertices[y][x+1].addEdge(position1);
+                    vertices[y][x].addEdge(position2);
+                }
+            }
             return;
         }
     }

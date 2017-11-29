@@ -8,6 +8,8 @@
 #include "vehicle.hpp"
 #include "vertex.hpp"
 #include "edge.hpp"
+#include "tools.hpp"
+#include <algorithm>
 
 class Graph
 {
@@ -17,6 +19,7 @@ public:
 	bool addVertex(int x, int y);
 	int getSize(); // { return longitude * latitude; }
 	void addVertices();
+        void addEdge();
 	void setVertex(int x, int y, tileType type);
         std::vector<std::vector<Vertex>>& getVertices();
 

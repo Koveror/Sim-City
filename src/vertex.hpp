@@ -2,6 +2,7 @@
 #define VERTEX_HPP_INCLUDED
 
 #include <vector>
+#include "tools.hpp"
 
 /*
 enum direction
@@ -31,12 +32,14 @@ public:
     //const Vertex& getNeighbor(direction dir);
     //const std::vector<Vertex> getAllNeighbors(); // { return neighbor_vertices; }
     void setType(tileType t);
+    void addEdge(Pos position);
+    std::vector<Pos> getEdgesTo();
 
 private:
     int x_loc;
     int y_loc;
     tileType vertex_type;
-    std::vector<Vertex> neighbor_vertices;
+    std::vector<Pos> edges_to;
 };
 
 #endif // VERTEX_HPP_INCLUDED
