@@ -40,7 +40,7 @@ int main(void) {
   }
   std::cout << "! " << testGraph.addVertex(0,0) << std::endl;
   //testGraph.setVertex(0, 0, building);
-
+	/*
     //Testing classes
     Car cr;
     Truck tr;
@@ -51,9 +51,15 @@ int main(void) {
     for (auto it : vehicles) {
         std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
     }
+	*/
+
+	Car c;
+	Pos p = Pos(15, 18);
+	c.setPosition(p);
 
 
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
+	window.setVerticalSyncEnabled(true);
 
     //GUI loop
     while (window.isOpen())
@@ -66,10 +72,10 @@ int main(void) {
             //When mouse is clicked, add nodes to vector
             if (event.type == sf::Event::MouseButtonPressed) {
                 int z = event.mouseButton.button;
-                std::cout << "Button: " << z << std::endl;
                 sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 int x = coord.x;
                 int y = coord.y;
+				p = Pos(x, y);
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Right){
@@ -116,7 +122,15 @@ int main(void) {
                 window.draw(node);  //Draw all of the nodes to the screen
             }
         }
-
+		
+		//Draw a car
+		sf::CircleShape model;
+		Pos got = c.getPosition();
+		model.setPosition(got.x, got.y);
+		model.setRadius(3.0);
+		window.draw(model);
+		c.moveTowards(p);
+		
         //Show it
         window.display();
     }

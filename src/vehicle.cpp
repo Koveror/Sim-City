@@ -7,8 +7,22 @@
 //    return current_edge.getDirection();
 //}
 
-void Vehicle::moveTowards() {
+void Vehicle::moveTowards(Pos givenPos) {
+	int newX = 0;
+	int newY = 0;	
+	
+	if(givenPos.y > position.y) {
+		newY = position.y + 1;
+	} else {
+		newY = position.y - 1;
+	}
 
+	if(givenPos.x > position.x) {
+		newX = position.x + 1;
+	} else {
+		newX = position.x - 1;
+	}
+	position = Pos(newX, newY);
 }
 
 void Vehicle::setPosition(Pos givenPos) {
