@@ -20,6 +20,10 @@ public:
 	
 	void setPosition(Pos givenPos);
 
+	void moveAlong();
+
+	void setPath(std::vector<Edge> givenPath);
+
     Pos getPosition();
     
 	Edge getNextEdge() const; // returns the next edge based on destination
@@ -32,6 +36,7 @@ private:
     std::shared_ptr<Vertex> next_vertex; //smart pointer?
     std::shared_ptr<Vertex> destination;
     std::shared_ptr<Edge> current_edge;
+	std::vector<Edge> path = std::vector<Edge>();
 	Pos position;
     int max_speed;
     float speed = 0;

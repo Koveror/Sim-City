@@ -52,11 +52,12 @@ int main(void) {
         std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
     }
 	*/
-
+	
 	Car c;
 	Pos p = Pos(15, 18);
 	c.setPosition(p);
 
+	
 
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
 	window.setVerticalSyncEnabled(true);
@@ -106,9 +107,9 @@ int main(void) {
         //Draw nodes
         std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
         for(auto row : v1){
-            for(auto vector : row) {
-                tileType t = vector.getType();
-                Pos a = vector.getPos();
+            for(auto v : row) {
+                tileType t = v.getType();
+                Pos a = v.getPos();
                 int x = a.x * 64;
                 int y = a.y * 64;
                 sf::Sprite node;
@@ -123,6 +124,7 @@ int main(void) {
                 window.draw(node);  //Draw all of the nodes to the screen
             }
         }
+		
 		
 		//Draw a car
 		sf::CircleShape model;
