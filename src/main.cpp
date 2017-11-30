@@ -17,7 +17,7 @@ int main(void) {
 	//load textures
 	sf::Texture grassTex;
 	sf::Texture buildingTex;
-  sf::Texture roadTex;
+ 	sf::Texture roadTex;
 
   if (!grassTex.loadFromFile("img/grass.png")){
     std::cout << "grass.png not found" << std::endl;
@@ -88,6 +88,7 @@ int main(void) {
                 
                 //TEST: print all curren addVertices
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+                std::cout << "\nCurrent edges:" << std::endl;
                 for(auto row : v1){
                     for(auto vertex : row) {
                         Pos a = vertex.getPos();
