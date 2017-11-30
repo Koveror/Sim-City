@@ -1,8 +1,8 @@
 #include "vertex.hpp"
 
-std::pair<int,int> Vertex::getCoord()
+Pos Vertex::getPos()
 {
-    return std::make_pair(x_loc, y_loc);
+    return Pos(x_loc, y_loc);
 }
 
 const tileType& Vertex::getType()

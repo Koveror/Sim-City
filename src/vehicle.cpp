@@ -13,12 +13,16 @@ void Vehicle::moveTowards(Pos givenPos) {
 	
 	if(givenPos.y > position.y) {
 		newY = position.y + 1;
+	} else if(givenPos.y == position.y){
+		newY = position.y;
 	} else {
 		newY = position.y - 1;
 	}
 
 	if(givenPos.x > position.x) {
 		newX = position.x + 1;
+	} else if(givenPos.x == position.x) {
+		newX = position.x;
 	} else {
 		newX = position.x - 1;
 	}

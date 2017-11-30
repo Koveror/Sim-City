@@ -90,9 +90,9 @@ int main(void) {
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
                 for(auto row : v1){
                     for(auto vertex : row) {
-                        std::pair<int,int> coord = vertex.getCoord();
+                        Pos a = vertex.getPos();
                         for(auto i : vertex.getEdgesTo()){
-                            std::cout << "FROM x:" << coord.first << " y: "<< coord.second << " TO x: "<< i.x << " y: "<< i.y << std::endl;
+                            std::cout << "FROM x:" << a.x << " y: "<< a.y << " TO x: "<< i.x << " y: "<< i.y << std::endl;
                         }
                     }
                 }
@@ -107,9 +107,9 @@ int main(void) {
         for(auto row : v1){
             for(auto vector : row) {
                 tileType t = vector.getType();
-                std::pair<int, int> pos = vector.getCoord();
-                int x = pos.first * 64;
-                int y = pos.second * 64;
+                Pos a = vector.getPos();
+                int x = a.x * 64;
+                int y = a.y * 64;
                 sf::Sprite node;
                 if (t == grass){
                 node.setTexture(grassTex);

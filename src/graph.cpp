@@ -17,8 +17,8 @@ void Graph::addVertices()
             vertices[j].push_back(v1);
             //DEBUG:
             std::cout << "Adding: " << "Grass: " << j << ", " << i << std::endl;
-            std::cout << "x: " << vertices[j][i].getCoord().first << std::endl;
-            std::cout << "y: " << vertices[j][i].getCoord().second << std::endl;
+            std::cout << "x: " << vertices[j][i].getPos().x << std::endl;
+            std::cout << "y: " << vertices[j][i].getPos().y << std::endl;
         }
     }
     return;
