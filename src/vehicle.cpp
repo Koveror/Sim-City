@@ -7,6 +7,20 @@
 //    return current_edge.getDirection();
 //}
 
+void Vehicle::setPath(std::vector<Edge> givenPath) {
+	path = givenPath;
+}
+
+void Vehicle::moveAlong() {
+	if(path.size() > 0) {
+		Edge e = path.front();
+		std::pair<Vertex, Vertex> pair = e.getVertices();
+		Vertex start = pair.first;
+		Vertex end = pair.second;
+		moveTowards(end.getPos());
+	}
+}
+
 void Vehicle::moveTowards(Pos givenPos) {
 	int newX = 0;
 	int newY = 0;	
