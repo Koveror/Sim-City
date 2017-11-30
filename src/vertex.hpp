@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "tools.hpp"
+#include <cstdio>
 
 /*
 enum direction
@@ -33,6 +34,7 @@ public:
     //const std::vector<Vertex> getAllNeighbors(); // { return neighbor_vertices; }
     void setType(tileType t);
     void addEdge(Pos position);
+    void removeEdge(Pos position);
     std::vector<Pos> getEdgesTo();
 
 private:

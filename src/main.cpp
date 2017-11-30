@@ -88,11 +88,12 @@ int main(void) {
                 
                 //TEST: print all curren addVertices
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+                std::cout << "\nCurrent edges:" << std::endl;
                 for(auto row : v1){
                     for(auto vertex : row) {
                         std::pair<int,int> coord = vertex.getCoord();
                         for(auto i : vertex.getEdgesTo()){
-                            std::cout << "FROM x:" << coord.first << " y: "<< coord.second << " TO x: "<< i.x << " y: "<< i.y << std::endl;
+                            std::cout << "(" << coord.first << ", "<< coord.second << ") to "<< "(" << i.x << ", "<< i.y << ")" << std::endl;
                         }
                     }
                 }
