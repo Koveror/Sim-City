@@ -4,12 +4,15 @@
 #include <vector>
 #include "tools.hpp"
 #include <cstdio>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
 
 class Vertex
 {
 public:
-    Vertex(int x, int y, tileType type) :
-    x_loc(x), y_loc(y), vertex_type(type) {}
+    Vertex(int x, int y, tileType type); // :
+//    x_loc(x), y_loc(y), vertex_type(type) {}
     //void addEdge(int x, int y);
     Pos getPos(); // (x,y)
     const tileType& getType(); // { return vertex_type;}
@@ -19,6 +22,8 @@ public:
     void addEdge(Pos position);
     void removeEdge(Pos position);
     std::vector<Pos> getEdgesTo();
+    std::string getTexture();
+    bool hasEdgeTo(int x, int y);
 
 private:
     int x_loc;

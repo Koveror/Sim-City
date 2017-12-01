@@ -6,6 +6,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include "graph.hpp"
 #include "vehicle.hpp"
+#include "texturemanager.hpp"
 
 //Force coordinates to a grid
 int forceToGrid(int a) {
@@ -14,23 +15,10 @@ int forceToGrid(int a) {
 
 int main(void) {
 
-	//load textures
-	sf::Texture grassTex;
-	sf::Texture buildingTex;
- 	sf::Texture roadTex;
-
-  if (!grassTex.loadFromFile("img/grass.png")){
-    std::cout << "grass.png not found" << std::endl;
-  }
-  if (!buildingTex.loadFromFile("img/building.png")){
-    std::cout << "building.png not found" << std::endl;
-  }
-  if (!roadTex.loadFromFile("img/road.png")){
-    std::cout << "road.png not found" << std::endl;
-  }
+  TextureManager texmanager;
 
   //Testing datastructures
-  Graph testGraph(3, 3);
+  Graph testGraph(16, 12);
   testGraph.addVertices();
   std::vector<std::vector<Vertex>> v = testGraph.getVertices();
   for(auto j : v){
@@ -52,12 +40,12 @@ int main(void) {
         std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
     }
 	*/
-	
+
 	Car c;
 	Pos p = Pos(15, 18);
 	c.setPosition(p);
 
-	
+
 
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
 	window.setVerticalSyncEnabled(true);
@@ -86,7 +74,7 @@ int main(void) {
                 }
                 //bool res = testGraph.addVertex(mx, my);
                 //std::cout << "(" << mx << ", " << my << ") " << z << ", added: " << res << std::endl;   //Print debugging info
-                
+
                 //TEST: print all curren addVertices
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
                 std::cout << "\nCurrent edges:" << std::endl;
@@ -98,7 +86,7 @@ int main(void) {
                         }
                     }
                 }
-                
+
             }
         }
         //Clear previous
@@ -108,24 +96,19 @@ int main(void) {
         std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
         for(auto row : v1){
             for(auto v : row) {
-                tileType t = v.getType();
                 Pos a = v.getPos();
                 int x = a.x * 64;
                 int y = a.y * 64;
                 sf::Sprite node;
-                if (t == grass){
-                node.setTexture(grassTex);
-                }else if (t == building){
-                node.setTexture(buildingTex);
-                }else if (t == road){
-                node.setTexture(roadTex);
-                }
+                //std::cout << v.getTexture() << '\n';
+                node.setTexture(texmanager.getRef(v.getTexture()));
+
                 node.setPosition(x, y);
                 window.draw(node);  //Draw all of the nodes to the screen
             }
         }
-		
-		
+
+
 		//Draw a car
 		sf::CircleShape model;
 		Pos got = c.getPosition();
@@ -133,7 +116,7 @@ int main(void) {
 		model.setRadius(3.0);
 		window.draw(model);
 		c.moveTowards(p);
-		
+
         //Show it
         window.display();
     }
