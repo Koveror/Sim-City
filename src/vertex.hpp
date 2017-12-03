@@ -1,12 +1,17 @@
 #ifndef VERTEX_HPP_INCLUDED
 #define VERTEX_HPP_INCLUDED
 
-#include <vector>
+#include <list>
 #include "tools.hpp"
 #include <cstdio>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include "edge.hpp"
+
+class Edge;
+
+class Graph;
 
 class Vertex
 {
@@ -16,17 +21,18 @@ public:
 	Pos getIndex();
     const tileType& getType();
     void setType(tileType t);
-    void addEdge(Pos position);
+    void addEdge(Pos position, Graph& graph);
     void removeEdge(Pos position);
-    std::vector<Pos> getEdgesTo();
+    std::list<Edge> getEdgesTo();
     std::string getTexture();
     bool hasEdgeTo(int x, int y);
+	bool operator==(Vertex a);
 
 private:
     int x_loc;
     int y_loc;
     tileType vertex_type;
-    std::vector<Pos> edges_to;
+    std::list<Edge> edges_to;
 };
 
 #endif // VERTEX_HPP_INCLUDED

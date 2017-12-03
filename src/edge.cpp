@@ -1,5 +1,18 @@
 #include "edge.hpp"
 
+bool Edge::operator==(Edge a) {
+	Vertex tv1 = getVertices().first;
+	Vertex tv2 = getVertices().second;
+	Vertex av1 = a.getVertices().first;
+	Vertex av2 = a.getVertices().second;
+	if(tv1 == av1 && tv2 == av2) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 std::pair<Vertex,Vertex> Edge::getVertices(){
     return std::make_pair(*vertex_1, *vertex_2);
 }

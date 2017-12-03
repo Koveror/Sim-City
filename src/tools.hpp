@@ -23,6 +23,14 @@ public:
 	Pos(int givenX = 0, int givenY = 0): x(givenX), y(givenY) {};
 	int x;
 	int y;
+	bool operator==(Pos a) {
+		if(x == a.x && y == a.y) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 };
+
 
 #endif

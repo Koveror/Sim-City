@@ -8,6 +8,8 @@
 #include "vehicle.hpp"
 #include "texturemanager.hpp"
 
+
+
 //Force coordinates to a grid
 int forceToGrid(int a) {
     return a / 64;
@@ -18,7 +20,7 @@ int main(void) {
   TextureManager texmanager;
 
   //Testing datastructures
-  Graph testGraph(16, 12);
+  Graph testGraph = Graph(16, 12);
   testGraph.addVertices();
  
   //testGraph.setVertex(0, 0, building);
@@ -66,17 +68,18 @@ int main(void) {
                 } else if (z == sf::Mouse::Left){
                   testGraph.setVertex(mx, my, road);
                 }
-                //bool res = testGraph.addVertex(mx, my);
-                //std::cout << "(" << mx << ", " << my << ") " << z << ", added: " << res << std::endl;   //Print debugging info
 
-                //TEST: print all curren addVertices
+                //TEST: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
                 std::cout << "\nCurrent edges:" << std::endl;
                 for(auto row : v1){
                     for(auto vertex : row) {
-                        Pos a = vertex.getIndex();
-                        for(auto i : vertex.getEdgesTo()){
-                            std::cout << "FROM x:" << a.x << " y: "<< a.y << " TO x: "<< i.x << " y: "<< i.y << std::endl;
+                        for(auto edge : vertex.getEdgesTo()){
+							Vertex v1 = edge.getVertices().first;
+							Vertex v2 = edge.getVertices().second;
+							Pos p1 = v1.getIndex();
+							Pos p2 = v2.getIndex();
+                            std::cout << "FROM (" << p1.x << ", " << p1.y << ") TO (" << p2.x << ", " << p2.y << ")" << std::endl;
                         }
                     }
                 }
@@ -94,19 +97,32 @@ int main(void) {
                 int x = a.x;
                 int y = a.y;
 				
+
+				//Draw all the sprites
+				sf::Sprite node;
+                node.setTexture(texmanager.getRef(v.getTexture()));
+				node.setOrigin(32, 32);
+                node.setPosition(x, y);
+				window.draw(node);
+
+				//Draw middle points of nodes
 				sf::CircleShape coord;
 				coord.setOrigin(3.0, 3.0);
 				coord.setPosition(x, y);
 				coord.setRadius(3.0);
 				coord.setFillColor(sf::Color::Yellow);
-				
-				sf::Sprite node;
-                node.setTexture(texmanager.getRef(v.getTexture()));
-				node.setOrigin(32, 32);
-
-                node.setPosition(x, y);
-                window.draw(node);  //Draw all of the nodes to the screen
 				window.draw(coord);
+				
+				//Draw middle points of all edges
+				for(Edge edge : v.getEdgesTo()) {
+					Pos p1 = edge.getMiddlePos();
+					sf::CircleShape middle;
+					middle.setOrigin(3.0, 3.0);
+					middle.setPosition(p1.x, p1.y);
+					middle.setRadius(3.0);
+					middle.setFillColor(sf::Color::Red);
+					window.draw(middle);
+				}
 				
             }
         }

@@ -27,6 +27,7 @@ void Graph::addVertices()
 
 void Graph::setVertex(int x, int y, tileType type)
 {
+	Graph& graph = *this;
     if(y < latitude){
         if(x < longitude){
             vertices[y][x].setType(type);
@@ -34,26 +35,26 @@ void Graph::setVertex(int x, int y, tileType type)
                 if(y > 0 && vertices[y-1][x].getType() == road){
                     Pos position1(x,y);
                     Pos position2(x,y-1);
-                    vertices[y-1][x].addEdge(position1);
-                    vertices[y][x].addEdge(position2);
+                    vertices[y-1][x].addEdge(position1, graph);
+                    vertices[y][x].addEdge(position2, graph);
                 }
                 if(y < latitude-1 && vertices[y+1][x].getType() == road){
                     Pos position1(x,y);
                     Pos position2(x,y+1);
-                    vertices[y+1][x].addEdge(position1);
-                    vertices[y][x].addEdge(position2);
+                    vertices[y+1][x].addEdge(position1, graph);
+                    vertices[y][x].addEdge(position2, graph);
                 }
                 if(x > 0 && vertices[y][x-1].getType() == road){
                     Pos position1(x,y);
                     Pos position2(x-1,y);
-                    vertices[y][x-1].addEdge(position1);
-                    vertices[y][x].addEdge(position2);
+                    vertices[y][x-1].addEdge(position1, graph);
+                    vertices[y][x].addEdge(position2, graph);
                 }
                 if(x < longitude-1 && vertices[y][x+1].getType() == road){
                     Pos position1(x,y);
                     Pos position2(x+1,y);
-                    vertices[y][x+1].addEdge(position1);
-                    vertices[y][x].addEdge(position2);
+                    vertices[y][x+1].addEdge(position1, graph);
+                    vertices[y][x].addEdge(position2, graph);
                 }
             } else {
                 if(y > 0 && vertices[y-1][x].getType() == road){

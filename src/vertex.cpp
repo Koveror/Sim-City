@@ -1,10 +1,22 @@
 #include "vertex.hpp"
+#include <memory>
+#include "graph.hpp"
 
 //Constructor
 Vertex::Vertex(int x, int y, tileType type){
   x_loc = x,
   y_loc = y,
   vertex_type = type;
+}
+
+bool Vertex::operator==(Vertex a) {
+	Pos p1 = getIndex();
+	Pos p2 = a.getIndex();
+	if(p1 == p2 && getType() == a.getType()) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 //Get index in vertices data structure
@@ -32,27 +44,48 @@ void Vertex::setType(tileType t)
     return;
 }
 
-void Vertex::addEdge(Pos position){
-    edges_to.push_back(position);
+void Vertex::addEdge(Pos position, Graph& graph) {
+	
+	std::vector<std::vector<Vertex>> vertices = graph.getVertices();	
+	
+	Vertex v1 = *this;
+	Vertex v2 = vertices[position.y][position.x];
+
+	std::shared_ptr<Vertex> p1 = std::make_shared<Vertex>(v1);
+	std::shared_ptr<Vertex> p2 = std::make_shared<Vertex>(v2);
+	int w = 1;
+	
+	Edge e1(p1, p2, w);
+
+    edges_to.push_back(e1);
+	edges_to.unique();
 }
 
-void Vertex::removeEdge(Pos position){
-    for(unsigned int i = 0; i < edges_to.size(); i++){
-        if(position.x == edges_to[i].x && position.y == edges_to[i].y){
-            edges_to.erase(edges_to.begin()+i);
+void Vertex::removeEdge(Pos position) {
+	std::cout << "Calling removeEdge" << std::endl;
+    for(auto it = edges_to.begin(); it != edges_to.end(); it++) {
+		Edge e = *it;
+		Vertex end = e.getVertices().second;
+		Pos endPos = end.getIndex();
+        if(position.x == endPos.x && position.y == endPos.y){
+			std::cout << "Erasing: " << endPos.x << endPos.y << std::endl;
+            edges_to.erase(it);	//Calling this calls the destructor of the edge and vertices along with it? -> Segmentation fault
         }
     }
 }
 
-std::vector<Pos> Vertex::getEdgesTo(){
+std::list<Edge> Vertex::getEdgesTo(){
     return edges_to;
 }
 
 bool Vertex::hasEdgeTo(int x, int y){
-    for (unsigned int i = 0; i < edges_to.size(); i++){
-        if(x == edges_to[i].x && y == edges_to[i].y){
+    for (auto it = edges_to.begin(); it != edges_to.end(); it++) {
+		Edge e = *it;
+		Vertex end = e.getVertices().second;
+		Pos endPos = end.getIndex();
+        if(x == endPos.x && y == endPos.y){
             return true;
-          }
+        }
     }
     return false;
 }
