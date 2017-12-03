@@ -1,23 +1,31 @@
 #include "vertex.hpp"
 
+//Constructor
 Vertex::Vertex(int x, int y, tileType type){
   x_loc = x,
   y_loc = y,
   vertex_type = type;
 }
 
-Pos Vertex::getPos()
+//Get index in vertices data structure
+Pos Vertex::getIndex()
 {
     return Pos(x_loc, y_loc);
 }
 
+//Get position for drawing on the screen
+Pos Vertex::getPos()
+{
+	return Pos(x_loc * 64 + 32, y_loc * 64 + 32);
+}
+
+//Get tiletype defined in tileType enumerator
 const tileType& Vertex::getType()
 {
-	//const tileType ret = vertex_type;
-	//return ret;
 	return vertex_type;
 }
 
+//Set tileType
 void Vertex::setType(tileType t)
 {
     vertex_type = t;

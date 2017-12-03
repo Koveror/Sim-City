@@ -13,7 +13,7 @@ public:
 
     int getWeight(); // { return weight;}
     std::pair<Vertex,Vertex> getVertices(); // { return both verticers the edge connects;}
-	Pos getMiddle();
+	Pos getMiddlePos();
 	direction getDirection();
 
 private:

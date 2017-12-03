@@ -20,13 +20,7 @@ int main(void) {
   //Testing datastructures
   Graph testGraph(16, 12);
   testGraph.addVertices();
-  std::vector<std::vector<Vertex>> v = testGraph.getVertices();
-  for(auto j : v){
-    for(auto i : j){
-        std::cout << "vertex getType: " << i.getType() << std::endl;
-    }
-  }
-  std::cout << "! " << testGraph.addVertex(0,0) << std::endl;
+ 
   //testGraph.setVertex(0, 0, building);
 	/*
     //Testing classes
@@ -80,7 +74,7 @@ int main(void) {
                 std::cout << "\nCurrent edges:" << std::endl;
                 for(auto row : v1){
                     for(auto vertex : row) {
-                        Pos a = vertex.getPos();
+                        Pos a = vertex.getIndex();
                         for(auto i : vertex.getEdgesTo()){
                             std::cout << "FROM x:" << a.x << " y: "<< a.y << " TO x: "<< i.x << " y: "<< i.y << std::endl;
                         }
@@ -97,31 +91,23 @@ int main(void) {
         for(auto row : v1){
             for(auto v : row) {
                 Pos a = v.getPos();
-                int x = a.x * 64;
-                int y = a.y * 64;
+                int x = a.x;
+                int y = a.y;
 				
 				sf::CircleShape coord;
-				coord.setOrigin(1.5, 1.5);
+				coord.setOrigin(3.0, 3.0);
 				coord.setPosition(x, y);
 				coord.setRadius(3.0);
 				coord.setFillColor(sf::Color::Yellow);
 				
 				sf::Sprite node;
                 node.setTexture(texmanager.getRef(v.getTexture()));
+				node.setOrigin(32, 32);
 
                 node.setPosition(x, y);
                 window.draw(node);  //Draw all of the nodes to the screen
 				window.draw(coord);
 				
-				std::vector<Pos> neigh = v.getEdgesTo();
-				for(Pos p : neigh) {
-					sf::CircleShape middle;
-					middle.setOrigin(1.5, 1.5);
-					middle.setPosition(p.x * 32, p.y * 32);
-					middle.setRadius(3.0);
-					middle.setFillColor(sf::Color::Red);
-					window.draw(middle);
-				}
             }
         }
 
@@ -129,7 +115,7 @@ int main(void) {
 		//Draw a car
 		sf::CircleShape model;
 		Pos got = c.getPosition();
-		model.setOrigin(1.5, 1.5);
+		model.setOrigin(3.0, 3.0);
 		model.setPosition(got.x, got.y);
 		model.setRadius(3.0);
 		window.draw(model);

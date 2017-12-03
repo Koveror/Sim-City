@@ -11,13 +11,10 @@
 class Vertex
 {
 public:
-    Vertex(int x, int y, tileType type); // :
-//    x_loc(x), y_loc(y), vertex_type(type) {}
-    //void addEdge(int x, int y);
-    Pos getPos(); // (x,y)
-    const tileType& getType(); // { return vertex_type;}
-    //const Vertex& getNeighbor(direction dir);
-    //const std::vector<Vertex> getAllNeighbors(); // { return neighbor_vertices; }
+    Vertex(int x, int y, tileType type);
+    Pos getPos();
+	Pos getIndex();
+    const tileType& getType();
     void setType(tileType t);
     void addEdge(Pos position);
     void removeEdge(Pos position);
