@@ -99,12 +99,29 @@ int main(void) {
                 Pos a = v.getPos();
                 int x = a.x * 64;
                 int y = a.y * 64;
-                sf::Sprite node;
-                //std::cout << v.getTexture() << '\n';
+				
+				sf::CircleShape coord;
+				coord.setOrigin(1.5, 1.5);
+				coord.setPosition(x, y);
+				coord.setRadius(3.0);
+				coord.setFillColor(sf::Color::Yellow);
+				
+				sf::Sprite node;
                 node.setTexture(texmanager.getRef(v.getTexture()));
 
                 node.setPosition(x, y);
                 window.draw(node);  //Draw all of the nodes to the screen
+				window.draw(coord);
+				
+				std::vector<Pos> neigh = v.getEdgesTo();
+				for(Pos p : neigh) {
+					sf::CircleShape middle;
+					middle.setOrigin(1.5, 1.5);
+					middle.setPosition(p.x * 32, p.y * 32);
+					middle.setRadius(3.0);
+					middle.setFillColor(sf::Color::Red);
+					window.draw(middle);
+				}
             }
         }
 
@@ -112,10 +129,12 @@ int main(void) {
 		//Draw a car
 		sf::CircleShape model;
 		Pos got = c.getPosition();
+		model.setOrigin(1.5, 1.5);
 		model.setPosition(got.x, got.y);
 		model.setRadius(3.0);
 		window.draw(model);
 		c.moveTowards(p);
+
 
         //Show it
         window.display();

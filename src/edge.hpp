@@ -13,6 +13,8 @@ public:
 
     int getWeight(); // { return weight;}
     std::pair<Vertex,Vertex> getVertices(); // { return both verticers the edge connects;}
+	Pos getMiddle();
+	direction getDirection();
 
 private:
     std::shared_ptr<Vertex> vertex_1; //smart pointer?

@@ -1,21 +1,27 @@
-# Sample README file for C++ programming project
+Sim-city-1 ReadMe
 
-This is an initial git repository for your programming project.
-It contains an initial directory structure that we wish you could
-use as follows:
+`Setup:`
+Sim-city-1 is designed to run on a linux system that has sfml 2.3.2 installed.
+Such systems can be found at for example Maari-A and Maari-C classes in Maarintalo.
 
-  * `plan/` -- Here is your project plan. You may use different sources,
-    but we hope to get the pan **also as pdf file**.
+The project root directory should contain the following folders:
 
-  * `doc/` -- here are the documentation sources related to your project.
-    You may use different tools for documentation (e.g. latex),
-    but we hope to get the final version of the document
-    **also as pdf file**.
+  * `plan/` -- Here is our project plan.
 
-  * `src/` -- here are the C++ source files. You can have subfolders as needed.
+  * `doc/` -- Here are the documentation sources related to our project.
 
-  * `README.md` -- This file that you should modify to represent
-    your project.
+  * `src/` -- Here are the C++ source files.
 
-You may also add other new directories as needed, for example
-for testing tools.
+  * `README.md` -- The file you are now reading.
+
+  * `Makefile`	-- Makefile to be used with the unix program called make.
+
+To run Sim-city-1, simply navigate to the project root directory using your unix terminal and then
+run the following command:
+
+	'make run-main'
+
+This command will compile the source files and make an executable called 'sim-city-1'. The command will also
+run the executable. The executable can be found in the src directory. The program can be run again from
+there or you can simply use the 'make run-main' command again. You can clean the src directory using the 'make clean'
+command, which will remove object files and executables from the src directory.
