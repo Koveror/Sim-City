@@ -40,6 +40,7 @@ int main(void) {
 	Car c;
 	Pos p = Pos(15, 18);
 	c.setPosition(p);
+	c.setNextPosition(p);
 
 
 
@@ -130,12 +131,12 @@ int main(void) {
 
 		//Draw a car
 		sf::CircleShape model;
+		c.move(testGraph);
 		Pos got = c.getPosition();
 		model.setOrigin(3.0, 3.0);
 		model.setPosition(got.x, got.y);
 		model.setRadius(3.0);
 		window.draw(model);
-		c.moveTowards(p);
 
 
         //Show it

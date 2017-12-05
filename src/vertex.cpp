@@ -9,6 +9,7 @@ Vertex::Vertex(int x, int y, tileType type){
   vertex_type = type;
 }
 
+//Boolean operator for comparing two vertices
 bool Vertex::operator==(Vertex a) {
 	Pos p1 = getIndex();
 	Pos p2 = a.getIndex();
@@ -44,6 +45,7 @@ void Vertex::setType(tileType t)
     return;
 }
 
+//Adds an edge to this vertices edge list. TODO: Don't add the same edge twice
 void Vertex::addEdge(Pos position, Graph& graph) {
 	
 	std::vector<std::vector<Vertex>> vertices = graph.getVertices();	
@@ -58,9 +60,9 @@ void Vertex::addEdge(Pos position, Graph& graph) {
 	Edge e1(p1, p2, w);
 
     edges_to.push_back(e1);
-	edges_to.unique();
 }
 
+//Remove an edge from this vertices edge list.
 void Vertex::removeEdge(Pos position) {
 	std::cout << "Calling removeEdge" << std::endl;
     for(auto it = edges_to.begin(); it != edges_to.end(); it++) {
@@ -74,7 +76,8 @@ void Vertex::removeEdge(Pos position) {
     }
 }
 
-std::list<Edge> Vertex::getEdgesTo(){
+//Return a list of edges that go out from this vertex
+std::vector<Edge> Vertex::getEdgesTo(){
     return edges_to;
 }
 
@@ -126,6 +129,8 @@ std::string Vertex::getTexture(){
         return "building";
     } else if (vertex_type == grass) {
         return "grass";
-    }
+    } else {
+		return "grass";
+	}
 
 }

@@ -23,7 +23,7 @@ public:
     void setType(tileType t);
     void addEdge(Pos position, Graph& graph);
     void removeEdge(Pos position);
-    std::list<Edge> getEdgesTo();
+    std::vector<Edge> getEdgesTo();
     std::string getTexture();
     bool hasEdgeTo(int x, int y);
 	bool operator==(Vertex a);
@@ -32,7 +32,7 @@ private:
     int x_loc;
     int y_loc;
     tileType vertex_type;
-    std::list<Edge> edges_to;
+    std::vector<Edge> edges_to;
 };
 
 #endif // VERTEX_HPP_INCLUDED
