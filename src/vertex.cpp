@@ -1,6 +1,7 @@
 #include "vertex.hpp"
 #include <memory>
 #include "graph.hpp"
+#include <algorithm>
 
 //Constructor
 Vertex::Vertex(int x, int y, tileType type){
@@ -45,7 +46,7 @@ void Vertex::setType(tileType t)
     return;
 }
 
-//Adds an edge to this vertices edge list. TODO: Don't add the same edge twice
+//Adds an edge to this vertices edge list.
 void Vertex::addEdge(Pos position, Graph& graph) {
 	
 	std::vector<std::vector<Vertex>> vertices = graph.getVertices();	
@@ -58,8 +59,16 @@ void Vertex::addEdge(Pos position, Graph& graph) {
 	int w = 1;
 	
 	Edge e1(p1, p2, w);
-
-    edges_to.push_back(e1);
+	
+	//Check not to add same edge twice
+	if(edges_to.size() > 0) {
+		auto res = std::find(edges_to.begin(), edges_to.end(), e1);
+		if(res == edges_to.end()) {
+			edges_to.push_back(e1);
+		}
+	} else {
+		edges_to.push_back(e1);
+	}
 }
 
 //Remove an edge from this vertices edge list.
