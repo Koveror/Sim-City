@@ -23,7 +23,7 @@ public:
     void setType(tileType t);
     void addEdge(Pos position, Graph& graph);
     void removeEdge(Pos position);
-	void removeEdgeMinor(Pos position);
+	void removeEdgesTo(Pos position);
     std::vector<Edge> getEdgesTo();
     std::string getTexture();
     bool hasEdgeTo(int x, int y);

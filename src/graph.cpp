@@ -59,27 +59,23 @@ void Graph::setVertex(int x, int y, tileType type)
             } else {
                 if(y > 0 && vertices[y-1][x].getType() == road){
                     Pos position1(x,y);
-                    Pos position2(x,y-1);
-                    vertices[y-1][x].removeEdge(position1);
-                    vertices[y][x].removeEdge(position2);
+                    vertices[y-1][x].removeEdgesTo(position1);
+                    vertices[y][x].removeEdge(position1);
                 }
                 if(y < latitude-1 && vertices[y+1][x].getType() == road){
                     Pos position1(x,y);
-                    Pos position2(x,y+1);
-                    vertices[y+1][x].removeEdge(position1);
-                    vertices[y][x].removeEdge(position2);
+                    vertices[y+1][x].removeEdgesTo(position1);
+                    vertices[y][x].removeEdge(position1);
                 }
                 if(x > 0 && vertices[y][x-1].getType() == road){
                     Pos position1(x,y);
-                    Pos position2(x-1,y);
-                    vertices[y][x-1].removeEdge(position1);
-                    vertices[y][x].removeEdge(position2);                   
+                    vertices[y][x-1].removeEdgesTo(position1);
+                    vertices[y][x].removeEdge(position1);                   
                 }
                 if(x < longitude-1 && vertices[y][x+1].getType() == road){
                     Pos position1(x,y);
-                    Pos position2(x+1,y);
-                    vertices[y][x+1].removeEdge(position1);
-                    vertices[y][x].removeEdge(position2);
+                    vertices[y][x+1].removeEdgesTo(position1);
+                    vertices[y][x].removeEdge(position1);
                 }
             }
             return;
