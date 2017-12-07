@@ -47,7 +47,7 @@ void Vertex::setType(tileType t)
 }
 
 //Adds an edge to this vertices edge list.
-void Vertex::addEdge(Pos position, Graph& graph) {
+void Vertex::addEdge(Pos position, Graph& graph, int weight) {
 	
 	std::vector<std::vector<Vertex>> vertices = graph.getVertices();	
 	
@@ -58,7 +58,7 @@ void Vertex::addEdge(Pos position, Graph& graph) {
 	std::shared_ptr<Vertex> p2 = std::make_shared<Vertex>(v2);
 	int w = 1;
 	
-	Edge e1(p1, p2, w);
+	Edge e1(p1, p2, weight);
 	
 	//Check not to add same edge twice
 	if(edges_to.size() > 0) {

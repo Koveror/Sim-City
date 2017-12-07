@@ -50,8 +50,6 @@ int main(void) {
     tileType vertex_to_add;
     sf::Clock clock;
     sf::Time time = clock.restart() + sf::seconds(4);
-    std::cout << time.asSeconds() << std::endl;
-    int q = 0;
         
     //GUI loop
     while (window.isOpen())
@@ -159,12 +157,8 @@ int main(void) {
             
             //Show it
             window.display();
-            std::cout << time.asSeconds() << std::endl;
             time = clock.restart();
         }
-        std::cout << time.asSeconds() << std::endl;
-        q += 1;
-        std::cout << q << std::endl;
         
     }
 

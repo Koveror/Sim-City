@@ -21,7 +21,7 @@ public:
 	Pos getIndex();
     const tileType& getType();
     void setType(tileType t);
-    void addEdge(Pos position, Graph& graph);
+    void addEdge(Pos position, Graph& graph, int weight);
     void removeEdge(Pos position);
 	void removeEdgesTo(Pos position);
     std::vector<Edge> getEdgesTo();
