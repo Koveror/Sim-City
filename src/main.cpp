@@ -22,37 +22,23 @@ int main(void) {
 	//Testing datastructures
 	Graph testGraph = Graph(16, 12);
 	testGraph.addVertices();
-
-	//testGraph.setVertex(0, 0, building);
-	/*
-	//Testing classes
-	Car cr;
-	Truck tr;
-	std::vector<Vehicle*> vehicles;
-	vehicles.push_back(&cr);
-	vehicles.push_back(&tr);
-
-	for (auto it : vehicles) {
-	std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
-	}
-	*/
-		
-	float refreshSpeed = 1 / 30;
-
+	
+	//Single car for testing
 	Car c;
 	Pos p = Pos(15, 18);
 	c.setPosition(p);
 	c.setNextPosition(p);
-
-
-
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
-	window.setVerticalSyncEnabled(true);
-    //variables for GUI loop
+    
+	//Variables for GUI loop
     tileType vertex_to_add;
+	float refreshSpeed = 1 / 30;
     sf::Clock clock;
     sf::Time time = clock.restart() + sf::seconds(4);
-        
+    
+	//Make a render window
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
+	window.setVerticalSyncEnabled(true);
+
     //GUI loop
     while (window.isOpen())
     {
@@ -61,7 +47,7 @@ int main(void) {
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) window.close();
-            //When mouse is clicked, add nodes to vector
+            //When mouse is clicked act accordingly
             if (event.type == sf::Event::MouseButtonPressed) {
                 int z = event.mouseButton.button;
                 sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -71,12 +57,12 @@ int main(void) {
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Left){
-                	testGraph.setVertex(mx, my, vertex_to_add);
+                	testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
                 } else if(z == sf::Mouse::Right) {
-					testGraph.getVertices()[my][mx].setPassable();
+					testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
 				}
 
-                //TEST: print all current edges
+                //DEBUG: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
                 std::cout << "\nCurrent edges:" << std::endl;
                 for(auto row : v1){
@@ -92,6 +78,7 @@ int main(void) {
                 }
 
             }
+			//Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
             if(event.type == sf::Event::KeyPressed){
                 if(event.key.code == sf::Keyboard::B){
                     vertex_to_add = building;
@@ -109,12 +96,13 @@ int main(void) {
             }
         }
         
-        //Update screen
+        //Update screen according to refreshSpeed
         if(clock.getElapsedTime().asSeconds() > refreshSpeed){
-            //Clear previous
+            
+			//Clear previous
             window.clear();
 
-            //Draw nodes
+            //Go through all vertices
             std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
             for(auto row : v1){
                 for(auto v : row) {
@@ -178,7 +166,7 @@ int main(void) {
             model.setPosition(got.x, got.y);
             window.draw(model);
             
-            //Show it
+            //Show everything that has been drawn
             window.display();
             time = clock.restart();
         }

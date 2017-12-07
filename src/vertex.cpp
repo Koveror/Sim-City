@@ -8,10 +8,10 @@ Vertex::Vertex(int x, int y, tileType type){
 	x_loc = x,
 	y_loc = y,
 	vertex_type = type;
-	passable_from.push_back(false);
-	passable_from.push_back(false);
-	passable_from.push_back(false);
-	passable_from.push_back(false);
+	passable_from.push_back(true);
+	passable_from.push_back(true);
+	passable_from.push_back(true);
+	passable_from.push_back(true);
 }
 
 //Boolean operator for comparing two vertices
@@ -25,11 +25,12 @@ bool Vertex::operator==(Vertex a) {
 	}
 }
 
-void Vertex::setPassable() {
-	passable_from[0] = true;
-	passable_from[1] = true;
-	passable_from[2] = true;
-	passable_from[3] = true;
+//Toggle the boolean values of the passable_from vector
+void Vertex::togglePassable() {
+	passable_from[0] = !passable_from[0];
+	passable_from[1] = !passable_from[1];
+	passable_from[2] = !passable_from[2];
+	passable_from[3] = !passable_from[3];
 }
 
 //Get index in vertices data structure
@@ -50,7 +51,7 @@ const tileType& Vertex::getType()
 	return vertex_type;
 }
 
-//Set tileType
+//Set tileType to given type t. Tiletype enumerator found in tools.hpp
 void Vertex::setType(tileType t)
 {
     vertex_type = t;
@@ -82,7 +83,7 @@ void Vertex::addEdge(Pos position, Graph& graph, int weight) {
 	}
 }
 
-//Remove an edge from this vertices edge list.
+//Remove all edges that start from this position.
 void Vertex::removeEdge(Pos position) {
 	std::cout << "Calling removeEdge " << position.x << ", " << position.y << std::endl;
 	//This vertex
@@ -90,6 +91,7 @@ void Vertex::removeEdge(Pos position) {
     edges_to.erase(newEnd, edges_to.end());
 }
 
+//Remove all edges that go to this position in this vertex.
 void Vertex::removeEdgesTo(Pos position) {
 	std::cout << "Calling removeEdgeMinor " << position.x << ", " << position.y << std::endl;
 	//This vertex
@@ -102,6 +104,7 @@ std::vector<Edge> Vertex::getEdgesTo(){
     return edges_to;
 }
 
+//Return true if this vertex has an edge to this index
 bool Vertex::hasEdgeTo(int x, int y){
     for (auto it = edges_to.begin(); it != edges_to.end(); it++) {
 		Edge e = *it;
@@ -114,6 +117,7 @@ bool Vertex::hasEdgeTo(int x, int y){
     return false;
 }
 
+//Get the texture type, based on the number and direction of edges
 std::string Vertex::getTexture(){
     if (vertex_type == road){
         bool edgeNorth = hasEdgeTo(x_loc, y_loc - 1);
