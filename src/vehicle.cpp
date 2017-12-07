@@ -11,10 +11,15 @@ void Vehicle::setNextPosition(Pos givenPos) {
 //Move the vehicle on the graph. This is the main move method that calls
 //all of the other methods. It is called on every tick on every car.
 void Vehicle::move(Graph& graph) {
-	if(position == nextPosition) {	//If we are at objective, get a new place to go
-		int iX = position.x / 64;
-		int iY = position.y / 64;
-		Vertex v = graph.getVertices()[iY][iX];		//Get current vertex from the graph
+	int iX = position.x / 64;
+	int iY = position.y / 64;
+	int dX = nextPosition.x / 64;
+	int dY = nextPosition.y / 64;
+	Vertex v = graph.getVertices()[iY][iX];		//Get current vertex from the graph
+	//std::cout << "Current index: (" << v.getIndex().x << ", " << v.getIndex().y << ")" << std::endl;
+	if(iX == dX && iY && dY && !v.passable_from[north]) {	//TODO: figure out current direction
+		//Wait
+	} else if(position == nextPosition) {	//If we are at objective, get a new place to go
 		std::vector<Edge> edges = v.getEdgesTo();
 		if(edges.size() < 1) {
 			nextPosition = v.getPos();

@@ -17,25 +17,27 @@ int forceToGrid(int a) {
 
 int main(void) {
 
-  TextureManager texmanager;
+	TextureManager texmanager;
 
-  //Testing datastructures
-  Graph testGraph = Graph(16, 12);
-  testGraph.addVertices();
- 
-  //testGraph.setVertex(0, 0, building);
+	//Testing datastructures
+	Graph testGraph = Graph(16, 12);
+	testGraph.addVertices();
+
+	//testGraph.setVertex(0, 0, building);
 	/*
-    //Testing classes
-    Car cr;
-    Truck tr;
-    std::vector<Vehicle*> vehicles;
-    vehicles.push_back(&cr);
-    vehicles.push_back(&tr);
+	//Testing classes
+	Car cr;
+	Truck tr;
+	std::vector<Vehicle*> vehicles;
+	vehicles.push_back(&cr);
+	vehicles.push_back(&tr);
 
-    for (auto it : vehicles) {
-        std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
-    }
+	for (auto it : vehicles) {
+	std::cout << "vehicle type: " << it->getType() << " and length: " << it->getLength() << std::endl;
+	}
 	*/
+		
+	float refreshSpeed = 1 / 30;
 
 	Car c;
 	Pos p = Pos(15, 18);
@@ -69,8 +71,10 @@ int main(void) {
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Left){
-                  testGraph.setVertex(mx, my, vertex_to_add);
-                } 
+                	testGraph.setVertex(mx, my, vertex_to_add);
+                } else if(z == sf::Mouse::Right) {
+					testGraph.getVertices()[my][mx].setPassable();
+				}
 
                 //TEST: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
@@ -99,11 +103,14 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::G){
                     vertex_to_add = grass;
                 }
+				else if(event.key.code == sf::Keyboard::M){		//Testing slow-mo
+					refreshSpeed = 1.0 / 10.0;
+				}
             }
         }
         
         //Update screen
-        if(clock.getElapsedTime().asSeconds() > 1/30){
+        if(clock.getElapsedTime().asSeconds() > refreshSpeed){
             //Clear previous
             window.clear();
 
@@ -116,43 +123,59 @@ int main(void) {
                     int y = a.y;
                                     
 
-                                    //Draw all the sprites
-                                    sf::Sprite node;
-                    node.setTexture(texmanager.getRef(v.getTexture()));
-                                    node.setOrigin(32, 32);
-                    node.setPosition(x, y);
-                                    window.draw(node);
+					//Draw all the sprites
+					sf::Sprite node;
+					node.setTexture(texmanager.getRef(v.getTexture()));
+					node.setOrigin(32, 32);
+					node.setPosition(x, y);
+					window.draw(node);
 
-                                    //Draw middle points of nodes
-                                    sf::CircleShape coord;
-                                    coord.setOrigin(3.0, 3.0);
-                                    coord.setPosition(x, y);
-                                    coord.setRadius(3.0);
-                                    coord.setFillColor(sf::Color::Yellow);
-                                    window.draw(coord);
-                                    
-                                    //Draw middle points of all edges
-                                    for(Edge edge : v.getEdgesTo()) {
-                                            Pos p1 = edge.getMiddlePos();
-                                            sf::CircleShape middle;
-                                            middle.setOrigin(3.0, 3.0);
-                                            middle.setPosition(p1.x, p1.y);
-                                            middle.setRadius(3.0);
-                                            middle.setFillColor(sf::Color::Red);
-                                            window.draw(middle);
-                                    }
-                                    
-                }
+					//Draw middle points of nodes
+					sf::CircleShape coord;
+					coord.setOrigin(3.0, 3.0);
+					coord.setPosition(x, y);
+					coord.setRadius(3.0);
+					coord.setFillColor(sf::Color::Yellow);
+					window.draw(coord);
+
+					//Draw middle points of all edges
+					for(Edge edge : v.getEdgesTo()) {
+						Pos p1 = edge.getMiddlePos();
+						sf::CircleShape middle;
+						middle.setOrigin(3.0, 3.0);
+						middle.setPosition(p1.x, p1.y);
+						middle.setRadius(3.0);
+						middle.setFillColor(sf::Color::Red);
+						window.draw(middle);
+						
+						//Draw traffic lights
+						sf::RectangleShape light(sf::Vector2f(16, 4));
+						light.setOrigin(-6, 2);
+
+						direction d = edge.getDirection();
+
+						if(v.getType() == road && v.getEdgesTo().size() > 2) {
+							if(v.passable_from[d]) {
+								light.setFillColor(sf::Color::Green);
+							} else {
+								light.setFillColor(sf::Color::Red);
+							}
+							light.setRotation(-d * 90);
+							light.setPosition(p1.x, p1.y);
+							window.draw(light);
+						}
+					}
+
+				}
             }
 
 
             //Draw a car
-            sf::CircleShape model;
+            sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
             c.move(testGraph);
             Pos got = c.getPosition();
-            model.setOrigin(3.0, 3.0);
+            model.setOrigin(6.0, 6.0);
             model.setPosition(got.x, got.y);
-            model.setRadius(3.0);
             window.draw(model);
             
             //Show it

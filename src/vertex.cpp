@@ -5,9 +5,13 @@
 
 //Constructor
 Vertex::Vertex(int x, int y, tileType type){
-  x_loc = x,
-  y_loc = y,
-  vertex_type = type;
+	x_loc = x,
+	y_loc = y,
+	vertex_type = type;
+	passable_from.push_back(false);
+	passable_from.push_back(false);
+	passable_from.push_back(false);
+	passable_from.push_back(false);
 }
 
 //Boolean operator for comparing two vertices
@@ -19,6 +23,13 @@ bool Vertex::operator==(Vertex a) {
 	} else {
 		return false;
 	}
+}
+
+void Vertex::setPassable() {
+	passable_from[0] = true;
+	passable_from[1] = true;
+	passable_from[2] = true;
+	passable_from[3] = true;
 }
 
 //Get index in vertices data structure

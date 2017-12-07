@@ -34,10 +34,6 @@ public:
     virtual std::string getType() const {return "(nothing)";}
 
 private:
-    std::shared_ptr<Vertex> last_vertex; //smart pointer?
-    std::shared_ptr<Vertex> next_vertex; //smart pointer?
-    std::shared_ptr<Vertex> destination;
-    std::shared_ptr<Edge> current_edge;
 	std::vector<Edge> path = std::vector<Edge>();
 	Pos nextPosition;
 	Pos position;

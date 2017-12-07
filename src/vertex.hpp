@@ -28,12 +28,16 @@ public:
     std::string getTexture();
     bool hasEdgeTo(int x, int y);
 	bool operator==(Vertex a);
+	void setPassable();
+
+	std::vector<bool> passable_from;	//move to private
 
 private:
     int x_loc;
     int y_loc;
     tileType vertex_type;
     std::vector<Edge> edges_to;
+	
 };
 
 #endif // VERTEX_HPP_INCLUDED
