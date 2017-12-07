@@ -46,7 +46,9 @@ int main(void) {
 
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
 	window.setVerticalSyncEnabled(true);
-
+    //variables for GUI loop
+    tileType vertex_to_add;
+        
     //GUI loop
     while (window.isOpen())
     {
@@ -64,11 +66,9 @@ int main(void) {
 				p = Pos(x, y);
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
-                if (z == sf::Mouse::Right){
-                  testGraph.setVertex(mx, my, building);
-                } else if (z == sf::Mouse::Left){
-                  testGraph.setVertex(mx, my, road);
-                }
+                if (z == sf::Mouse::Left){
+                  testGraph.setVertex(mx, my, vertex_to_add);
+                } 
 
                 //TEST: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
@@ -85,6 +85,18 @@ int main(void) {
                     }
                 }
 
+            }
+            if(event.type == sf::Event::KeyPressed){
+                if(event.key.code == sf::Keyboard::B){
+                    vertex_to_add = building;
+                    std::cout << "building" << std::endl;
+                }
+                else if(event.key.code == sf::Keyboard::R){
+                    vertex_to_add = road;
+                }
+                else if(event.key.code == sf::Keyboard::G){
+                    vertex_to_add = grass;
+                }
             }
         }
         //Clear previous
