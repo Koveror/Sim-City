@@ -74,17 +74,12 @@ void Vertex::addEdge(Pos position, Graph& graph) {
 //Remove an edge from this vertices edge list.
 void Vertex::removeEdge(Pos position) {
 	std::cout << "Calling removeEdge " << position.x << ", " << position.y << std::endl;
-	//Neighbours
-	for(Edge e : edges_to) {
-		removeEdgeMinor(position);
-	}	
-
 	//This vertex
 	std::vector<Edge>::iterator newEnd = std::remove_if(edges_to.begin(), edges_to.end(), [position](Edge x){return x.getVertices().first.getIndex() == position;});
     edges_to.erase(newEnd, edges_to.end());
 }
 
-void Vertex::removeEdgeMinor(Pos position) {
+void Vertex::removeEdgesTo(Pos position) {
 	std::cout << "Calling removeEdgeMinor " << position.x << ", " << position.y << std::endl;
 	//This vertex
 	std::vector<Edge>::iterator newEnd = std::remove_if(edges_to.begin(), edges_to.end(), [position](Edge x){return x.getVertices().second.getIndex() == position;});
