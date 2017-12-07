@@ -48,6 +48,10 @@ int main(void) {
 	window.setVerticalSyncEnabled(true);
     //variables for GUI loop
     tileType vertex_to_add;
+    sf::Clock clock;
+    sf::Time time = clock.restart() + sf::seconds(4);
+    std::cout << time.asSeconds() << std::endl;
+    int q = 0;
         
     //GUI loop
     while (window.isOpen())
@@ -99,60 +103,69 @@ int main(void) {
                 }
             }
         }
-        //Clear previous
-        window.clear();
+        
+        //Update screen
+        if(clock.getElapsedTime().asSeconds() > 1/30){
+            //Clear previous
+            window.clear();
 
-        //Draw nodes
-        std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
-        for(auto row : v1){
-            for(auto v : row) {
-                Pos a = v.getPos();
-                int x = a.x;
-                int y = a.y;
-				
+            //Draw nodes
+            std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+            for(auto row : v1){
+                for(auto v : row) {
+                    Pos a = v.getPos();
+                    int x = a.x;
+                    int y = a.y;
+                                    
 
-				//Draw all the sprites
-				sf::Sprite node;
-                node.setTexture(texmanager.getRef(v.getTexture()));
-				node.setOrigin(32, 32);
-                node.setPosition(x, y);
-				window.draw(node);
+                                    //Draw all the sprites
+                                    sf::Sprite node;
+                    node.setTexture(texmanager.getRef(v.getTexture()));
+                                    node.setOrigin(32, 32);
+                    node.setPosition(x, y);
+                                    window.draw(node);
 
-				//Draw middle points of nodes
-				sf::CircleShape coord;
-				coord.setOrigin(3.0, 3.0);
-				coord.setPosition(x, y);
-				coord.setRadius(3.0);
-				coord.setFillColor(sf::Color::Yellow);
-				window.draw(coord);
-				
-				//Draw middle points of all edges
-				for(Edge edge : v.getEdgesTo()) {
-					Pos p1 = edge.getMiddlePos();
-					sf::CircleShape middle;
-					middle.setOrigin(3.0, 3.0);
-					middle.setPosition(p1.x, p1.y);
-					middle.setRadius(3.0);
-					middle.setFillColor(sf::Color::Red);
-					window.draw(middle);
-				}
-				
+                                    //Draw middle points of nodes
+                                    sf::CircleShape coord;
+                                    coord.setOrigin(3.0, 3.0);
+                                    coord.setPosition(x, y);
+                                    coord.setRadius(3.0);
+                                    coord.setFillColor(sf::Color::Yellow);
+                                    window.draw(coord);
+                                    
+                                    //Draw middle points of all edges
+                                    for(Edge edge : v.getEdgesTo()) {
+                                            Pos p1 = edge.getMiddlePos();
+                                            sf::CircleShape middle;
+                                            middle.setOrigin(3.0, 3.0);
+                                            middle.setPosition(p1.x, p1.y);
+                                            middle.setRadius(3.0);
+                                            middle.setFillColor(sf::Color::Red);
+                                            window.draw(middle);
+                                    }
+                                    
+                }
             }
+
+
+            //Draw a car
+            sf::CircleShape model;
+            c.move(testGraph);
+            Pos got = c.getPosition();
+            model.setOrigin(3.0, 3.0);
+            model.setPosition(got.x, got.y);
+            model.setRadius(3.0);
+            window.draw(model);
+            
+            //Show it
+            window.display();
+            std::cout << time.asSeconds() << std::endl;
+            time = clock.restart();
         }
-
-
-		//Draw a car
-		sf::CircleShape model;
-		c.move(testGraph);
-		Pos got = c.getPosition();
-		model.setOrigin(3.0, 3.0);
-		model.setPosition(got.x, got.y);
-		model.setRadius(3.0);
-		window.draw(model);
-
-
-        //Show it
-        window.display();
+        std::cout << time.asSeconds() << std::endl;
+        q += 1;
+        std::cout << q << std::endl;
+        
     }
 
     return 0;
