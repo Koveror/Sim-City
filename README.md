@@ -1,8 +1,14 @@
-Sim-city-1 ReadMe
+# Sim-city-1 ReadMe
 
-`Setup:`
-Sim-city-1 is designed to run on a linux system that has sfml 2.3.2 installed.
-Such systems can be found at for example Maari-A and Maari-C classes in Maarintalo.
+## Pre-requisites
+
+Sim-city-1 is designed to run on a linux system that has `SFML 2.3.2` installed.
+Such systems can be found at Maari-A and Maari-C classes in Maarintalo.
+
+To install SFML at your own system, please visit the official SFML website at
+https://www.sfml-dev.org
+
+## Setup
 
 To run Sim-city-1, simply navigate to the project root directory using your unix terminal and then
 run the following command:
@@ -13,6 +19,12 @@ This command will compile the source files and make an executable called 'sim-ci
 run the executable. The executable can be found in the src directory. The program can be run again from
 there or you can simply use the 'make run-main' command again. You can clean the src directory using the 'make clean'
 command, which will remove object files and executables from the src directory.
+
+## Simulator instructions
+
+TBA
+
+## Course instructions
 
 The project root directory should contain the following folders:
 
