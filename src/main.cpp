@@ -22,7 +22,7 @@ int main(void) {
     //Testing datastructures
     Graph testGraph = Graph(16, 12);
     testGraph.addVertices();
-    
+
     //Single car for testing
     Car c;
     Pos p = Pos(15, 18);
@@ -35,12 +35,12 @@ int main(void) {
     float ticker = 0.0;
     sf::Clock clock;
     sf::Time time = clock.restart() + sf::seconds(4);
-    
+
     //Make a render window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
     window.setVerticalSyncEnabled(true);
-        
-    
+
+
 
     //GUI loop
     while (window.isOpen())
@@ -80,6 +80,9 @@ int main(void) {
                     }
                 }
 
+                //DEBUG: Dijkstra
+                auto test = getPath(testGraph, v1[1][0], v1[0][1]);
+
             }
 			//Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
             if(event.type == sf::Event::KeyPressed){
@@ -97,10 +100,10 @@ int main(void) {
                 }
             }
         }
-        
+
         //Update screen according to refreshSpeed
         if(clock.getElapsedTime().asSeconds() > refreshSpeed){
-            
+
 			//Clear previous
             window.clear();
 
@@ -111,7 +114,7 @@ int main(void) {
                     Pos a = v.getPos();
                     int x = a.x;
                     int y = a.y;
-                                    
+
 
 					//Draw all the sprites
 					sf::Sprite node;
@@ -137,7 +140,7 @@ int main(void) {
 						middle.setRadius(3.0);
 						middle.setFillColor(sf::Color::Red);
 						window.draw(middle);
-						
+
 						//Draw traffic lights
 						sf::RectangleShape light(sf::Vector2f(16, 4));
 						light.setOrigin(-6, 2);
@@ -167,17 +170,17 @@ int main(void) {
             model.setOrigin(6.0, 6.0);
             model.setPosition(got.x, got.y);
             window.draw(model);
-            
+
             //Test sendVehicle
             std::default_random_engine generator;
             testGraph.getVertices()[4][4].sendVehicle(generator, 5.0);
-            
+
             //Show everything that has been drawn
             window.display();
             time = clock.restart();
             ticker = ticker + refreshSpeed;
         }
-        
+
     }
 
     return 0;
