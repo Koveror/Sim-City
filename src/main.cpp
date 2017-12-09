@@ -7,6 +7,7 @@
 #include "graph.hpp"
 #include "vehicle.hpp"
 #include "texturemanager.hpp"
+#include "dijkstra.hpp"
 
 
 
@@ -76,14 +77,14 @@ int main(void) {
 							Vertex v2 = edge.getVertices().second;
 							Pos p1 = v1.getIndex();
 							Pos p2 = v2.getIndex();
-                                                        int weight = edge.getWeight();
+                            int weight = edge.getWeight();
                             std::cout << "FROM (" << p1.x << ", " << p1.y << ") TO (" << p2.x << ", " << p2.y << ") - " << "WEIGHT = " << weight << std::endl;
                         }
                     }
                 }
 
                 //DEBUG: Dijkstra
-                //auto test = getPath(testGraph, v1[1][0], v1[0][1]);
+                auto test = getPath(testGraph, v1[1][0], v1[0][1]);
 
             }
 			//Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
@@ -101,7 +102,7 @@ int main(void) {
                     vehicleSendBoolean = !vehicleSendBoolean;
                     if(vehicleSendBoolean){
                         std::cout << "Spawning vehicles..." << std::endl;
-                    } 
+                    }
                     else {
                         std::cout << "Pausing vehicle spawning" << std::endl;
                     }
@@ -138,7 +139,7 @@ int main(void) {
                             v.sendVehicle();
                         }
                     }
-                    
+
                     //Draw all the sprites
                     sf::Sprite node;
                     node.setTexture(texmanager.getRef(v.getTexture()));
@@ -189,9 +190,9 @@ int main(void) {
             //Go through all the vehicles
 			for(Vehicle vehicle : testGraph.getVehicles()) {
 		        sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
-				int i = 0;			
+				int i = 0;
 				while(i < speedUp) {
-					//std::cout << "calling move" << std::endl;            
+					//std::cout << "calling move" << std::endl;
 					//vehicle.move(testGraph);
 					i++;
 				}

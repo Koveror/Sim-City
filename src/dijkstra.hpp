@@ -30,7 +30,7 @@ std::vector<Vertex> getPath(Graph g, Vertex source, Vertex target){
     for (auto &rows : g.getVertices()) {
         for (auto &v: rows) {
             //std::cout << "DIJKSTRA debug: " << v.getIndex().x << ", " << v.getIndex().y << std::endl;
-            if (v.getType() == road) {
+            if (v.getType() == road ||v.getType() == building) {
                 Q.push(std::make_pair(v, dist[v.getIndex().y][v.getIndex().x]));
             }
         }
