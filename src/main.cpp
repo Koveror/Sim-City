@@ -17,27 +17,30 @@ int forceToGrid(int a) {
 
 int main(void) {
 
-	TextureManager texmanager;
+    TextureManager texmanager;
 
-	//Testing datastructures
-	Graph testGraph = Graph(16, 12);
-	testGraph.addVertices();
-	
-	//Single car for testing
-	Car c;
-	Pos p = Pos(15, 18);
-	c.setPosition(p);
-	c.setNextPosition(p);
+    //Testing datastructures
+    Graph testGraph = Graph(16, 12);
+    testGraph.addVertices();
     
-	//Variables for GUI loop
+    //Single car for testing
+    Car c;
+    Pos p = Pos(15, 18);
+    c.setPosition(p);
+    c.setNextPosition(p);
+
+    //Variables for GUI loop
     tileType vertex_to_add;
-	float refreshSpeed = 1 / 30;
+    float refreshSpeed = 1.0 / 30.0;
+    float ticker = 0.0;
     sf::Clock clock;
     sf::Time time = clock.restart() + sf::seconds(4);
     
-	//Make a render window
+    //Make a render window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
-	window.setVerticalSyncEnabled(true);
+    window.setVerticalSyncEnabled(true);
+        
+    
 
     //GUI loop
     while (window.isOpen())
@@ -57,10 +60,10 @@ int main(void) {
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Left){
-                	testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
+                    testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
                 } else if(z == sf::Mouse::Right) {
-					testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
-				}
+                    testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
+                }
 
                 //DEBUG: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
@@ -82,7 +85,6 @@ int main(void) {
             if(event.type == sf::Event::KeyPressed){
                 if(event.key.code == sf::Keyboard::B){
                     vertex_to_add = building;
-                    std::cout << "building" << std::endl;
                 }
                 else if(event.key.code == sf::Keyboard::R){
                     vertex_to_add = road;
@@ -90,9 +92,9 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::G){
                     vertex_to_add = grass;
                 }
-				else if(event.key.code == sf::Keyboard::M){		//Testing slow-mo
-					refreshSpeed = 1.0 / 10.0;
-				}
+                else if(event.key.code == sf::Keyboard::M){		//Testing slow-mo
+                        refreshSpeed = 1.0 / 10.0;
+                }
             }
         }
         
@@ -166,9 +168,14 @@ int main(void) {
             model.setPosition(got.x, got.y);
             window.draw(model);
             
+            //Test sendVehicle
+            std::default_random_engine generator;
+            testGraph.getVertices()[4][4].sendVehicle(generator, 5.0);
+            
             //Show everything that has been drawn
             window.display();
             time = clock.restart();
+            ticker = ticker + refreshSpeed;
         }
         
     }

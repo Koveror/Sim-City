@@ -47,13 +47,15 @@ public:
 
 	//Operator overloading
 	bool operator==(Vertex a);
+        
+    void sendVehicle(std::default_random_engine generator, float intensity);
 
 private:
     int x_loc;
     int y_loc;
     tileType vertex_type;
     std::vector<Edge> edges_to;
-	
+    int sendVehicleTime;
 };
 
 #endif // VERTEX_HPP_INCLUDED

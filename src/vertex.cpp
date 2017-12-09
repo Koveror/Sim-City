@@ -159,3 +159,11 @@ std::string Vertex::getTexture(){
 	}
 
 }
+
+void Vertex::sendVehicle(std::default_random_engine generator, float intensity){
+    std::exponential_distribution<double> distribution(1.0 / 5.0);
+    for(int i = 0; i < 5; i++){
+        double number = distribution(generator);
+        std::cout << number << std::endl;
+    }
+}
