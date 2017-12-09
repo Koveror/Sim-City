@@ -18,41 +18,32 @@ class Graph;
 class Vertex
 {
 public:
-	
-	//Constructor
+
+	///Constructor
     Vertex(int x, int y, tileType type);
-	
-	//Member functions
+
+	///Member functions
     Pos getPos();
-	
 	Pos getIndex();
-	
     const tileType& getType();
-	
     void setType(tileType t);
-
     void addEdge(Pos position, Graph& graph, int weight);
-
     void removeEdge(Pos position);
-
 	void removeEdgesTo(Pos position);
-
     std::vector<Edge> getEdgesTo();
-
     std::string getTexture();
-
     bool hasEdgeTo(int x, int y);
-
 	void togglePassable();
-
-	std::vector<bool> passable_from;	//TODO: move to private
-
-	//Operator overloading
-	bool operator==(Vertex a);
-        
     void sendVehicle(std::default_random_engine generator, float intensity);
 
+	///Operator overloading
+	bool operator==(Vertex a);
+
+	///TODO
+    std::vector<bool> passable_from;    //move to private
+
 private:
+    ///Private members
     int x_loc;
     int y_loc;
     tileType vertex_type;

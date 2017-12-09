@@ -1,21 +1,22 @@
 #ifndef TOOLS_HPP_INCLUDED
 #define TOOLS_HPP_INCLUDED
 
-
-enum direction
+//enumerations for directions
+typedef enum
 {
     north,
     east,
     south,
     west
-};
+} direction;
 
-enum tileType
+//enumerations for different tiles (vertices)
+typedef enum
 {
 	grass,
 	building,
 	road
-};
+} tileType;
 
 
 class Pos {
@@ -30,6 +31,10 @@ public:
 			return false;
 		}
 	}
+
+	///Public members
+    int x;
+	int y;
 };
 
 

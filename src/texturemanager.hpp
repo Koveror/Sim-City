@@ -7,21 +7,17 @@
 
 class TextureManager
 {
-private:
+public:
+    ///Constructor
+    TextureManager();
 
-    /* Array of textures used */
-    std::map<std::string, sf::Texture> textures;
-
-    public:
-
-    /* Add a texture from a file */
+    ///Member functions
     void addTexture(const std::string& name, const std::string &filename);
-
-    /* Translate an id into a reference */
     sf::Texture& getRef(const std::string& texture);
 
-    /* Constructor */
-    TextureManager();
+private:
+    ///Private members
+    std::map<std::string, sf::Texture> textures; //Array of textures used
 };
 
 #endif // TEXTUREMANAGER_HPP_INCLUDED
