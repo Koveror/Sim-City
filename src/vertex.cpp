@@ -158,10 +158,20 @@ std::string Vertex::getTexture(){
 
 }
 
-void Vertex::sendVehicle(std::default_random_engine generator, float intensity){
+void Vertex::sendVehicle(){
+    std::random_device rd;
+    std::mt19937 generator(rd());
     std::exponential_distribution<double> distribution(1.0 / 5.0);
-    for(int i = 0; i < 5; i++){
-        double number = distribution(generator);
-        std::cout << number << std::endl;
+    
+    if(distribution(generator) < 0.00665){
+        std::cout << "Send Vehicle Goddamit" << std::endl;
     }
+    
+//     int summa = 0.0;
+//     for(int i = 0; i < 10000000; i++){
+//         double number = distribution(generator);
+//         if(number < (1.0 / 30.0) ){
+//             summa += 1;
+//         }
+//     }
 }
