@@ -1,5 +1,6 @@
 #include "texturemanager.hpp"
 
+// Add a texture from a file
 void TextureManager::addTexture(const std::string& name, const std::string& filename)
 {
     /* Load the texture */
@@ -12,6 +13,7 @@ void TextureManager::addTexture(const std::string& name, const std::string& file
     return;
 }
 
+// Translate an id into a reference
 sf::Texture& TextureManager::getRef(const std::string& texture)
 {
     return this->textures.at(texture);
@@ -21,7 +23,6 @@ sf::Texture& TextureManager::getRef(const std::string& texture)
 //    sf::Sprite ret;
 //    ret.setTexture(textures[index]);
 //}
-
 
 TextureManager::TextureManager() {
     addTexture("road0", "img/road.png");

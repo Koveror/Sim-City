@@ -1,5 +1,6 @@
 #include "edge.hpp"
 
+//Operator overload for comparing two edges
 bool Edge::operator==(Edge a) {
 	Vertex tv1 = getVertices().first;
 	Vertex tv2 = getVertices().second;
@@ -12,8 +13,13 @@ bool Edge::operator==(Edge a) {
 	}
 }
 
+//Return the weight of the edge
+int Edge::getWeight() {
+    return weight;
+}
 
-std::pair<Vertex,Vertex> Edge::getVertices(){
+//Return both vertices of the edge
+std::pair<Vertex,Vertex> Edge::getVertices() {
     return std::make_pair(*vertex_1, *vertex_2);
 }
 
@@ -28,7 +34,7 @@ Pos Edge::getMiddlePos() {
 	return p3;
 }
 
-//Returns the direction of this edge, calculated from the endpoints
+//Return the direction of this edge, calculated from the endpoints
 direction Edge::getDirection() {
 	std::pair<Vertex, Vertex> v = getVertices();
 	Pos v1 = v.first.getIndex();

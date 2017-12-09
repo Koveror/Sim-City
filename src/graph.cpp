@@ -6,6 +6,16 @@ int Graph::getSize()
     return size;
 }
 
+int Graph::getSizeX()
+{
+    return longitude;
+}
+
+int Graph::getSizeY()
+{
+    return latitude;
+}
+
 void Graph::addVertices()
 {
     for (int j = 0; j < latitude; j++) {
@@ -70,7 +80,7 @@ void Graph::setVertex(int x, int y, tileType type)
                 if(x > 0 && vertices[y][x-1].getType() == road){
                     Pos position1(x,y);
                     vertices[y][x-1].removeEdgesTo(position1);
-                    vertices[y][x].removeEdge(position1);                   
+                    vertices[y][x].removeEdge(position1);
                 }
                 if(x < longitude-1 && vertices[y][x+1].getType() == road){
                     Pos position1(x,y);
