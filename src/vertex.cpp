@@ -164,7 +164,7 @@ void Vertex::sendVehicle(){
     std::exponential_distribution<double> distribution(1.0 / 5.0);
     
     if(distribution(generator) < 0.00665){
-        std::cout << "Send Vehicle Goddamit" << std::endl;
+        std::cout << "Send vehicle from: " << "(" << x_loc << "," << y_loc << ")" << std::endl;
     }
     
 //     int summa = 0.0;

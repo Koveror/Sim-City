@@ -30,7 +30,8 @@ int main(void) {
 
     //Variables for GUI loop
     tileType vertex_to_add;
-	int speedUp = 1;
+    bool vehicleSendBoolean = false;
+    int speedUp = 1;
     float refreshSpeed = 1.0 / 60.0;
     float ticker = 0.0;
     sf::Clock clock;
@@ -96,6 +97,15 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::G){
                     vertex_to_add = grass;
                 }
+                else if(event.key.code == sf::Keyboard::V){
+                    vehicleSendBoolean = !vehicleSendBoolean;
+                    if(vehicleSendBoolean){
+                        std::cout << "Spawning vehicles..." << std::endl;
+                    } 
+                    else {
+                        std::cout << "Pausing vehicle spawning" << std::endl;
+                    }
+                }
                 else if(event.key.code == sf::Keyboard::Num3){		//Testing fast forward
                 	speedUp = 6;
                 }
@@ -122,51 +132,57 @@ int main(void) {
                     int x = a.x;
                     int y = a.y;
 
+                    //Send vehicles
+                    if(vehicleSendBoolean){
+                        if(v.getType() == building){
+                            v.sendVehicle();
+                        }
+                    }
+                    
+                    //Draw all the sprites
+                    sf::Sprite node;
+                    node.setTexture(texmanager.getRef(v.getTexture()));
+                    node.setOrigin(32, 32);
+                    node.setPosition(x, y);
+                    window.draw(node);
 
-					//Draw all the sprites
-					sf::Sprite node;
-					node.setTexture(texmanager.getRef(v.getTexture()));
-					node.setOrigin(32, 32);
-					node.setPosition(x, y);
-					window.draw(node);
+                    //Draw middle points of nodes
+                    sf::CircleShape coord;
+                    coord.setOrigin(3.0, 3.0);
+                    coord.setPosition(x, y);
+                    coord.setRadius(3.0);
+                    coord.setFillColor(sf::Color::Yellow);
+                    window.draw(coord);
 
-					//Draw middle points of nodes
-					sf::CircleShape coord;
-					coord.setOrigin(3.0, 3.0);
-					coord.setPosition(x, y);
-					coord.setRadius(3.0);
-					coord.setFillColor(sf::Color::Yellow);
-					window.draw(coord);
+                    //Draw middle points of all edges
+                    for(Edge edge : v.getEdgesTo()) {
+                            Pos p1 = edge.getMiddlePos();
+                            sf::CircleShape middle;
+                            middle.setOrigin(3.0, 3.0);
+                            middle.setPosition(p1.x, p1.y);
+                            middle.setRadius(3.0);
+                            middle.setFillColor(sf::Color::Red);
+                            window.draw(middle);
 
-					//Draw middle points of all edges
-					for(Edge edge : v.getEdgesTo()) {
-						Pos p1 = edge.getMiddlePos();
-						sf::CircleShape middle;
-						middle.setOrigin(3.0, 3.0);
-						middle.setPosition(p1.x, p1.y);
-						middle.setRadius(3.0);
-						middle.setFillColor(sf::Color::Red);
-						window.draw(middle);
+                            //Draw traffic lights
+                            sf::RectangleShape light(sf::Vector2f(16, 4));
+                            light.setOrigin(-6, 2);
 
-						//Draw traffic lights
-						sf::RectangleShape light(sf::Vector2f(16, 4));
-						light.setOrigin(-6, 2);
+                            direction d = edge.getDirection();
 
-						direction d = edge.getDirection();
+                            if(v.getType() == road && v.getEdgesTo().size() > 2) {
+                                    if(v.passable_from[d]) {
+                                            light.setFillColor(sf::Color::Green);
+                                    } else {
+                                            light.setFillColor(sf::Color::Red);
+                                    }
+                                    light.setRotation(-d * 90);
+                                    light.setPosition(p1.x, p1.y);
+                                    window.draw(light);
+                            }
+                    }
 
-						if(v.getType() == road && v.getEdgesTo().size() > 2) {
-							if(v.passable_from[d]) {
-								light.setFillColor(sf::Color::Green);
-							} else {
-								light.setFillColor(sf::Color::Red);
-							}
-							light.setRotation(-d * 90);
-							light.setPosition(p1.x, p1.y);
-							window.draw(light);
-						}
-					}
-
-				}
+                }
             }
 
 
@@ -184,10 +200,6 @@ int main(void) {
 		        model.setPosition(got.x, got.y);
 		        window.draw(model);
 			}
-
-            //Test sendVehicle
-            std::default_random_engine generator;
-            testGraph.getVertices()[4][4].sendVehicle();
 
             //Show everything that has been drawn
             window.display();
