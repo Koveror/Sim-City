@@ -34,7 +34,7 @@ public:
     std::string getTexture();
     bool hasEdgeTo(int x, int y);
 	void togglePassable();
-    void sendVehicle(std::default_random_engine generator, float intensity);
+    void sendVehicle();
 
 	///Operator overloading
 	bool operator==(Vertex a);

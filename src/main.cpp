@@ -186,7 +186,7 @@ int main(void) {
 
             //Test sendVehicle
             std::default_random_engine generator;
-            testGraph.getVertices()[4][4].sendVehicle(generator, 5.0);
+            testGraph.getVertices()[4][4].sendVehicle();
 
             //Show everything that has been drawn
             window.display();
