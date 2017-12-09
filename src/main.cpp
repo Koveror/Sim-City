@@ -75,7 +75,8 @@ int main(void) {
 							Vertex v2 = edge.getVertices().second;
 							Pos p1 = v1.getIndex();
 							Pos p2 = v2.getIndex();
-                            std::cout << "FROM (" << p1.x << ", " << p1.y << ") TO (" << p2.x << ", " << p2.y << ")" << std::endl;
+                                                        int weight = edge.getWeight();
+                            std::cout << "FROM (" << p1.x << ", " << p1.y << ") TO (" << p2.x << ", " << p2.y << ") - " << "WEIGHT = " << weight << std::endl;
                         }
                     }
                 }
@@ -174,8 +175,8 @@ int main(void) {
 		        sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
 				int i = 0;			
 				while(i < speedUp) {
-					std::cout << "calling move" << std::endl;            
-					vehicle.move(testGraph);
+					//std::cout << "calling move" << std::endl;            
+					//vehicle.move(testGraph);
 					i++;
 				}
 		        Pos got = vehicle.getPosition();
