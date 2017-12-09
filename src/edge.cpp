@@ -1,5 +1,16 @@
 #include "edge.hpp"
 
+void Edge::removeVehicle(Pos p) {
+	std::vector<Vehicle>::iterator newEnd = std::remove_if(vehicles.begin(), vehicles.end(), [p](Vehicle x){return p == x.getPosition();});
+    vehicles.erase(newEnd, vehicles.end());
+}
+
+void Edge::addVehicle(Pos p) {
+	Vehicle v(1, 1, 1);
+	v.setPosition(p);
+	vehicles.push_back(v);
+}
+
 bool Edge::operator==(Edge a) {
 	Vertex tv1 = getVertices().first;
 	Vertex tv2 = getVertices().second;
@@ -42,4 +53,4 @@ direction Edge::getDirection() {
 	} else {
 		return north;	//Assumed to be north
 	}
-}
+}	

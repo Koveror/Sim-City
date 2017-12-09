@@ -1,6 +1,4 @@
 #include "vehicle.hpp"
-#include "tools.hpp"
-#include "graph.hpp"
 
 //Set the position to where this vehicle tries to move
 //when the method move() is called.
@@ -78,7 +76,7 @@ void Vehicle::setPosition(Pos givenPos) {
 }
 
 //Get current position. Used for drawing for example.
-Pos Vehicle::getPosition() {
+Pos Vehicle::getPosition() const{
 	return position;
 }
 

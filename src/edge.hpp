@@ -2,9 +2,12 @@
 #define EDGE_HPP_INCLUDED
 
 #include <utility>
-#include <memory> //ptr
-#include "vertex.hpp"
+#include <memory>
+#include <vector>
+#include "vehicle.hpp"
+#include "tools.hpp"
 
+class Vehicle;
 class Vertex;
 
 class Edge
@@ -17,12 +20,14 @@ public:
 	Pos getMiddlePos();
 	direction getDirection();
 	bool operator==(Edge a);
+	void addVehicle(Pos p);
+	void removeVehicle(Pos p);
 
 private:
     std::shared_ptr<Vertex> vertex_1; //smart pointer?
     std::shared_ptr<Vertex> vertex_2; //smart pointer?
     int weight;
-    //std::vector<Vehicle> vehicles;
+    std::vector<Vehicle> vehicles;
 };
 
 #endif // EDGE_HPP_INCLUDED

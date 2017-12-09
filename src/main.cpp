@@ -31,7 +31,8 @@ int main(void) {
 
     //Variables for GUI loop
     tileType vertex_to_add;
-    float refreshSpeed = 1.0 / 30.0;
+	int speedUp = 1;
+    float refreshSpeed = 1.0 / 60.0;
     float ticker = 0.0;
     sf::Clock clock;
     sf::Time time = clock.restart() + sf::seconds(4);
@@ -92,9 +93,15 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::G){
                     vertex_to_add = grass;
                 }
-                else if(event.key.code == sf::Keyboard::M){		//Testing slow-mo
-                        refreshSpeed = 1.0 / 10.0;
+                else if(event.key.code == sf::Keyboard::Num3){		//Testing fast forward
+                	speedUp = 6;
                 }
+				else if(event.key.code == sf::Keyboard::Num2){
+					speedUp = 3;
+				}
+				else if(event.key.code == sf::Keyboard::Num1){
+					speedUp = 1;
+				}
             }
         }
         
@@ -162,7 +169,11 @@ int main(void) {
 
             //Draw a car
             sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
-            c.move(testGraph);
+			int i = 0;			
+			while(i < speedUp) {            
+				c.move(testGraph);
+				i++;
+			}
             Pos got = c.getPosition();
             model.setOrigin(6.0, 6.0);
             model.setPosition(got.x, got.y);

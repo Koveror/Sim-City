@@ -5,11 +5,12 @@
 #include <utility>
 #include <iostream>
 #include <vector>
-#include "vehicle.hpp"
-#include "vertex.hpp"
-#include "edge.hpp"
 #include "tools.hpp"
 #include <algorithm>
+
+#include "vertex.hpp"
+
+class Vertex;
 
 class Graph
 {

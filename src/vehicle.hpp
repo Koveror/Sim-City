@@ -2,10 +2,15 @@
 #define VEHICLE_HPP_INCLUDED
 
 #include <memory> //ptr
-#include "vertex.hpp"
+
 #include "edge.hpp"
-#include "tools.hpp"
+#include "vehicle.hpp"
+#include "vertex.hpp"
 #include "graph.hpp"
+
+class Edge;
+
+class Graph;
 
 class Vehicle
 {
@@ -25,7 +30,7 @@ public:
 
 	void setPath(std::vector<Edge> givenPath);
 
-    Pos getPosition();
+    Pos getPosition() const;
     
     int getLength() const;
 

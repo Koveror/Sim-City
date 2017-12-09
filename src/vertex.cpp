@@ -1,6 +1,5 @@
 #include "vertex.hpp"
 #include <memory>
-#include "graph.hpp"
 #include <algorithm>
 
 //Constructor
@@ -68,7 +67,6 @@ void Vertex::addEdge(Pos position, Graph& graph, int weight) {
 
 	std::shared_ptr<Vertex> p1 = std::make_shared<Vertex>(v1);
 	std::shared_ptr<Vertex> p2 = std::make_shared<Vertex>(v2);
-	int w = 1;
 	
 	Edge e1(p1, p2, weight);
 	
