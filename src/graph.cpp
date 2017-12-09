@@ -1,5 +1,16 @@
 #include "graph.hpp"
 
+void Graph::addCar(Pos p) {
+	std::cout << "calling add car" << std::endl;
+	Car c;
+	c.setPosition(p);
+	vehicles.push_back(c);
+}
+
+std::vector<Vehicle>& Graph::getVehicles() {
+	return vehicles;
+}
+
 int Graph::getSize()
 {
     auto size = longitude * latitude;

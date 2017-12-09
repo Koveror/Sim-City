@@ -9,6 +9,7 @@
 
 #include "vertex.hpp"
 
+class Vehicle;
 class Vertex;
 
 class Graph
@@ -25,8 +26,10 @@ public:
 	int getSizeY();
 	void addVertices();
     void addEdge();
+	void addCar(Pos p);
 	void setVertex(int x, int y, tileType type);
     std::vector<std::vector<Vertex>>& getVertices();
+	std::vector<Vehicle>& getVehicles();
 
 private:
     ///Private members
@@ -34,6 +37,7 @@ private:
 	int latitude; //y
 
 	std::vector<std::vector<Vertex>> vertices;
+	std::vector<Vehicle> vehicles;
 };
 
 #endif // GRAPH_HPP_INCLUDED

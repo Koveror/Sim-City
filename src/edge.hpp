@@ -25,8 +25,6 @@ public:
 
 	///Operator overloading
 	bool operator==(Edge a);
-	void addVehicle(Pos p);
-	void removeVehicle(Pos p);
 
 private:
     ///Private members

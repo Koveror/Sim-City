@@ -1,16 +1,5 @@
 #include "edge.hpp"
 
-void Edge::removeVehicle(Pos p) {
-	std::vector<Vehicle>::iterator newEnd = std::remove_if(vehicles.begin(), vehicles.end(), [p](Vehicle x){return p == x.getPosition();});
-    vehicles.erase(newEnd, vehicles.end());
-}
-
-void Edge::addVehicle(Pos p) {
-	Vehicle v(1, 1, 1);
-	v.setPosition(p);
-	vehicles.push_back(v);
-}
-
 //Operator overload for comparing two edges
 bool Edge::operator==(Edge a) {
 	Vertex tv1 = getVertices().first;

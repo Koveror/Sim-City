@@ -24,10 +24,9 @@ int main(void) {
     testGraph.addVertices();
 
     //Single car for testing
-    Car c;
-    Pos p = Pos(15, 18);
-    c.setPosition(p);
-    c.setNextPosition(p);
+    testGraph.addCar(Pos(300, 300));
+//	testGraph.addCar(Pos(113, 122));
+//	testGraph.addCar(Pos(300, 400));
 
     //Variables for GUI loop
     tileType vertex_to_add;
@@ -57,7 +56,7 @@ int main(void) {
                 sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 int x = coord.x;
                 int y = coord.y;
-				p = Pos(x, y);
+				Pos p = Pos(x, y);
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Left){
@@ -170,17 +169,20 @@ int main(void) {
             }
 
 
-            //Draw a car
-            sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
-			int i = 0;			
-			while(i < speedUp) {            
-				c.move(testGraph);
-				i++;
+            //Go through all the vehicles
+			for(Vehicle vehicle : testGraph.getVehicles()) {
+		        sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
+				int i = 0;			
+				while(i < speedUp) {
+					std::cout << "calling move" << std::endl;            
+					vehicle.move(testGraph);
+					i++;
+				}
+		        Pos got = vehicle.getPosition();
+		        model.setOrigin(6.0, 6.0);
+		        model.setPosition(got.x, got.y);
+		        window.draw(model);
 			}
-            Pos got = c.getPosition();
-            model.setOrigin(6.0, 6.0);
-            model.setPosition(got.x, got.y);
-            window.draw(model);
 
             //Test sendVehicle
             std::default_random_engine generator;

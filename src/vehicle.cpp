@@ -14,19 +14,22 @@ void Vehicle::move(Graph& graph) {
 	int dX = nextPosition.x / 64;
 	int dY = nextPosition.y / 64;
 	Vertex v = graph.getVertices()[iY][iX];		//Get current vertex from the graph
-	//std::cout << "Current index: (" << v.getIndex().x << ", " << v.getIndex().y << ")" << std::endl;
+	std::cout << "Current position: (" << position.x << ", " << position.y << ")" << std::endl;
+	std::cout << "Next position: (" << nextPosition.x << ", " << nextPosition.y << ")" << std::endl;
 	if(iX == dX && iY && dY && !v.passable_from[north]) {	//TODO: figure out current direction
 		//Wait
 	} else if(position == nextPosition) {	//If we are at objective, get a new place to go
 		std::vector<Edge> edges = v.getEdgesTo();
 		if(edges.size() < 1) {
-			nextPosition = v.getPos();
+			std::cout << "Getting new" << std::endl;
 		} else {
 			int random = rand() % edges.size();
 			Vertex v1 = edges[random].getVertices().second;		//Get a random edge from edges_to
+			std::cout << "Setting next pos to " << v1.getPos().x << ", " << v1.getPos().y << std::endl;
 			nextPosition = v1.getPos();		//Set to move towards the endpoint of random edge
 		}
     } else {
+		std::cout << "Calling move towards" << std::endl;
 		moveTowards(nextPosition);	//If we aren't where we are supposed to, move towards it
 	}
 }
