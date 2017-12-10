@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include "graph.hpp"
 
-#define INF INT_MAX
+int INF = std::numeric_limits<int>::max();
 
 class CompareWeight
 {
