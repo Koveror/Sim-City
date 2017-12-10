@@ -84,7 +84,7 @@ int main(void) {
                 }
 
                 //DEBUG: Dijkstra
-                auto test = getPath(testGraph, v1[1][0], v1[0][1]);
+                //auto test = getPath(testGraph, v1[1][0], v1[0][1]);
 
             }
 			//Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...

@@ -1,5 +1,12 @@
 #include "graph.hpp"
 
+Graph::~Graph() {
+    for(auto it : vehicles) {
+        std::cout << "Deleting vehicles" << std::endl;
+        delete it;
+    }
+}
+
 void Graph::addCar(Pos p) {
         Car* c = new Car;
         c -> setPosition(p);
@@ -8,7 +15,7 @@ void Graph::addCar(Pos p) {
         std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
 }
 
-std::vector<Vehicle*>& Graph::getVehicles() {
+std::list<Vehicle*>& Graph::getVehicles() {
 	return vehicles;
 }
 

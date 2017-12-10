@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <iostream>
-#include <vector>
+#include <list>
 #include "tools.hpp"
 #include <algorithm>
 
@@ -19,6 +19,9 @@ public:
     Graph(int n, int m) :
     longitude(n), latitude(m) { }
 
+    ///Destructor
+    ~Graph();
+
     ///Member functions
     bool addVertex(int x, int y);
     int getSize();
@@ -29,7 +32,7 @@ public:
     void addCar(Pos p);
     void setVertex(int x, int y, tileType type);
     std::vector<std::vector<Vertex>>& getVertices();
-    std::vector<Vehicle*>& getVehicles();
+    std::list<Vehicle*>& getVehicles();
     void sendVehicle(Pos position);
 
 private:
@@ -38,7 +41,7 @@ private:
     int latitude; //y
 
     std::vector<std::vector<Vertex>> vertices;
-    std::vector<Vehicle*> vehicles;
+    std::list<Vehicle*> vehicles;
 };
 
 #endif // GRAPH_HPP_INCLUDED
