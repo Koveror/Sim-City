@@ -186,4 +186,23 @@ bool Graph::addVertex(int x, int y)
 	return true;
 }
 
+void Graph::sendVehicle(Pos position){
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::exponential_distribution<double> distribution(1.0 / 5.0);
+    
+    if(distribution(generator) < 0.00665){
+        std::cout << "Send vehicle from: " << "(" << position.x/96 << "," << position.y/96 << ")" << std::endl;
+        addCar(position);
+    }
+    
+//     int summa = 0.0;
+//     for(int i = 0; i < 10000000; i++){
+//         double number = distribution(generator);
+//         if(number < (1.0 / 30.0) ){
+//             summa += 1;
+//         }
+//     }
+}
+
 

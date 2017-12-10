@@ -136,7 +136,7 @@ int main(void) {
                     //Send vehicles
                     if(vehicleSendBoolean){
                         if(v.getType() == building){
-                            v.sendVehicle();
+                            testGraph.sendVehicle(a);
                         }
                     }
 
