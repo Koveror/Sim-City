@@ -1,13 +1,14 @@
 #include "graph.hpp"
 
 void Graph::addCar(Pos p) {
-	Car c;
-	c.setPosition(p);
+        Car* c = new Car;
+        c -> setPosition(p);
+        c -> setNextPosition(p);
 	vehicles.push_back(c);
         std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
 }
 
-std::vector<Vehicle>& Graph::getVehicles() {
+std::vector<Vehicle*>& Graph::getVehicles() {
 	return vehicles;
 }
 

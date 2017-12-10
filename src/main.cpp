@@ -188,15 +188,15 @@ int main(void) {
 
 
             //Go through all the vehicles
-			for(Vehicle vehicle : testGraph.getVehicles()) {
+                        for(Vehicle* vehicle : testGraph.getVehicles()) {
 		        sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
 				int i = 0;
 				while(i < speedUp) {
 					//std::cout << "calling move" << std::endl;
-					//vehicle.move(testGraph);
+                                        vehicle -> move(testGraph);
 					i++;
 				}
-		        Pos got = vehicle.getPosition();
+                        Pos got = vehicle -> getPosition();
 		        model.setOrigin(6.0, 6.0);
 		        model.setPosition(got.x, got.y);
 		        window.draw(model);
