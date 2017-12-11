@@ -58,7 +58,7 @@ void Graph::addVertices()
 
 void Graph::setVertex(int x, int y, tileType type)
 {
-	Graph& graph = *this;
+    Graph& graph = *this;
     if(y < latitude){
         if(x < longitude){
             vertices[y][x].setType(type);
@@ -161,6 +161,18 @@ void Graph::setVertex(int x, int y, tileType type)
                     vertices[y][x+1].removeEdgesTo(position1);
                 }
             } else {
+                /*std::cout << "type is grass, check lights..." << std::endl;
+                for (auto neighbor : vertices[y][x].getEdgesTo() ) {
+                    auto loc = neighbor.getVertices().second.getIndex();
+                    std::cout << "check neighbor passable_from... " << ( vertices[loc.y][loc.x].getEdgesTo().size() ) << std::endl;
+                    if (vertices[loc.y][loc.x].getEdgesTo().size() < 3) {
+                        vertices[loc.y][loc.x].passable_from[0] = true;
+                        vertices[loc.y][loc.x].passable_from[1] = true;
+                        vertices[loc.y][loc.x].passable_from[2] = true;
+                        vertices[loc.y][loc.x].passable_from[3] = true;
+                    }
+                
+                }*/
 
                 Pos position1(x,y);
                 vertices[y][x].removeEdge(position1);
@@ -178,6 +190,14 @@ void Graph::setVertex(int x, int y, tileType type)
                     vertices[y][x+1].removeEdgesTo(position1);
                 }
             }
+            /*std::cout << "check passable_from... " << ( vertices[y][x].getEdgesTo().size() ) << std::endl;
+            if (vertices[y][x].getEdgesTo().size() < 3) {
+                vertices[y][x].passable_from[0] = true;
+                vertices[y][x].passable_from[1] = true;
+                vertices[y][x].passable_from[2] = true;
+                vertices[y][x].passable_from[3] = true;
+            }*/
+            
             return;
         }
     }
@@ -200,7 +220,7 @@ void Graph::sendVehicle(Pos position){
     std::random_device rd;
     std::mt19937 generator(rd());
     std::exponential_distribution<double> distribution(1.0 / 5.0);
-    std::cout << "gen: " << distribution(generator) << std::endl;
+    //std::cout << "gen: " << distribution(generator) << std::endl;
     if(distribution(generator) < 0.00665){
         std::cout << "Send vehicle from: " << "(" << position.x/96 << "," << position.y/96 << ")" << std::endl;
         addCar(position);

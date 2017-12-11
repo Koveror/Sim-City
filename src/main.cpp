@@ -45,13 +45,13 @@ int main(void) {
 
 
     //Dijkstra
-    //testGraph.setVertex(0,1,road);
+    /*testGraph.setVertex(0,1,road);
     testGraph.setVertex(3,0,road);
     testGraph.setVertex(3,1,road);
     testGraph.setVertex(2,1,road);
     testGraph.setVertex(1,1,road);
     testGraph.setVertex(0,1,road);
-    auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
+    auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);*/
 
     //GUI loop
     while (window.isOpen())
@@ -67,7 +67,7 @@ int main(void) {
                 sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 int x = coord.x;
                 int y = coord.y;
-				//Pos p = Pos(x, y);
+                //Pos p = Pos(x, y);
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Left){
@@ -82,13 +82,12 @@ int main(void) {
                 for(auto row : v1){
                     for(auto vertex : row) {
                         for(auto edge : vertex.getEdgesTo()){
-							Vertex v1 = edge.getVertices().first;
-							Vertex v2 = edge.getVertices().second;
-							Pos p1 = v1.getIndex();
-							Pos p2 = v2.getIndex();
+                            Vertex v1 = edge.getVertices().first;
+                            Vertex v2 = edge.getVertices().second;
+                            Pos p1 = v1.getIndex();
+                            Pos p2 = v2.getIndex();
                             int weight = edge.getWeight();
                             std::cout << "FROM (" << p1.x << ", " << p1.y << ") TO (" << p2.x << ", " << p2.y << ") - " << "WEIGHT = " << weight << std::endl;
-                            std::cout << "v1.getEdgesTo.size: " << v1.getEdgesTo().size() << " and v2.getEdgesTo.size: " << v2.getEdgesTo().size() << std::endl;
                         }
                     }
                 }
@@ -97,7 +96,7 @@ int main(void) {
                 //auto test = getPath(testGraph, v1[1][0], v1[0][1]);
 
             }
-			//Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
+                //Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
             if(event.type == sf::Event::KeyPressed){
                 if(event.key.code == sf::Keyboard::B){
                     vertex_to_add = building;
@@ -120,12 +119,19 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::Num3){		//Testing fast forward
                 	speedUp = 6;
                 }
-				else if(event.key.code == sf::Keyboard::Num2){
-					speedUp = 3;
-				}
-				else if(event.key.code == sf::Keyboard::Num1){
-					speedUp = 1;
-				}
+                else if(event.key.code == sf::Keyboard::Num2){
+                        speedUp = 3;
+                }
+                else if(event.key.code == sf::Keyboard::Num1){
+                        speedUp = 1;
+                }
+                else if(event.key.code == sf::Keyboard::D){             //Testing Dijkstra
+                    auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
+                    std::cout << "Path from source to target below: " << std::endl;
+                    for (auto& v : test)  {
+                        std::cout << v.first << ", " << v.second << std::endl;
+                    }
+                }
             }
         }
 
@@ -198,19 +204,19 @@ int main(void) {
 
 
             //Go through all the vehicles
-                for(auto vehicle : testGraph.getVehicles()) {
-		        sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
-				int i = 0;
-				while(i < speedUp) {
-					//std::cout << "calling move" << std::endl;
-                                        vehicle -> move(testGraph);
-					i++;
-				}
-                        Pos got = vehicle -> getPosition();
-		        model.setOrigin(6.0, 6.0);
-		        model.setPosition(got.x, got.y);
-		        window.draw(model);
-			}
+            for(auto vehicle : testGraph.getVehicles()) {
+                sf::RectangleShape model(sf::Vector2f(16.0, 12.0));
+                    int i = 0;
+                    while(i < speedUp) {
+                        //std::cout << "calling move" << std::endl;
+                        vehicle -> move(testGraph);
+                        i++;
+                    }
+                Pos got = vehicle -> getPosition();
+                model.setOrigin(6.0, 6.0);
+                model.setPosition(got.x, got.y);
+                window.draw(model);
+            }
 
             //Show everything that has been drawn
             window.display();

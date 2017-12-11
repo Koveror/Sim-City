@@ -26,6 +26,7 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
     std::vector<std::vector<std::pair<int,int>>> prev(Y, std::vector<std::pair<int,int>>(X, std::make_pair(-1, -1)));
     Pos s = source.getIndex();
     dist[s.y][s.x] = 0;
+    Vertex start = g.getVertices()[s.y][s.x];
 
     std::priority_queue<std::pair<Vertex,int>,std::vector<std::pair<Vertex,int>>,CompareWeight> Q;
 
@@ -41,14 +42,15 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
     std::cout << "DIJKSTRA debug source index: " << source.getIndex().x << ", " << source.getIndex().y << ", dist: " << dist[s.y][s.x] << std::endl;
     std::cout << "DIJKSTRA debug target index: " << target.getIndex().x << ", " << target.getIndex().y << std::endl;
 
-    Q.push(std::make_pair(source, dist[source.getIndex().y][source.getIndex().x]));
+    Q.push(std::make_pair(start, dist[source.getIndex().y][source.getIndex().x]));
     //std::cout << "DIJKSTRA debug Q size (start): " << Q.size() << std::endl;
-
     while (!Q.empty()) {
         Vertex u = Q.top().first;
         visited[u.getIndex().y][u.getIndex().x] = true;
         std::cout << "Now at: " << u.getIndex().x << ", " << u.getIndex().y << std::endl;
         Q.pop();
+        
+        ///If we find the target
         if (u == target) {
             std::cout << "Found target, printing path..." << std::endl;
 
@@ -56,20 +58,22 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
             std::pair<int,int> u = std::make_pair(target.getIndex().y, target.getIndex().x);
             //std::cout << "bool begin: " << (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) << std::endl;
             while (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) {
-                std::cout << "Route: " << u.first << ", " << u.second << std::endl;
+                //std::cout << "Route: " << u.first << ", " << u.second << std::endl;
                 route.push_back(u);
                 u = prev[u.first][u.second];
                 //std::cout << "bool: " << (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) << std::endl;
             }
             route.push_back(u);
-            std::cout << "Route last: " << u.first << ", " << u.second << std::endl;
+            //std::cout << "Route last: " << u.first << ", " << u.second << std::endl;
+            std::reverse(std::begin(route),std::end(route));
             return route;
         }
 
         std::vector<Edge> neighbors = u.getEdgesTo();
         std::cout << "DIJKSTRA debug neighbors size: " << neighbors.size() << std::endl;
         for (Edge &edge : neighbors) {
-            Vertex v = edge.getVertices().second; ///Bug here?
+            auto v_pos = edge.getVertices().second.getIndex(); ///Bug here?
+            Vertex v = g.getVertices()[v_pos.y][v_pos.x];
             std::cout << "Neighbor v: " << v.getIndex().x << ", " << v.getIndex().y << std::endl;
             //std::cout << "edge weight: " << edge.getWeight() << std::endl;
             std::cout << "visited? " << (visited[v.getIndex().y][v.getIndex().x]) << std::endl;
@@ -81,12 +85,15 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
                     //std::cout << "prev[x]: " << v.getIndex().x << "; prev[y]: " << v.getIndex().y << std::endl;
                     //std::cout << "u [x]: " << u.getIndex().x << "; u [y]: " << u.getIndex().y << std::endl;
                 }
+                std::cout << "Pushing in v..." << std::endl;
+                Q.push(std::make_pair(v, dist[v.getIndex().y][v.getIndex().x]));
             }
-            Q.push(std::make_pair(v, dist[v.getIndex().y][v.getIndex().x]));
+            
         }
         //std::cout << "DIJKSTRA debug Q size: " << Q.size() << std::endl;
     }
 
+    /*
     ///VISITED
     std::cout << "VISITED" << std::endl;
     for (int i = 0; i < 4; ++i)
@@ -119,6 +126,7 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
         }
         std::cout << std::endl;
     }
+    */
 
     //No suitable route has been found, return empty one
     return std::vector<std::pair<int,int>>();
