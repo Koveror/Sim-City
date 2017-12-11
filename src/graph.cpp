@@ -11,8 +11,8 @@ void Graph::addCar(Pos p) {
 
     std::shared_ptr<Vehicle> c = std::make_shared<Car>();
     //Vehicle* c = new Car;
-    c -> setPosition(p);
-    c -> setNextPosition(p);
+    c->setPosition(p);
+    c->setNextPosition(p);
 	vehicles.push_back(c);
     std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
 }
@@ -115,8 +115,30 @@ void Graph::setVertex(int x, int y, tileType type)
                     vertices[y][x+1].addEdge(position1, graph, 1000);
                     vertices[y][x].addEdge(position2, graph, 1000);
                 }
-            } else if(type == building){
 
+                //std::cout << "type is road, check lights..." << std::endl;
+                if (vertices[y][x].getEdgesTo().size() >= 3) {
+                    vertices[y][x].passable_from[0] = false;
+                    vertices[y][x].passable_from[1] = false;
+                    vertices[y][x].passable_from[2] = false;
+                    vertices[y][x].passable_from[3] = false;
+                }
+
+                for (auto neighbor : vertices[y][x].getEdgesTo() ) {
+                    auto loc = neighbor.getVertices().second.getIndex();
+                    //std::cout << loc.x << ", " << loc.y << std::endl;
+                    //std::cout << "check neighbor passable_from... " << ( vertices[loc.y][loc.x].getEdgesTo().size() ) << std::endl;
+                    if (vertices[loc.y][loc.x].getEdgesTo().size() >= 3) {
+                        //std::cout << "change..." << std::endl;
+                        vertices[loc.y][loc.x].passable_from[0] = false;
+                        vertices[loc.y][loc.x].passable_from[1] = false;
+                        vertices[loc.y][loc.x].passable_from[2] = false;
+                        vertices[loc.y][loc.x].passable_from[3] = false;
+                    }
+
+                }
+
+            } else if(type == building){
                 Pos position1(x,y);
                 vertices[y][x].removeEdge(position1);
 
@@ -160,19 +182,26 @@ void Graph::setVertex(int x, int y, tileType type)
                     Pos position2(x+1,y);
                     vertices[y][x+1].removeEdgesTo(position1);
                 }
+                vertices[y][x].passable_from[0] = true;
+                vertices[y][x].passable_from[1] = true;
+                vertices[y][x].passable_from[2] = true;
+                vertices[y][x].passable_from[3] = true;
+
             } else {
-                /*std::cout << "type is grass, check lights..." << std::endl;
+                //std::cout << "type is grass, check lights..." << std::endl;
                 for (auto neighbor : vertices[y][x].getEdgesTo() ) {
                     auto loc = neighbor.getVertices().second.getIndex();
-                    std::cout << "check neighbor passable_from... " << ( vertices[loc.y][loc.x].getEdgesTo().size() ) << std::endl;
-                    if (vertices[loc.y][loc.x].getEdgesTo().size() < 3) {
+                    //std::cout << loc.x << ", " << loc.y << std::endl;
+                    //std::cout << "check neighbor passable_from... " << ( vertices[loc.y][loc.x].getEdgesTo().size() ) << std::endl;
+                    if (vertices[loc.y][loc.x].getEdgesTo().size() == 3) {
+                        //std::cout << "change..." << std::endl;
                         vertices[loc.y][loc.x].passable_from[0] = true;
                         vertices[loc.y][loc.x].passable_from[1] = true;
                         vertices[loc.y][loc.x].passable_from[2] = true;
                         vertices[loc.y][loc.x].passable_from[3] = true;
                     }
-                
-                }*/
+
+                }
 
                 Pos position1(x,y);
                 vertices[y][x].removeEdge(position1);
@@ -191,13 +220,13 @@ void Graph::setVertex(int x, int y, tileType type)
                 }
             }
             /*std::cout << "check passable_from... " << ( vertices[y][x].getEdgesTo().size() ) << std::endl;
-            if (vertices[y][x].getEdgesTo().size() < 3) {
-                vertices[y][x].passable_from[0] = true;
-                vertices[y][x].passable_from[1] = true;
-                vertices[y][x].passable_from[2] = true;
-                vertices[y][x].passable_from[3] = true;
+            if (vertices[y][x].getEdgesTo().size() > 2) {
+                vertices[y][x].passable_from[0] = false;
+                vertices[y][x].passable_from[1] = false;
+                vertices[y][x].passable_from[2] = false;
+                vertices[y][x].passable_from[3] = false;
             }*/
-            
+
             return;
         }
     }

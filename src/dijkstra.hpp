@@ -39,17 +39,17 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
         }
     }*/
 
-    std::cout << "DIJKSTRA debug source index: " << source.getIndex().x << ", " << source.getIndex().y << ", dist: " << dist[s.y][s.x] << std::endl;
-    std::cout << "DIJKSTRA debug target index: " << target.getIndex().x << ", " << target.getIndex().y << std::endl;
+    //std::cout << "DIJKSTRA debug source index: " << source.getIndex().x << ", " << source.getIndex().y << ", dist: " << dist[s.y][s.x] << std::endl;
+    //std::cout << "DIJKSTRA debug target index: " << target.getIndex().x << ", " << target.getIndex().y << std::endl;
 
     Q.push(std::make_pair(start, dist[source.getIndex().y][source.getIndex().x]));
     //std::cout << "DIJKSTRA debug Q size (start): " << Q.size() << std::endl;
     while (!Q.empty()) {
         Vertex u = Q.top().first;
         visited[u.getIndex().y][u.getIndex().x] = true;
-        std::cout << "Now at: " << u.getIndex().x << ", " << u.getIndex().y << std::endl;
+        //std::cout << "Now at: " << u.getIndex().x << ", " << u.getIndex().y << std::endl;
         Q.pop();
-        
+
         ///If we find the target
         if (u == target) {
             std::cout << "Found target, printing path..." << std::endl;
@@ -70,13 +70,13 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
         }
 
         std::vector<Edge> neighbors = u.getEdgesTo();
-        std::cout << "DIJKSTRA debug neighbors size: " << neighbors.size() << std::endl;
+        //std::cout << "DIJKSTRA debug neighbors size: " << neighbors.size() << std::endl;
         for (Edge &edge : neighbors) {
             auto v_pos = edge.getVertices().second.getIndex(); ///Bug here?
             Vertex v = g.getVertices()[v_pos.y][v_pos.x];
-            std::cout << "Neighbor v: " << v.getIndex().x << ", " << v.getIndex().y << std::endl;
+            //std::cout << "Neighbor v: " << v.getIndex().x << ", " << v.getIndex().y << std::endl;
             //std::cout << "edge weight: " << edge.getWeight() << std::endl;
-            std::cout << "visited? " << (visited[v.getIndex().y][v.getIndex().x]) << std::endl;
+            //std::cout << "visited? " << (visited[v.getIndex().y][v.getIndex().x]) << std::endl;
             if (!visited[v.getIndex().y][v.getIndex().x]) {
                 int alt = dist[u.getIndex().y][u.getIndex().x] + edge.getWeight();
                 if (alt < dist[v.getIndex().y][v.getIndex().x]) {
@@ -85,10 +85,10 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
                     //std::cout << "prev[x]: " << v.getIndex().x << "; prev[y]: " << v.getIndex().y << std::endl;
                     //std::cout << "u [x]: " << u.getIndex().x << "; u [y]: " << u.getIndex().y << std::endl;
                 }
-                std::cout << "Pushing in v..." << std::endl;
+                //std::cout << "Pushing in v..." << std::endl;
                 Q.push(std::make_pair(v, dist[v.getIndex().y][v.getIndex().x]));
             }
-            
+
         }
         //std::cout << "DIJKSTRA debug Q size: " << Q.size() << std::endl;
     }
@@ -128,7 +128,7 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
     }
     */
 
-    //No suitable route has been found, return empty one
+    std::cout << "No suitable route has been found, returning empty route" << std::endl;
     return std::vector<std::pair<int,int>>();
 }
 

@@ -182,12 +182,12 @@ int main(void) {
                             window.draw(middle);
 
                             //Draw traffic lights
-                            sf::RectangleShape light(sf::Vector2f(16, 2));
-                            light.setOrigin(-6, 2);
+                            sf::RectangleShape light(sf::Vector2f(18, 2));
+                            light.setOrigin(-4, 2);
 
                             direction d = edge.getDirection();
 
-                            if(v.getType() == road && v.getEdgesTo().size() > 2) {
+                            if( (v.getType() == road && v.getEdgesTo().size() > 1) || (v.getType() == building && v.getEdgesTo().size() > 1) ) { // should be 2, now 1 due to debug purposes
                                     if(v.passable_from[d]) {
                                             light.setFillColor(sf::Color::Green);
                                     } else {
