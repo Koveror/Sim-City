@@ -71,17 +71,17 @@ void Vertex::setType(tileType t)
 
 //Adds an edge to this vertices edge list.
 void Vertex::addEdge(Pos position, Graph& graph, int weight) {
-	
-	std::vector<std::vector<Vertex>> vertices = graph.getVertices();	
-	
+
+	std::vector<std::vector<Vertex>> vertices = graph.getVertices();
+
 	Vertex v1 = *this;
 	Vertex v2 = vertices[position.y][position.x];
 
 	std::shared_ptr<Vertex> p1 = std::make_shared<Vertex>(v1);
 	std::shared_ptr<Vertex> p2 = std::make_shared<Vertex>(v2);
-	
+
 	Edge e1(p1, p2, weight);
-	
+
 	//Check not to add same edge twice
 	if(edges_to.size() > 0) {
 		auto res = std::find(edges_to.begin(), edges_to.end(), e1);
@@ -110,7 +110,7 @@ void Vertex::removeEdgesTo(Pos position) {
 }
 
 //Return a list of edges that go out from this vertex
-std::vector<Edge> Vertex::getEdgesTo(){
+const std::vector<Edge>& Vertex::getEdgesTo(){
     return edges_to;
 }
 
@@ -127,8 +127,8 @@ bool Vertex::hasEdgeTo(int x, int y){
     return false;
 }
 
+const std::string Vertex::getTexture(){
 //Get the texture type, based on the number and direction of edges
-std::string Vertex::getTexture(){
     if (vertex_type == road){
         bool edgeNorth = hasEdgeTo(x_loc, y_loc - 1);
         bool edgeEast  = hasEdgeTo(x_loc + 1, y_loc);
@@ -174,11 +174,11 @@ void Vertex::sendVehicle(){
     std::random_device rd;
     std::mt19937 generator(rd());
     std::exponential_distribution<double> distribution(1.0 / 5.0);
-    
+
     if(distribution(generator) < 0.00665){
         std::cout << "Send vehicle from: " << "(" << x_loc << "," << y_loc << ")" << std::endl;
     }
-    
+
 //     int summa = 0.0;
 //     for(int i = 0; i < 10000000; i++){
 //         double number = distribution(generator);

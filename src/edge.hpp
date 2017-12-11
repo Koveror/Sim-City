@@ -31,7 +31,7 @@ private:
     std::shared_ptr<Vertex> vertex_1;
     std::shared_ptr<Vertex> vertex_2;
     int weight;
-    std::vector<Vehicle> vehicles;
+    //std::vector<Vehicle> vehicles;
 };
 
 #endif // EDGE_HPP_INCLUDED

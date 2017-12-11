@@ -32,7 +32,7 @@ public:
     void addCar(Pos p);
     void setVertex(int x, int y, tileType type);
     std::vector<std::vector<Vertex>>& getVertices();
-    std::list<Vehicle*>& getVehicles();
+    std::list<std::shared_ptr<Vehicle>>& getVehicles();
     void sendVehicle(Pos position);
 
 private:
@@ -41,7 +41,7 @@ private:
     int latitude; //y
 
     std::vector<std::vector<Vertex>> vertices;
-    std::list<Vehicle*> vehicles;
+    std::list<std::shared_ptr<Vehicle>> vehicles;
 };
 
 #endif // GRAPH_HPP_INCLUDED

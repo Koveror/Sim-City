@@ -1,21 +1,23 @@
 #include "graph.hpp"
 
 Graph::~Graph() {
-    for(auto it : vehicles) {
+    /*for(auto it : vehicles) {
         std::cout << "Deleting vehicles" << std::endl;
         delete it;
-    }
+    }*/
 }
 
 void Graph::addCar(Pos p) {
-        Car* c = new Car;
-        c -> setPosition(p);
-        c -> setNextPosition(p);
+
+    std::shared_ptr<Vehicle> c = std::make_shared<Car>();
+    //Vehicle* c = new Car;
+    c -> setPosition(p);
+    c -> setNextPosition(p);
 	vehicles.push_back(c);
-        std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
+    std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
 }
 
-std::list<Vehicle*>& Graph::getVehicles() {
+std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
 	return vehicles;
 }
 
@@ -61,10 +63,10 @@ void Graph::setVertex(int x, int y, tileType type)
         if(x < longitude){
             vertices[y][x].setType(type);
             if(type == road){
-                
+
                 Pos position1(x,y);
                 vertices[y][x].removeEdge(position1);
-                
+
                 if(y > 0 && vertices[y-1][x].getType() == road){
                     Pos position2(x,y-1);
                     vertices[y-1][x].removeEdgesTo(position1);
@@ -114,10 +116,10 @@ void Graph::setVertex(int x, int y, tileType type)
                     vertices[y][x].addEdge(position2, graph, 1000);
                 }
             } else if(type == building){
-                
+
                 Pos position1(x,y);
                 vertices[y][x].removeEdge(position1);
-                
+
                 if(y > 0 && vertices[y-1][x].getType() == road){
                     Pos position2(x,y-1);
                     vertices[y-1][x].removeEdgesTo(position1);
@@ -159,10 +161,10 @@ void Graph::setVertex(int x, int y, tileType type)
                     vertices[y][x+1].removeEdgesTo(position1);
                 }
             } else {
-                
+
                 Pos position1(x,y);
                 vertices[y][x].removeEdge(position1);
-                
+
                 if(y > 0){
                     vertices[y-1][x].removeEdgesTo(position1);
                 }
@@ -198,12 +200,12 @@ void Graph::sendVehicle(Pos position){
     std::random_device rd;
     std::mt19937 generator(rd());
     std::exponential_distribution<double> distribution(1.0 / 5.0);
-    
+    std::cout << "gen: " << distribution(generator) << std::endl;
     if(distribution(generator) < 0.00665){
         std::cout << "Send vehicle from: " << "(" << position.x/96 << "," << position.y/96 << ")" << std::endl;
         addCar(position);
     }
-    
+
 //     int summa = 0.0;
 //     for(int i = 0; i < 10000000; i++){
 //         double number = distribution(generator);

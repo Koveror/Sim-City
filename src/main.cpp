@@ -44,6 +44,15 @@ int main(void) {
 
 
 
+    //Dijkstra
+    //testGraph.setVertex(0,1,road);
+    testGraph.setVertex(3,0,road);
+    testGraph.setVertex(3,1,road);
+    testGraph.setVertex(2,1,road);
+    testGraph.setVertex(1,1,road);
+    testGraph.setVertex(0,1,road);
+    auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
+
     //GUI loop
     while (window.isOpen())
     {
@@ -58,7 +67,7 @@ int main(void) {
                 sf::Vector2f coord = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 int x = coord.x;
                 int y = coord.y;
-				Pos p = Pos(x, y);
+				//Pos p = Pos(x, y);
                 int mx = forceToGrid(x);
                 int my = forceToGrid(y);
                 if (z == sf::Mouse::Left){
@@ -79,6 +88,7 @@ int main(void) {
 							Pos p2 = v2.getIndex();
                             int weight = edge.getWeight();
                             std::cout << "FROM (" << p1.x << ", " << p1.y << ") TO (" << p2.x << ", " << p2.y << ") - " << "WEIGHT = " << weight << std::endl;
+                            std::cout << "v1.getEdgesTo.size: " << v1.getEdgesTo().size() << " and v2.getEdgesTo.size: " << v2.getEdgesTo().size() << std::endl;
                         }
                     }
                 }
@@ -166,7 +176,7 @@ int main(void) {
                             window.draw(middle);
 
                             //Draw traffic lights
-                            sf::RectangleShape light(sf::Vector2f(16, 4));
+                            sf::RectangleShape light(sf::Vector2f(16, 2));
                             light.setOrigin(-6, 2);
 
                             direction d = edge.getDirection();
@@ -188,7 +198,7 @@ int main(void) {
 
 
             //Go through all the vehicles
-                        for(Vehicle* vehicle : testGraph.getVehicles()) {
+                for(auto vehicle : testGraph.getVehicles()) {
 		        sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
 				int i = 0;
 				while(i < speedUp) {

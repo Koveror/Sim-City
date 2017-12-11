@@ -48,4 +48,4 @@ direction Edge::getDirection() {
 	} else {
 		return north;	//Assumed to be north
 	}
-}	
+}

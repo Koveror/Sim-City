@@ -30,8 +30,8 @@ public:
     void addEdge(Pos position, Graph& graph, int weight);
     void removeEdge(Pos position);
 	void removeEdgesTo(Pos position);
-    std::vector<Edge> getEdgesTo();
-    std::string getTexture();
+    const std::vector<Edge>& getEdgesTo();
+    const std::string getTexture();
     bool hasEdgeTo(int x, int y);
 	void togglePassable();
     void sendVehicle();
