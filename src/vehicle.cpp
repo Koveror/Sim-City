@@ -39,7 +39,7 @@ void Vehicle::move(Graph& graph) {
 			Vertex v1 = edges[random].getVertices().second;		//Get a random edge from edges_to
 			//std::cout << "Setting next pos to " << v1.getPos().x << ", " << v1.getPos().y << std::endl;
 			nextPosition = v1.getPos();		//Set to move towards the endpoint of random edge
-                        getPath(graph, graph.getVertices()[2][2], graph.getVertices()[0][0])
+                        //getPath(graph, graph.getVertices()[2][2], graph.getVertices()[0][0])
 		}
     } else {
 		//std::cout << "Calling move towards" << std::endl;
