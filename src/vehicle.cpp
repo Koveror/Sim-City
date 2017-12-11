@@ -13,21 +13,22 @@ void Vehicle::move(Graph& graph) {
 	int iY = position.y / 64;
 	int dX = nextPosition.x / 64;
 	int dY = nextPosition.y / 64;
-	Vertex v = graph.getVertices()[iY][iX];		//Get current vertex from the graph
+		Vertex v = graph.getVertices()[iY][iX];		//Get current vertex from the graph
+	Vertex nextV = graph.getVertices()[dY][dX];		//Get current vertex from the graph
 	//std::cout << "Current position: (" << position.x << ", " << position.y << ")" << std::endl;
 	//std::cout << "Next position: (" << nextPosition.x << ", " << nextPosition.y << ")" << std::endl;
 	//figure out curent direction
-        direction currentDirection = north;
+        direction comingFrom = north;
         if(position.x < nextPosition.x){
-            currentDirection = east;
+            comingFrom = west;
         } else if(position.x > nextPosition.x){
-            currentDirection = west;
+            comingFrom = east;
         } else if(position.y < nextPosition.y){
-            currentDirection = north;
+            comingFrom = south;
         } else if(position.y > nextPosition.y){
-            currentDirection = south;
+            comingFrom = north;
         }
-	if(iX == dX && iY && dY && !v.passable_from[currentDirection]) {	//TODO: figure out current direction
+	if(iX == dX && iY && dY && !v.passable_from[comingFrom]) {	//TODO: figure out current direction
 		//Wait
 	} else if(position == nextPosition) {	//If we are at objective, get a new place to go
 		std::vector<Edge> edges = v.getEdgesTo();
