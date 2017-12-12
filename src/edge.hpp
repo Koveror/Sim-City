@@ -22,6 +22,7 @@ public:
     std::pair<Vertex,Vertex> getVertices(); // { return both verticers the edge connects;}
 	Pos getMiddlePos();
 	direction getDirection();
+	void swapVertices();
 
 	///Operator overloading
 	bool operator==(Edge a);

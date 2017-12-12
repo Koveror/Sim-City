@@ -137,6 +137,18 @@ bool Vertex::hasEdgeTo(int x, int y){
     return false;
 }
 
+Edge Vertex::getSingleEdge(std::pair<int,int> coordPair) {
+    for (auto it = edges_to.begin(); it != edges_to.end(); it++) {
+		Edge e = *it;
+		Vertex end = e.getVertices().second;
+		Pos endPos = end.getIndex();
+        if(coordPair.second == endPos.x && coordPair.first == endPos.y){
+            return e;
+        }
+    }
+    return edges_to.front(); //suppress warning
+}
+
 const std::string Vertex::getTexture(){
 //Get the texture type, based on the number and direction of edges
     if (vertex_type == road){

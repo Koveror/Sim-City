@@ -18,7 +18,7 @@ public:
     }
 };
 
-std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
+std::vector<Edge> getPath(Graph g, Vertex source, Vertex target) {
     int Y = g.getSizeY();
     int X = g.getSizeX();
     std::vector<std::vector<int>> visited(Y, std::vector<int>(X, false));
@@ -55,18 +55,27 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
             std::cout << "Found target, printing path..." << std::endl;
 
             auto route = std::vector<std::pair<int,int>>();
+            auto routeEdges = std::vector<Edge>();
             std::pair<int,int> u = std::make_pair(target.getIndex().y, target.getIndex().x);
             //std::cout << "bool begin: " << (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) << std::endl;
             while (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) {
                 //std::cout << "Route: " << u.first << ", " << u.second << std::endl;
+                Vertex temp = g.getVertices()[u.first][u.second];
+                Edge tempEdge = temp.getSingleEdge(prev[u.first][u.second]);
                 route.push_back(u);
+                routeEdges.push_back(tempEdge);
                 u = prev[u.first][u.second];
                 //std::cout << "bool: " << (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) << std::endl;
             }
             route.push_back(u);
             //std::cout << "Route last: " << u.first << ", " << u.second << std::endl;
             std::reverse(std::begin(route),std::end(route));
-            return route;
+            std::reverse(std::begin(routeEdges),std::end(routeEdges));
+            //return route;
+            for (auto& e : routeEdges) {
+                e.swapVertices();
+            }
+            return routeEdges;
         }
 
         std::vector<Edge> neighbors = u.getEdgesTo();
@@ -129,7 +138,8 @@ std::vector<std::pair<int,int>> getPath(Graph g, Vertex source, Vertex target) {
     */
 
     std::cout << "No suitable route has been found, returning empty route" << std::endl;
-    return std::vector<std::pair<int,int>>();
+    return std::vector<Edge>();
+    //return std::vector<std::pair<int,int>>();
 }
 
 #endif // DIJKSTRA_HPP_INCLUDED

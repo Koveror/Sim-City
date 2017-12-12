@@ -33,6 +33,7 @@ public:
     const std::vector<Edge>& getEdgesTo();
     const std::string getTexture();
     bool hasEdgeTo(int x, int y);
+    Edge getSingleEdge(std::pair<int,int> coordPair);
 	void togglePassable();
     void sendVehicle();
 

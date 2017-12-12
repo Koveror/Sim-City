@@ -49,3 +49,10 @@ direction Edge::getDirection() {
 		return north;	//Assumed to be north
 	}
 }
+
+//Swap Edge vertices
+void Edge::swapVertices() {
+    std::shared_ptr<Vertex> temp = vertex_1;
+    vertex_1 = vertex_2;
+    vertex_2 = temp;
+}
