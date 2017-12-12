@@ -26,8 +26,13 @@ void Vehicle::move(Graph& graph) {
             if(edges.size() < 1) {
                 //std::cout << "Getting new" << std::endl;
             } else {
-                nextPosition = path.front().getVertices().second.getPos();
-                path.erase(path.begin());
+                if(path.size() > 0){
+                    nextPosition = path.front().getVertices().second.getPos();
+                    path.erase(path.begin());
+                }
+                else{
+                    nextPosition = position;
+                }
                 //reset comingFrom -direction 
                 if(position.x < nextPosition.x){
                     comingFrom = west;
