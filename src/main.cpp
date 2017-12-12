@@ -141,7 +141,7 @@ int main(void) {
                     auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
                     std::cout << "Path from source to target below: " << std::endl;
                     for (auto& v : test)  {
-                        std::cout << v.getVertices().first.getPos().x << std::endl;
+                        std::cout << v.getVertices().first.getPos().x << "-" << v.getVertices().first.getPos().y << std::endl;
                     }
                 }
                 //reset paths TODO!!!
