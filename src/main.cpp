@@ -144,22 +144,24 @@ int main(void) {
                         std::cout << v.getVertices().first.getPos().x << "-" << v.getVertices().first.getPos().y << std::endl;
                     }
                 }
-                //reset paths TODO!!!
-                for(auto vehicle : testGraph.getVehicles()) {
-                    Pos CurrentPosition = vehicle -> getPosition();
-            
-                    int sourceX = forceToGrid(CurrentPosition.x);
-                    int sourceY = forceToGrid(CurrentPosition.y);
-                    Vertex source = testGraph.getVertices()[sourceX][sourceY];
-                    
-                    Pos destination = vehicle -> getDestination();
-                    int targetX = forceToGrid(destination.x);
-                    int targetY = forceToGrid(destination.y);
-                    Vertex target = testGraph.getVertices()[targetX][targetY];
-                    
-                    //auto test = getPath(testGraph, source, target);
-
-                }
+            }
+            //reset paths TODO!!!
+            for(auto vehicle : testGraph.getVehicles()) {
+                std::cout << "Car path: " << std::endl;
+                Pos CurrentPosition = vehicle -> getPosition();
+        
+                int sourceX = forceToGrid(CurrentPosition.x);
+                int sourceY = forceToGrid(CurrentPosition.y);
+                Vertex source = testGraph.getVertices()[sourceY][sourceX];
+                
+                Pos destination = vehicle -> getDestination();
+                int targetX = forceToGrid(destination.x);
+                int targetY = forceToGrid(destination.y);
+                Vertex target = testGraph.getVertices()[targetY][targetX];
+                
+                auto route = getPath(testGraph, source, target);
+                vehicle->setPath(route);
+                
             }
         }
 

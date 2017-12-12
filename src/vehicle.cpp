@@ -26,12 +26,8 @@ void Vehicle::move(Graph& graph) {
             if(edges.size() < 1) {
                 //std::cout << "Getting new" << std::endl;
             } else {
-                int random = rand() % edges.size();
-                Vertex v1 = edges[random].getVertices().second;		//Get a random edge from edges_to
-                //std::cout << "Setting next pos to " << v1.getPos().x << ", " << v1.getPos().y << std::endl;
-                nextPosition = v1.getPos();		//Set to move towards the endpoint of random edge
-                //getPath(graph, graph.getVertices()[2][2], graph.getVertices()[0][0])
-                
+                nextPosition = path.front().getVertices().second.getPos();
+                path.erase(path.begin());
                 //reset comingFrom -direction 
                 if(position.x < nextPosition.x){
                     comingFrom = west;
@@ -42,7 +38,6 @@ void Vehicle::move(Graph& graph) {
                 } else if(position.y > nextPosition.y){
                     comingFrom = north;
                 }
-                std::cout << comingFrom << std::endl;
             }
         } else {
 		//std::cout << "Calling move towards" << std::endl;
@@ -50,7 +45,7 @@ void Vehicle::move(Graph& graph) {
 	}
 }
 
-//Set a path for this vehicle to move on. Currently not used.
+//Set a path for this vehicle to move on.
 void Vehicle::setPath(std::vector<Edge> givenPath) {
 	path = givenPath;
 }
