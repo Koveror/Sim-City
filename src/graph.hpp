@@ -6,6 +6,8 @@
 #include <list>
 #include "tools.hpp"
 #include <algorithm>
+#include <string>
+#include <fstream>
 
 #include "vertex.hpp"
 
@@ -34,6 +36,8 @@ public:
     std::vector<std::vector<Vertex>>& getVertices();
     std::list<std::shared_ptr<Vehicle>>& getVehicles();
     void sendVehicle(Pos position);
+    bool saveGraph(std::string filename);
+    bool loadGraph(std::string filename);
 
 private:
     ///Private members

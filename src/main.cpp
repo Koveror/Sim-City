@@ -116,6 +116,12 @@ int main(void) {
                         std::cout << "Pausing vehicle spawning" << std::endl;
                     }
                 }
+                else if(event.key.code == sf::Keyboard::S){ //testing saveGraph
+                    std::cout << "Saved succesfully: " << testGraph.saveGraph("testi1.txt") << std::endl;
+                }
+                else if(event.key.code == sf::Keyboard::L){ //testing saveGraph
+                    std::cout << "Loaded succesfully: " << testGraph.loadGraph("testi1.txt") << std::endl;
+                }
                 else if(event.key.code == sf::Keyboard::Num3){		//Testing fast forward
                 	speedUp = 6;
                 }
