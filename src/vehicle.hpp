@@ -44,6 +44,7 @@ private:
     float speed = 0;
     int length;
     int width;
+    direction comingFrom;
 };
 
 class Car : public Vehicle
