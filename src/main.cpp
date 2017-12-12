@@ -117,10 +117,16 @@ int main(void) {
                     }
                 }
                 else if(event.key.code == sf::Keyboard::S){ //testing saveGraph
-                    std::cout << "Saved succesfully: " << testGraph.saveGraph("testi1.txt") << std::endl;
+                    std::string name;
+                    std::cout << "Type the full filename to save the map. File-extension not required." << std::endl;
+                    std::cin >> name;
+                    std::cout << "Saved succesfully: " << testGraph.saveGraph(name) << std::endl;
                 }
                 else if(event.key.code == sf::Keyboard::L){ //testing saveGraph
-                    std::cout << "Loaded succesfully: " << testGraph.loadGraph("testi1.txt") << std::endl;
+                    std::string name;
+                    std::cout << "Type the full filename to load the map. File-extension not required." << std::endl;
+                    std::cin >> name;
+                    std::cout << "Loaded succesfully: " << testGraph.loadGraph(name) << std::endl;
                 }
                 else if(event.key.code == sf::Keyboard::Num3){		//Testing fast forward
                 	speedUp = 6;

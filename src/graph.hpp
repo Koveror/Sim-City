@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <string>
 #include <fstream>
+#include <exception>
 
 #include "vertex.hpp"
 

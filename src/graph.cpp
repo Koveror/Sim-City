@@ -265,32 +265,38 @@ void Graph::sendVehicle(Pos position){
 }
 
 bool Graph::saveGraph(std::string filename) {
-  std::ofstream file;
-  file.open(filename);
-  for (auto row : vertices) {
-    for (auto v : row) {
-      file << v.getType();
+    std::string extension = ".txt";
+    std::ofstream file;
+    file.open(filename+extension);
+    for (auto row : vertices) {
+        for (auto v : row) {
+          file << v.getType();
+        }
+        file << "\n";
     }
-    file << "\n";
-  }
-  file.close();
-  return true;
+    file.close();
+    return true;
 }
 
 bool Graph::loadGraph(std::string filename) {
-  std::ifstream file;
-  file.open(filename);
-  if (!file.is_open()) return false;
-  std::string row;
+    std::string extension = ".txt";
+    std::ifstream file;
 
-  int y = 0;
-  while (getline(file, row)){
-    int x = 0;
-    for(std::string::iterator c = row.begin(); c != row.end(); ++c) {
-      setVertex(x, y, static_cast<tileType>(*c - '0'));
-      x++;
+    file.open(filename+extension);
+    if (!file.is_open()) return false;
+    std::string row;
+
+    int y = 0;
+    while (!file.eof()) {
+        getline(file, row);
+        int x = 0;
+        for (std::string::iterator c = row.begin(); c != row.end(); ++c) {
+            setVertex(x, y, static_cast<tileType>(*c - '0'));
+            x++;
+        }
+        y++;
     }
-    y++;
-  }
-  return true;
+    file.close();
+
+    return true;
 }
