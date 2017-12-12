@@ -18,7 +18,7 @@ class Vehicle
 public:
     ///Constructor
     Vehicle(int max_spd, int l, int w) :
-        max_speed(max_spd), length(l), width(w) {}
+        max_speed(max_spd), length(l), width(w), destination(Pos(0,0)) {}
 
     ///Destructor
     virtual ~Vehicle() {}
@@ -34,6 +34,7 @@ public:
     int getLength() const;
     int getWidth() const;
     virtual std::string getType() const {return "(nothing)";}
+    Pos getDestination() const;
 
 private:
     ///Private members
@@ -45,6 +46,7 @@ private:
     int length;
     int width;
     direction comingFrom;
+    Pos destination;
 };
 
 class Car : public Vehicle

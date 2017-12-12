@@ -108,3 +108,7 @@ int Vehicle::getLength() const{
 int Vehicle::getWidth() const{
     return width;
 }
+
+Pos Vehicle::getDestination() const{
+    return destination;
+}

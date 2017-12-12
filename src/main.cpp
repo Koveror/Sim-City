@@ -144,6 +144,22 @@ int main(void) {
                         std::cout << v.first << ", " << v.second << std::endl;
                     }
                 }
+                //reset paths TODO!!!
+                for(auto vehicle : testGraph.getVehicles()) {
+                    Pos CurrentPosition = vehicle -> getPosition();
+            
+                    int sourceX = forceToGrid(CurrentPosition.x);
+                    int sourceY = forceToGrid(CurrentPosition.y);
+                    Vertex source = testGraph.getVertices()[sourceX][sourceY];
+                    
+                    Pos destination = vehicle -> getDestination();
+                    int targetX = forceToGrid(destination.x);
+                    int targetY = forceToGrid(destination.y);
+                    Vertex target = testGraph.getVertices()[targetX][targetY];
+                    
+                    //auto test = getPath(testGraph, source, target);
+
+                }
             }
         }
 
