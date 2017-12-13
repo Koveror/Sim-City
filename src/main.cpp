@@ -50,6 +50,7 @@ int main(void) {
     while (window.isOpen())
     {
         sf::Event event;
+        testGraph.update();
         //Event loop listens for events and reacts
         while (window.pollEvent(event))
         {
@@ -138,8 +139,6 @@ int main(void) {
                     }
                 }*/
             }
-            //reset paths TODO!!!
-            testGraph.update();
         }
 
         //Update screen according to refreshSpeed
