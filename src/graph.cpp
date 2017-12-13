@@ -279,6 +279,7 @@ bool Graph::saveGraph(std::string filename) {
 }
 
 bool Graph::loadGraph(std::string filename) {
+    vehicles.clear();
     std::string extension = ".txt";
     std::ifstream file;
 

@@ -55,7 +55,7 @@ void Vehicle::setPath(std::vector<Edge> givenPath) {
 	path = givenPath;
 }
 
-//Move along an edge. Currently not used.
+//Move along an edge.
 void Vehicle::moveAlong() {
 	if(path.size() > 0) {
 		Edge e = path.front();
@@ -109,6 +109,16 @@ int Vehicle::getWidth() const{
     return width;
 }
 
+// get destination
 Pos Vehicle::getDestination() const{
     return destination;
+}
+
+bool Vehicle::atDestination() const{
+    if (position == destination)  {
+        return true;
+    }
+    else {
+        return false;
+    }
 }

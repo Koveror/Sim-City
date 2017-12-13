@@ -35,6 +35,7 @@ public:
     int getWidth() const;
     virtual std::string getType() const {return "(nothing)";}
     Pos getDestination() const;
+    bool atDestination() const;
 
 private:
     ///Private members
@@ -56,7 +57,7 @@ public:
     Car() : Vehicle(60, 6, 4) { }
 
     ///Destructor
-    ~Car() {}
+    virtual ~Car() {}
 
     ///Member functions
     virtual std::string getType() const { return "Car"; }
@@ -69,7 +70,7 @@ public:
     Truck() : Vehicle(40, 8, 4) { }
 
     ///Destructor
-    ~Truck() {}
+    virtual ~Truck() {}
 
     ///Member functions
     virtual std::string getType() const { return "Truck"; }
@@ -82,7 +83,7 @@ public:
     Bike() : Vehicle(70, 3, 2) { }
 
     ///Destructor
-    ~Bike() {}
+    virtual ~Bike() {}
 
     ///Member functions
     virtual std::string getType() const { return "Bike"; }

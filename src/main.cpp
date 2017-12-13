@@ -25,7 +25,7 @@ int main(void) {
     testGraph.addVertices();
 
     //Single car for testing
-    testGraph.addCar(Pos(300, 300));
+    //testGraph.addCar(Pos(300, 300));
 //	testGraph.addCar(Pos(113, 122));
 //	testGraph.addCar(Pos(300, 400));
 
@@ -141,7 +141,7 @@ int main(void) {
                     auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
                     std::cout << "Path from source to target below: " << std::endl;
                     for (auto& v : test)  {
-                        std::cout << v.getVertices().first.getPos().x << "-" << v.getVertices().first.getPos().y << std::endl;
+                        std::cout << v.getVertices().first.getPos().x << ", " << v.getVertices().first.getPos().y << " to " << v.getVertices().second.getPos().x << ", " << v.getVertices().second.getPos().y << std::endl;
                     }
                 }
             }
@@ -235,7 +235,7 @@ int main(void) {
 
             //Go through all the vehicles
             for(auto vehicle : testGraph.getVehicles()) {
-                sf::RectangleShape model(sf::Vector2f(16.0, 12.0));
+                sf::RectangleShape model(sf::Vector2f(12.0, 12.0));
                     int i = 0;
                     while(i < speedUp) {
                         //std::cout << "calling move" << std::endl;
