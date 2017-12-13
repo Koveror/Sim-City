@@ -7,14 +7,7 @@
 #include "graph.hpp"
 #include "vehicle.hpp"
 #include "texturemanager.hpp"
-#include "dijkstra.hpp"
-
-
-
-//Force coordinates to a grid
-int forceToGrid(int a) {
-    return a / 64;
-}
+//#include "dijkstra.hpp"
 
 int main(void) {
 
@@ -68,8 +61,8 @@ int main(void) {
                 int x = coord.x;
                 int y = coord.y;
                 //Pos p = Pos(x, y);
-                int mx = forceToGrid(x);
-                int my = forceToGrid(y);
+                int mx = x / 64;
+                int my = y / 64;
                 if (z == sf::Mouse::Left){
                     testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
                 } else if(z == sf::Mouse::Right) {
@@ -137,32 +130,16 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::Num1){
                         speedUp = 1;
                 }
-                else if(event.key.code == sf::Keyboard::D){             //Testing Dijkstra
+                /*else if(event.key.code == sf::Keyboard::D){             //Testing Dijkstra
                     auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
                     std::cout << "Path from source to target below: " << std::endl;
                     for (auto& v : test)  {
                         std::cout << v.getVertices().first.getPos().x << ", " << v.getVertices().first.getPos().y << " to " << v.getVertices().second.getPos().x << ", " << v.getVertices().second.getPos().y << std::endl;
                     }
-                }
+                }*/
             }
             //reset paths TODO!!!
-            for(auto vehicle : testGraph.getVehicles()) {
-                //std::cout << "Car path: " << std::endl;
-                Pos CurrentPosition = vehicle->getPosition();
-        
-                int sourceX = forceToGrid(CurrentPosition.x);
-                int sourceY = forceToGrid(CurrentPosition.y);
-                Vertex source = testGraph.getVertices()[sourceY][sourceX];
-                
-                Pos destination = vehicle->getDestination();
-                int targetX = forceToGrid(destination.x);
-                int targetY = forceToGrid(destination.y);
-                Vertex target = testGraph.getVertices()[targetY][targetX];
-                
-                auto route = getPath(testGraph, source, target);
-                vehicle->setPath(route);
-                
-            }
+            testGraph.update();
         }
 
         //Update screen according to refreshSpeed

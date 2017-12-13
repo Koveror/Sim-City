@@ -9,11 +9,17 @@
 #include <string>
 #include <fstream>
 #include <exception>
+#include <random>
+
+#include <queue> //priority queue
+#include <limits> //numeric limits
+#include <utility> //pair
 
 #include "vertex.hpp"
 
 class Vehicle;
 class Vertex;
+class Edge; /// HUOM
 
 class Graph
 {
@@ -39,6 +45,8 @@ public:
     void sendVehicle(Pos position);
     bool saveGraph(std::string filename);
     bool loadGraph(std::string filename);
+    std::vector<Edge> getPath(Vertex source, Vertex target);
+    void update();
 
 private:
     ///Private members

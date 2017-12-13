@@ -115,10 +115,9 @@ Pos Vehicle::getDestination() const{
 }
 
 bool Vehicle::atDestination() const{
-    if (position == destination)  {
-        return true;
-    }
-    else {
-        return false;
-    }
+    auto temp = Pos(position.x/64, position.y/64);
+    //std::cout << "DEBUG temp pos: " << temp.x << ", " << temp.y << std::endl;
+    //std::cout << "DEBUG destination pos " << destination.x << ", " << destination.y << std::endl;
+    
+    return temp == destination;
 }

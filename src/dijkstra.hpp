@@ -4,21 +4,21 @@
 #include <queue> //priority queue
 #include <limits> //numeric limits
 #include <utility> //pair
-#include <unordered_map>
 #include "graph.hpp"
+#include "vertex.hpp"
+#include "edge.hpp"
 
 #define INF std::numeric_limits<int>::max()
 
-
-class CompareWeight
-{
-public:
-    bool operator()(std::pair<Vertex,int> n1,std::pair<Vertex,int> n2) { // (pair: vertex, int)
-        return n1.second>n2.second;
-    }
-};
-
 std::vector<Edge> getPath(Graph g, Vertex source, Vertex target) {
+    class CompareWeight
+    {
+    public:
+        bool operator()(std::pair<Vertex,int> n1,std::pair<Vertex,int> n2) { // (pair: vertex, int)
+            return n1.second>n2.second;
+        }
+    };
+
     int Y = g.getSizeY();
     int X = g.getSizeX();
     std::vector<std::vector<int>> visited(Y, std::vector<int>(X, false));
@@ -101,41 +101,6 @@ std::vector<Edge> getPath(Graph g, Vertex source, Vertex target) {
         }
         //std::cout << "DIJKSTRA debug Q size: " << Q.size() << std::endl;
     }
-
-    /*
-    ///VISITED
-    std::cout << "VISITED" << std::endl;
-    for (int i = 0; i < 4; ++i)
-    {
-        for (int j = 0; j < 6; ++j)
-        {
-            std::cout << visited[i][j] << "; ";
-        }
-        std::cout << std::endl;
-    }
-
-    ///DIST
-    std::cout << "DIST" << std::endl;
-    for (int i = 0; i < 4; ++i)
-    {
-        for (int j = 0; j < 6; ++j)
-        {
-            std::cout << dist[i][j] << "; ";
-        }
-        std::cout << std::endl;
-    }
-
-    std::cout << "PREV" << std::endl;
-    ///PREV
-    for (int i = 0; i < 4; ++i)
-    {
-        for (int j = 0; j < 6; ++j)
-        {
-            std::cout << "(" << prev[i][j].first << "," << prev[i][j].second << ")\t";
-        }
-        std::cout << std::endl;
-    }
-    */
 
     //std::cout << "No suitable route has been found, returning empty route" << std::endl;
     return std::vector<Edge>();
