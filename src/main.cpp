@@ -7,17 +7,19 @@
 #include "graph.hpp"
 #include "vehicle.hpp"
 #include "texturemanager.hpp"
+#include <cmath>
+#include <exception>
 //#include "dijkstra.hpp"
 
 int main(void) {
 
     TextureManager texmanager;
 
-    //Testing datastructures
+    //Testing data structures
     Graph testGraph = Graph(16, 12);
     testGraph.addVertices();
 
-    //Single car for testing
+    //add single cars for testing
     testGraph.addCar(Pos(300, 300));
     testGraph.addCar(Pos(113, 122));
     testGraph.addCar(Pos(300, 400));
@@ -25,32 +27,35 @@ int main(void) {
     //Variables for GUI loop
     tileType vertex_to_add;
     bool vehicleSendBoolean = false;
+    bool autoTrafficLight = false;
     int speedUp = 1;
     float refreshSpeed = 1.0 / 60.0;
     float ticker = 0.0;
+    int changeSpeed = 6;
     sf::Clock clock;
+    sf::Clock timer;
     sf::Time time = clock.restart() + sf::seconds(4);
 
     //Make a render window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
     window.setVerticalSyncEnabled(true);
 
-
-
-    //Dijkstra
-    /*testGraph.setVertex(0,1,road);
-    testGraph.setVertex(3,0,road);
-    testGraph.setVertex(3,1,road);
-    testGraph.setVertex(2,1,road);
-    testGraph.setVertex(1,1,road);
-    testGraph.setVertex(0,1,road);
-    auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);*/
-
     //GUI loop
     while (window.isOpen())
     {
-        sf::Event event;
+        //Automatic traffic light changing
+
+        if (autoTrafficLight && timer.getElapsedTime().asSeconds() > changeSpeed) {
+            timer.restart();
+            for (auto& row : testGraph.getVertices()) {
+                for (Vertex& light : row) {
+                    light.togglePassable();
+                }
+            }
+        }
         testGraph.update();
+
+        sf::Event event;
         //Event loop listens for events and reacts
         while (window.pollEvent(event))
         {
@@ -110,26 +115,75 @@ int main(void) {
                         std::cout << "Pausing vehicle spawning" << std::endl;
                     }
                 }
-                else if(event.key.code == sf::Keyboard::S){ //testing saveGraph
+                else if(event.key.code == sf::Keyboard::S){ // saveGraph
                     std::string name;
                     std::cout << "Type the full filename to save the map. File-extension not required." << std::endl;
                     std::cin >> name;
-                    std::cout << "Saved succesfully: " << testGraph.saveGraph(name) << std::endl;
+                    std::cout << "Saved successfully (1 or 0): " << testGraph.saveGraph(name) << std::endl;
                 }
-                else if(event.key.code == sf::Keyboard::L){ //testing saveGraph
+                else if(event.key.code == sf::Keyboard::L){ // loadGraph
                     std::string name;
                     std::cout << "Type the full filename to load the map. File-extension not required." << std::endl;
                     std::cin >> name;
-                    std::cout << "Loaded succesfully: " << testGraph.loadGraph(name) << std::endl;
+                    std::cout << "Loaded successfully (1 or 0): " << testGraph.loadGraph(name) << std::endl;
                 }
-                else if(event.key.code == sf::Keyboard::Num3){		//Testing fast forward
-                	speedUp = 6;
+                else if(event.key.code == sf::Keyboard::T){
+                    autoTrafficLight = !autoTrafficLight;
+                    if (autoTrafficLight) {
+                        std::cout << "Traffic light control: automatic" << std::endl;
+                    }
+                    else {
+                        std::cout << "Traffic light control: manual (right mouse button, RMB)" << std::endl;
+                    }
+                }
+                else if(event.key.code == sf::Keyboard::Num3){
+                    std::cout << "8x speed" << std::endl;
+                	speedUp = 8;
                 }
                 else if(event.key.code == sf::Keyboard::Num2){
-                        speedUp = 3;
+                    std::cout << "4x speed" << std::endl;
+                    speedUp = 4;
                 }
                 else if(event.key.code == sf::Keyboard::Num1){
-                        speedUp = 1;
+                    std::cout << "Normal speed" << std::endl;
+                    speedUp = 1;
+                }
+                else if(event.key.code == sf::Keyboard::O){
+                    int newRate;
+                    while (1) {
+                        std::cout << "Give an Integer number for how fast traffic lights should automatically change, in seconds (MIN = 4, MAX = 10)" << std::endl;
+                        std::cout << "Type -1 to cancel" << std::endl;
+                        std::cin >> newRate;
+                        try {
+                            if(std::cin.fail()){
+                                throw "You did not give a valid Integer!";
+                            }
+
+                            if (newRate > 10) {
+                                throw "Value exceeds maximum!";
+                            }
+                            else if (newRate < 4 && newRate != -1) {
+                                throw "Value falls below minimum!";
+                            }
+                            else if (newRate == -1) {
+                                std::cout << "Input cancelled." << std::endl;
+                                break;
+                            }
+                            else {
+                                changeSpeed = newRate;
+                            }
+                            std::cout << "current changeSpeed is: " << changeSpeed << std::endl;
+                            break;
+                        } catch (const char* error) {
+                            std::cin.clear();
+                            std::cin.ignore(std::numeric_limits<int>::max(),'\n');
+                            std::cerr << "Error! " << error << std::endl;
+                        }
+                    }
+                }
+                else if(event.key.code == sf::Keyboard::P){
+                    std::cout << "Game paused..." << std::endl;
+                    speedUp = 0;
                 }
                 /*else if(event.key.code == sf::Keyboard::D){             //Testing Dijkstra
                     auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
@@ -193,7 +247,7 @@ int main(void) {
 
                             direction d = edge.getDirection();
 
-                            if( (v.getType() == road && v.getEdgesTo().size() > 1) || (v.getType() == building && v.getEdgesTo().size() > 1) ) { // should be 2, now 1 due to debug purposes
+                            if( (v.getType() == road && v.getEdgesTo().size() > 2 /*) || (v.getType() == building && v.getEdgesTo().size() > 2*/ ) ) { // should be 2, now 1 due to debug purposes
                                     if(v.passable_from[d]) {
                                             light.setFillColor(sf::Color::Green);
                                     } else {

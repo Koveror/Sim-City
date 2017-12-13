@@ -188,6 +188,20 @@ void Graph::setVertex(int x, int y, tileType type)
                 vertices[y][x].passable_from[2] = true;
                 vertices[y][x].passable_from[3] = true;
 
+                for (auto neighbor : vertices[y][x].getEdgesTo() ) {
+                    auto loc = neighbor.getVertices().second.getIndex();
+                    //std::cout << loc.x << ", " << loc.y << std::endl;
+                    //std::cout << "check neighbor passable_from... " << ( vertices[loc.y][loc.x].getEdgesTo().size() ) << std::endl;
+                    if (vertices[loc.y][loc.x].getEdgesTo().size() >= 3) {
+                        //std::cout << "change..." << std::endl;
+                        vertices[loc.y][loc.x].passable_from[0] = false;
+                        vertices[loc.y][loc.x].passable_from[1] = false;
+                        vertices[loc.y][loc.x].passable_from[2] = false;
+                        vertices[loc.y][loc.x].passable_from[3] = false;
+                    }
+
+                }
+
             } else {
                 //std::cout << "type is grass, check lights..." << std::endl;
                 for (auto neighbor : vertices[y][x].getEdgesTo() ) {
@@ -403,7 +417,7 @@ std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
 
 void Graph::update() {
     for(auto it = vehicles.begin(); it != vehicles.end(); ) {
-        
+
     //for(auto vehicle : vehicles) {
         //std::cout << "Car path: " << std::endl;
         Pos CurrentPosition = (*it)->getPosition();
@@ -411,15 +425,15 @@ void Graph::update() {
         int sourceX = CurrentPosition.x / 64;
         int sourceY = CurrentPosition.y / 64;
         Vertex source = getVertices()[sourceY][sourceX];
-        
+
         Pos destination = (*it)->getDestination();
         int targetX = destination.x / 64;
         int targetY = destination.y / 64;
         Vertex target = getVertices()[targetY][targetX];
-        
+
         auto route = getPath(source, target);
         (*it)->setPath(route);
-        
+
         if ( (*it)->atDestination() ) {
             //std::cout << "atDestination!" << std::endl;
             it = vehicles.erase(it);
@@ -427,7 +441,7 @@ void Graph::update() {
             //std::cout << "nope" << std::endl;
             ++it;
         }
-        
-        
+
+
     }
 }
