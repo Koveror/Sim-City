@@ -52,7 +52,7 @@ std::vector<Edge> getPath(Graph g, Vertex source, Vertex target) {
 
         ///If we find the target
         if (u == target) {
-            std::cout << "Found target, printing path..." << std::endl;
+            //std::cout << "Found target, printing path..." << std::endl;
 
             auto route = std::vector<std::pair<int,int>>();
             auto routeEdges = std::vector<Edge>();
@@ -137,7 +137,7 @@ std::vector<Edge> getPath(Graph g, Vertex source, Vertex target) {
     }
     */
 
-    std::cout << "No suitable route has been found, returning empty route" << std::endl;
+    //std::cout << "No suitable route has been found, returning empty route" << std::endl;
     return std::vector<Edge>();
     //return std::vector<std::pair<int,int>>();
 }

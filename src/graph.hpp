@@ -23,7 +23,7 @@ public:
     longitude(n), latitude(m) { }
 
     ///Destructor
-    ~Graph();
+    //~Graph();
 
     ///Member functions
     bool addVertex(int x, int y);

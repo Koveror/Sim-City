@@ -1,11 +1,11 @@
 #include "graph.hpp"
 
-Graph::~Graph() {
-    /*for(auto it : vehicles) {
+/*Graph::~Graph() {
+    for(auto it : vehicles) {
         std::cout << "Deleting vehicles" << std::endl;
-        delete it;
-    }*/
-}
+        it.reset();
+    }
+}*/
 
 void Graph::addCar(Pos p) {
 
@@ -13,8 +13,9 @@ void Graph::addCar(Pos p) {
     //Vehicle* c = new Car;
     c->setPosition(p);
     c->setNextPosition(p);
-	vehicles.push_back(c);
+    vehicles.push_back(c);
     std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
+    std::cout << "Vehicles size: " << vehicles.size() << std::endl;
 }
 
 std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
@@ -251,8 +252,8 @@ void Graph::sendVehicle(Pos position){
     std::exponential_distribution<double> distribution(1.0 / 5.0);
     //std::cout << "gen: " << distribution(generator) << std::endl;
     if(distribution(generator) < 0.00665){
-        std::cout << "Send vehicle from: " << "(" << position.x/96 << "," << position.y/96 << ")" << std::endl;
-        addCar(position);
+        std::cout << "Send vehicle from: " << "(" << position.x/64 << "," << position.y/64 << ")" << std::endl; //96?
+        this->addCar(position);
     }
 
 //     int summa = 0.0;
@@ -279,12 +280,12 @@ bool Graph::saveGraph(std::string filename) {
 }
 
 bool Graph::loadGraph(std::string filename) {
-    vehicles.clear();
     std::string extension = ".txt";
     std::ifstream file;
 
     file.open(filename+extension);
     if (!file.is_open()) return false;
+    vehicles.clear();
     std::string row;
 
     int y = 0;

@@ -24,12 +24,12 @@ public:
     virtual ~Vehicle() {}
 
     ///Member functions
-	void moveTowards(Pos givenPos);
-	void move(Graph& graph);
-	void setPosition(Pos givenPos);
-	void moveAlong();
-	void setNextPosition(Pos givenPos);
-	void setPath(std::vector<Edge> givenPath);
+    void moveTowards(Pos givenPos);
+    void move(Graph& graph);
+    void setPosition(Pos givenPos);
+    void moveAlong();
+    void setNextPosition(Pos givenPos);
+    void setPath(std::vector<Edge> givenPath);
     Pos getPosition() const;
     int getLength() const;
     int getWidth() const;
@@ -39,14 +39,14 @@ public:
 
 private:
     ///Private members
-	std::vector<Edge> path = std::vector<Edge>();
-	Pos nextPosition;
-	Pos position;
+    std::vector<Edge> path = std::vector<Edge>();
+    Pos nextPosition;
+    Pos position;
     int max_speed;
     float speed = 0;
     int length;
     int width;
-    direction comingFrom;
+    direction comingFrom = north;
     Pos destination;
 };
 

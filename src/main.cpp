@@ -25,9 +25,9 @@ int main(void) {
     testGraph.addVertices();
 
     //Single car for testing
-    //testGraph.addCar(Pos(300, 300));
-//	testGraph.addCar(Pos(113, 122));
-//	testGraph.addCar(Pos(300, 400));
+    testGraph.addCar(Pos(300, 300));
+    testGraph.addCar(Pos(113, 122));
+    testGraph.addCar(Pos(300, 400));
 
     //Variables for GUI loop
     tileType vertex_to_add;
@@ -147,14 +147,14 @@ int main(void) {
             }
             //reset paths TODO!!!
             for(auto vehicle : testGraph.getVehicles()) {
-                std::cout << "Car path: " << std::endl;
-                Pos CurrentPosition = vehicle -> getPosition();
+                //std::cout << "Car path: " << std::endl;
+                Pos CurrentPosition = vehicle->getPosition();
         
                 int sourceX = forceToGrid(CurrentPosition.x);
                 int sourceY = forceToGrid(CurrentPosition.y);
                 Vertex source = testGraph.getVertices()[sourceY][sourceX];
                 
-                Pos destination = vehicle -> getDestination();
+                Pos destination = vehicle->getDestination();
                 int targetX = forceToGrid(destination.x);
                 int targetY = forceToGrid(destination.y);
                 Vertex target = testGraph.getVertices()[targetY][targetX];
