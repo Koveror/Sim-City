@@ -14,9 +14,13 @@
 ///To run tests, uncomment (event.key.code == sf::Keyboard::Z) in the if else block.
 int test(void) {
     std::cout << "Begin unit tests..." << std::endl;
+
+    ///Graph
+    std::cout << " " << std::endl;
+    std::cout << "Testing GRAPH" << std::endl;
     Graph testG = Graph(4, 3);
     testG.addVertices();
-    
+
     //
     assert(testG.getSize() == 12);
     std::cout << "Graph addVertices() and getSize() works properly" << std::endl;
@@ -24,30 +28,64 @@ int test(void) {
     std::cout << "Graph getSizeX() works properly" << std::endl;
     assert(testG.getSizeY() == 3);
     std::cout << "Graph getSizeY() works properly" << std::endl;
-    
+
     //
-    testG.setVertex(0,1,road);
+    testG.setVertex(0,1,building);
     auto type = testG.getVertices()[1][0].getType();
+    assert(type == building);
+    testG.getVertices()[1][0].setType(road);
+    type = testG.getVertices()[1][0].getType();
     assert(type == road);
-    std::cout << "Graph getVertices() & Vertex getType() works properly" << std::endl;
+    std::cout << "Graph getVertices() & Vertex getType() and setType() works properly" << std::endl;
+
     assert(testG.getVehicles().size() == 0);
     std::cout << "Graph getVehicles is: " << testG.getVehicles().size() << std::endl;
     auto position = Pos(0,0);
     assert(position.x == 0 && position.y == 0);
     std::cout << "created Position Pos(0,0). Now testing addCar..." << std::endl;
-    
+
     //
     testG.setVertex(0,0,building);
     testG.setVertex(0,2,building);
-    testG.addCar(position);
+    testG.sendVehicle(position, 1, 10000.0); //unusually high rate to ensure that vehicle DEFINITELY spawns
+    //testG.addCar(position);
     //std::cout << "Graph getVehicles is: " << testG.getVehicles().size() << std::endl;
     assert(testG.getVehicles().size() == 1);
-    std::cout << "Graph getVehicles is 1. Both Graph getVehicles() and addCar works." << std::endl;
-    
+    std::cout << "Graph getVehicles is 1. Both Graph getVehicles() and sendVehicle (and addCar) works." << std::endl;
+
     //
     assert(testG.getPath(testG.getVertices()[0][0],testG.getVertices()[2][0]).size() == 2);
     std::cout << "Graph getPath works." << std::endl;
-    
+
+    ///Vertex
+    std::cout << " " << std::endl;
+    std::cout << "Testing VERTEX" << std::endl;
+    Vertex a = Vertex(1, 1, road);
+    assert(a.getPos() == Pos(96,96) && a.getIndex() == Pos(1,1));
+    std::cout << "Vertex getPos() and getIndex() works." << std::endl;
+
+    ///Edge
+    std::cout << " " << std::endl;
+    std::cout << "Testing EDGE" << std::endl;
+
+    ///Vehicle
+    std::cout << "Testing VEHICLE" << std::endl;
+    Vehicle testVehA = Vehicle(50, 4, 6);
+    Vehicle testVehB = Vehicle(60, 6, 8);
+    Vehicle copyVehA = Vehicle(testVehA);
+    Vehicle copyVehB = testVehB;
+
+    //
+    assert(testVehA.getWidth() == copyVehA.getWidth() && testVehA.getHeight() == copyVehA.getHeight());
+    assert(testVehB.getWidth() == copyVehB.getWidth() && testVehB.getHeight() == copyVehB.getHeight());
+    std::cout << "Copy constructor and assignment works, Vehicle getWidth() and getHeight() also work." << std::endl;
+
+    //
+    Vehicle *c = new Car();
+    assert(c->getHeight() == 12);
+    delete c;
+    std::cout << "Derived class Car works." << std::endl;
+
     return 0;
 }
 
@@ -80,7 +118,7 @@ int main(void) {
     //Make a render window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
     window.setVerticalSyncEnabled(true);
-    
+
     //Welcome msg on console
     std::cout << "Welcome to sim-city-1! Press H for help/instructions" << std::endl;
     std::cout << "To run unittests, uncomment (event.key.code == sf::Keyboard::Z) if-else block." << std::endl;
@@ -371,20 +409,20 @@ int main(void) {
                 if(dir == south){
                     model.setPosition(got.x-14, got.y);
                     model.setRotation(180);
-                } 
+                }
                 else if(dir == north){
                     model.setPosition(got.x+14, got.y);
                     model.setRotation(-180);
-                } 
+                }
                 else if(dir == east){
                     model.setPosition(got.x, got.y-14);
                     model.setRotation(90);
-                } 
+                }
                 else if(dir == west){
                     model.setPosition(got.x, got.y+14);
                     model.setRotation(-90);
                 }
-                
+
                 window.draw(model);
             }
 

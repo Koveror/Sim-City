@@ -66,7 +66,7 @@ Press **T** to toggle automatic traffic light control. You can also use right mo
 
 Game speed can be changed using numbers **1** (1x), **2** (4x) and **3** (8x).
 
-To save your current map psess **S** and follow instructions on the console. To load press **L** and also follow instructions on the console.
+To save your current map press **S** and follow instructions on the console. To load press **L** and also follow instructions on the console.
 
 ### Use of C++ features
 In this section we will quickly go through of use of C++ features that were required in the project.
@@ -81,7 +81,7 @@ We use smart pointers (`std::shared_ptr`) for storing vehicles as our graph clas
 Exception handling is used when user wants to change the rates that 1) change lights and 2) buildings spawn vehicles, as both of these require user input. The try catch loop ensures that if user enters invalid argument or invalid value, the software throws an error, forcing to retry, or type -1 to cancel the operation. Exception handling is also used when the user wants to load a map.
 
 #### Rule of three
-Rule of three (and rule of zero) is enforced in every part of our software: For example, see vehicle.cpp.
+Rule of three (and rule of zero) is enforced in every part of our software: For example, vehicle class has a (virtual) destructor, copy constructor and copy assignment.
 
 #### Dynamic binding and virtual classes/functions
 Vehicle class uses dynamic binding, as we have derived classes for vehicles. For example, virtual destructor is required for base class Vehicle.
