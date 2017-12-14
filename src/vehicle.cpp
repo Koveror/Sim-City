@@ -1,5 +1,32 @@
 #include "vehicle.hpp"
 
+
+//Helper method used for collision checking. Checks every single vehicle to see that p0 doesn't contain a vehicle.
+//Returns true if there is a vehicle in front, otherwise returns false.
+//TODO: Performance!!!
+//TODO: In turns vehicles can go inside each other
+bool Vehicle::checkFront(Graph& graph) const {
+
+    int length = 15;    //The distance of the front position from the vehicle. TODO: Use vehicle width and length
+    Pos p0;     //A position in front of the current vehicle.
+
+    //Get current direction and figure out front position.
+    direction d0 = getDirection();
+    if(d0 == north) {p0 = Pos(position.x, position.y - length);}
+    else if(d0 == east) {p0 = Pos(position.x - length, position.y);}
+    else if(d0 == south) {p0 = Pos(position.x, position.y + length);}
+    else {p0 = Pos(position.x + length, position.y);}
+
+    //Check if the front position is clear by checking through all of the vehicles.
+    std::list<std::shared_ptr<Vehicle>> vehicles = graph.getVehicles();
+    auto it = std::find_if(vehicles.begin(), vehicles.end(), [p0, d0](std::shared_ptr<Vehicle> x){return x->getPosition() == p0 && x -> getDirection() == d0;});
+    if(it == vehicles.end()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 //Set the position to where this vehicle tries to move
 //when the method move() is called.
 void Vehicle::setNextPosition(Pos givenPos) {
@@ -15,12 +42,15 @@ void Vehicle::move(Graph& graph) {
 	int dY = nextPosition.y / 64;
         Vertex v = graph.getVertices()[iY][iX];		//Get current vertex from the graph
 	Vertex nextV = graph.getVertices()[dY][dX];		//Get current vertex from the graph
-	//std::cout << "Current position: (" << position.x << ", " << position.y << ")" << std::endl;
-	//std::cout << "Next position: (" << nextPosition.x << ", " << nextPosition.y << ")" << std::endl;
 
+        //Check traffic lights
 	if(iX == dX && iY == dY && !v.passable_from[comingFrom]) {	//TODO: figure out current direction
             //Wait
-	} 
+        }
+        //Check that fron of car is clear
+        else if(checkFront(graph)) {
+            //Wait
+        }
 	else if(position.x == nextPosition.x && position.y == nextPosition.y) {
             std::vector<Edge> edges = v.getEdgesTo();
             if(edges.size() < 1) {
