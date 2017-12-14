@@ -11,7 +11,7 @@
 #include <exception>
 #include <cassert>
 
-///To run tests, uncomment (event.key.code == sf::Keyboard::Z) if else block.
+///To run tests, uncomment (event.key.code == sf::Keyboard::Z) in the if else block.
 int test(void) {
     std::cout << "Begin unit tests..." << std::endl;
     Graph testG = Graph(4, 3);
@@ -26,16 +26,27 @@ int test(void) {
     std::cout << "Graph getSizeY() works properly" << std::endl;
     
     //
-    testG.setVertex(0,0,road);
-    auto typez = testG.getVertices()[0][0].getType();
-    assert(typez == road);
+    testG.setVertex(0,1,road);
+    auto type = testG.getVertices()[1][0].getType();
+    assert(type == road);
     std::cout << "Graph getVertices() & Vertex getType() works properly" << std::endl;
     assert(testG.getVehicles().size() == 0);
-    std::cout << "Graph getVehicles is 0." << std::endl;
+    std::cout << "Graph getVehicles is: " << testG.getVehicles().size() << std::endl;
     auto position = Pos(0,0);
     assert(position.x == 0 && position.y == 0);
-    std::cout << "created Position Pos(0,0)." << std::endl;
+    std::cout << "created Position Pos(0,0). Now testing addCar..." << std::endl;
+    
+    //
+    testG.setVertex(0,0,building);
+    testG.setVertex(0,2,building);
     testG.addCar(position);
+    //std::cout << "Graph getVehicles is: " << testG.getVehicles().size() << std::endl;
+    assert(testG.getVehicles().size() == 1);
+    std::cout << "Graph getVehicles is 1. Both Graph getVehicles() and addCar works." << std::endl;
+    
+    //
+    assert(testG.getPath(testG.getVertices()[0][0],testG.getVertices()[2][0]).size() == 2);
+    std::cout << "Graph getPath works." << std::endl;
     
     return 0;
 }
