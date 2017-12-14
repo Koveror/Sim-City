@@ -87,7 +87,7 @@ Rule of three (and rule of zero) is enforced in every part of our software: For 
 Vehicle class uses dynamic binding, as we have derived classes for vehicles. For example, virtual destructor is required for base class Vehicle.
 
 ### Known bugs
-- Collision detection is still buggy, cars can run past each other e.g. at intersections.
+- Currently vehicles go through each other; in other words, collision detection doesn't work properly.
 - Different vehicles do not have textures, the only aspect to distinguish the difference is the vehicle size.
 
 
