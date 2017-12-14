@@ -22,13 +22,13 @@ command, which will remove object files and executables from the src directory.
 
 ## Simulation instructions
 
-To get started, simply run the program and read the welcome message. That should get you started!
+To get started, simply run the program and read the welcome message on the console. That should get you started!
 
-Detailed instructions is also included in the `documentation.md`, which can be found in the `doc` folder.
+Detailed instructions is included in the `readme.md`, which can be found in the `doc` folder.
 
-## Course instructions
+## Other foldiers and files
 
-The project root directory should contain the following folders:
+The project root directory contains the following folders:
 
   * `plan/` -- Here is our project plan.
 
@@ -39,3 +39,10 @@ The project root directory should contain the following folders:
   * `README.md` -- The file you are now reading.
 
   * `Makefile`	-- Makefile to be used with the unix program called make.
+  
+## Credits
+- Harti Hänninen, Industrial Engineering and Management
+- Risto Koverola, Computer Science and Engineering
+- Ilari Rauhala, Engineering Physics and Mathematics
+- Tianzhong Pan, Industrial Engineering and Management
+On 15th December, 2017
