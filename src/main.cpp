@@ -11,12 +11,19 @@
 #include <exception>
 #include <cassert>
 
+///To run tests, uncomment (event.key.code == sf::Keyboard::Z) if else block.
 int test(void) {
     std::cout << "Begin unit tests..." << std::endl;
-    return 0;
     Graph testG = Graph(4, 3);
     testG.addVertices();
-    assert(2+2==5);
+    assert(testG.getSize() == 12);
+    std::cout << "Graph getSize() works properly" << std::endl;
+    assert(testG.getSizeX() == 4);
+    std::cout << "Graph getSizeX() works properly" << std::endl;
+    assert(testG.getSizeY() == 3);
+    std::cout << "Graph getSizeY() works properly" << std::endl;
+    
+    return 0;
 }
 
 int main(void) {
@@ -50,6 +57,7 @@ int main(void) {
     
     //Welcome msg on console
     std::cout << "Welcome to sim-city-1! Press H for help/instructions" << std::endl;
+    std::cout << "To run unittests, uncomment (event.key.code == sf::Keyboard::Z) if-else block." << std::endl;
 
     //GUI loop
     while (window.isOpen())
@@ -185,7 +193,7 @@ int main(void) {
                             else {
                                 changeSpeed = newRate;
                             }
-                            std::cout << "current changeSpeed is: " << changeSpeed << std::endl;
+                            std::cout << "Current changeSpeed is: " << changeSpeed << std::endl;
                             break;
                         } catch (const char* error) {
                             std::cin.clear();
