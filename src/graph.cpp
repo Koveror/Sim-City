@@ -280,6 +280,10 @@ void Graph::sendVehicle(Pos position){
 }
 
 bool Graph::saveGraph(std::string filename) {
+    if (filename == "-1") {
+        std::cout << "Saving cancelled." << std::endl;
+        return false;
+    }
     std::string extension = ".txt";
     std::ofstream file;
     file.open(filename+extension);
@@ -290,15 +294,23 @@ bool Graph::saveGraph(std::string filename) {
         file << "\n";
     }
     file.close();
+    std::cout << "Save success!" << std::endl;
     return true;
 }
 
 bool Graph::loadGraph(std::string filename) {
+    if (filename == "-1") {
+        std::cout << "Loading cancelled." << std::endl;
+        return false;
+    }
     std::string extension = ".txt";
     std::ifstream file;
 
     file.open(filename+extension);
-    if (!file.is_open()) return false;
+    if (!file.is_open()) {
+        std::cerr << "Load failed." << std::endl;
+        return false;
+    }
     vehicles.clear();
     std::string row;
 
@@ -313,7 +325,7 @@ bool Graph::loadGraph(std::string filename) {
         y++;
     }
     file.close();
-
+    std::cout << "Load success!" << std::endl;
     return true;
 }
 

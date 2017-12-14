@@ -100,13 +100,13 @@ Pos Vehicle::getPosition() const{
 }
 
 //Get length variable. Currently not used.
-int Vehicle::getLength() const{
-    return length;
+int Vehicle::getWidth() const{
+    return width;
 }
 
 //Get width. Currently not in use.
-int Vehicle::getWidth() const{
-    return width;
+int Vehicle::getHeight() const{
+    return height;
 }
 
 // get destination

@@ -7,7 +7,6 @@
 #include "vehicle.hpp"
 #include "vertex.hpp"
 #include "graph.hpp"
-//#include "dijkstra.hpp"
 
 class Edge;
 
@@ -17,11 +16,17 @@ class Vehicle
 {
 public:
     ///Constructor
-    Vehicle(int max_spd, int l, int w) :
-        max_speed(max_spd), length(l), width(w), destination(Pos(0,0)) {}
+    Vehicle(int max_spd, int w, int h) :
+        max_speed(max_spd), width(w), height(h), destination(Pos(0,0)) {}
 
     ///Destructor
     virtual ~Vehicle() {}
+    
+    ///Copy constructor, Ro3
+    Vehicle(const Vehicle& copyFrom) = default;
+    
+    ///Copy assignment, Ro3
+    Vehicle& operator=(const Vehicle& copyFrom) = default;
 
     ///Member functions
     void moveTowards(Pos givenPos);
@@ -31,8 +36,8 @@ public:
     void setNextPosition(Pos givenPos);
     void setPath(std::vector<Edge> givenPath);
     Pos getPosition() const;
-    int getLength() const;
     int getWidth() const;
+    int getHeight() const;
     virtual std::string getType() const {return "(nothing)";}
     Pos getDestination() const;
     bool atDestination() const;
@@ -44,9 +49,9 @@ private:
     Pos position;
     int max_speed;
     float speed = 0;
-    int length;
     int width;
-    direction comingFrom = north;
+    int height;
+    direction comingFrom = north; //Must assign to avoid segfault
     Pos destination;
 };
 
@@ -54,10 +59,7 @@ class Car : public Vehicle
 {
 public:
     ///Constructor
-    Car() : Vehicle(60, 6, 4) { }
-
-    ///Destructor
-    virtual ~Car() {}
+    Car() : Vehicle(60, 28, 18) { }
 
     ///Member functions
     virtual std::string getType() const { return "Car"; }
@@ -67,10 +69,7 @@ class Truck : public Vehicle
 {
 public:
     ///Constructor
-    Truck() : Vehicle(40, 8, 4) { }
-
-    ///Destructor
-    virtual ~Truck() {}
+    Truck() : Vehicle(40, 38, 20) { }
 
     ///Member functions
     virtual std::string getType() const { return "Truck"; }
@@ -80,10 +79,7 @@ class Bike : public Vehicle
 {
 public:
     ///Constructor
-    Bike() : Vehicle(70, 3, 2) { }
-
-    ///Destructor
-    virtual ~Bike() {}
+    Bike() : Vehicle(70, 14, 6) { }
 
     ///Member functions
     virtual std::string getType() const { return "Bike"; }

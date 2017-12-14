@@ -9,7 +9,15 @@
 #include "texturemanager.hpp"
 #include <cmath>
 #include <exception>
-//#include "dijkstra.hpp"
+#include <cassert>
+
+int test(void) {
+    std::cout << "Begin unit tests..." << std::endl;
+    return 0;
+    Graph testG = Graph(4, 3);
+    testG.addVertices();
+    assert(2+2==5);
+}
 
 int main(void) {
 
@@ -20,9 +28,9 @@ int main(void) {
     testGraph.addVertices();
 
     //add single cars for testing
-    testGraph.addCar(Pos(300, 300));
-    testGraph.addCar(Pos(113, 122));
-    testGraph.addCar(Pos(300, 400));
+    //testGraph.addCar(Pos(300, 300));
+    //testGraph.addCar(Pos(113, 122));
+    //testGraph.addCar(Pos(300, 400));
 
     //Variables for GUI loop
     tileType vertex_to_add;
@@ -39,6 +47,9 @@ int main(void) {
     //Make a render window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "Sim-City");
     window.setVerticalSyncEnabled(true);
+    
+    //Welcome msg on console
+    std::cout << "Welcome to sim-city-1! Press H for help/instructions" << std::endl;
 
     //GUI loop
     while (window.isOpen())
@@ -118,14 +129,16 @@ int main(void) {
                 else if(event.key.code == sf::Keyboard::S){ // saveGraph
                     std::string name;
                     std::cout << "Type the full filename to save the map. File-extension not required." << std::endl;
+                    std::cout << "Type -1 to cancel" << std::endl;
                     std::cin >> name;
-                    std::cout << "Saved successfully (1 or 0): " << testGraph.saveGraph(name) << std::endl;
+                    testGraph.saveGraph(name);
                 }
                 else if(event.key.code == sf::Keyboard::L){ // loadGraph
                     std::string name;
                     std::cout << "Type the full filename to load the map. File-extension not required." << std::endl;
+                    std::cout << "Type -1 to cancel" << std::endl;
                     std::cin >> name;
-                    std::cout << "Loaded successfully (1 or 0): " << testGraph.loadGraph(name) << std::endl;
+                    testGraph.loadGraph(name);
                 }
                 else if(event.key.code == sf::Keyboard::T){
                     autoTrafficLight = !autoTrafficLight;
@@ -137,15 +150,15 @@ int main(void) {
                     }
                 }
                 else if(event.key.code == sf::Keyboard::Num3){
-                    std::cout << "8x speed" << std::endl;
-                	speedUp = 8;
+                    std::cout << "Now at: 8x speed" << std::endl;
+                    speedUp = 8;
                 }
                 else if(event.key.code == sf::Keyboard::Num2){
-                    std::cout << "4x speed" << std::endl;
+                    std::cout << "Now at: 4x speed" << std::endl;
                     speedUp = 4;
                 }
                 else if(event.key.code == sf::Keyboard::Num1){
-                    std::cout << "Normal speed" << std::endl;
+                    std::cout << "Now at: Normal speed" << std::endl;
                     speedUp = 1;
                 }
                 else if(event.key.code == sf::Keyboard::O){
@@ -185,13 +198,23 @@ int main(void) {
                     std::cout << "Game paused..." << std::endl;
                     speedUp = 0;
                 }
-                /*else if(event.key.code == sf::Keyboard::D){             //Testing Dijkstra
-                    auto test = getPath(testGraph, testGraph.getVertices()[1][0], testGraph.getVertices()[0][3]);
-                    std::cout << "Path from source to target below: " << std::endl;
-                    for (auto& v : test)  {
-                        std::cout << v.getVertices().first.getPos().x << ", " << v.getVertices().first.getPos().y << " to " << v.getVertices().second.getPos().x << ", " << v.getVertices().second.getPos().y << std::endl;
-                    }
-                }*/
+                else if(event.key.code == sf::Keyboard::H){ ///TODO
+                    std::cout << "Instructions:" << std::endl;
+                    std::cout << "- Press R, G or B to select which kind of tile to add." << std::endl;
+                    std::cout << "  R = road, G = grass and B = building." << std::endl;
+                    std::cout << "- Press S or L to save or load." << std::endl;
+                    std::cout << "  Follow further instructions on the console." << std::endl;
+                    std::cout << "- Press T to toggle automatic traffic light control." << std::endl;
+                    std::cout << "  Note that even if you're on automatic mode, you can still manually change individual lights." << std::endl;
+                    std::cout << "- Press O (not zero) to change the rate that automatic traffic light control changes lights." << std::endl;
+                    std::cout << "  Further instructions will appear on the console." << std::endl;
+                    std::cout << "- Press 1, 2 or 3 to change game speed." << std::endl;
+                    std::cout << "  1 = normal speed, 2 = 4x speed and 3 = 8x speed" << std::endl;
+
+                }
+                else if(event.key.code == sf::Keyboard::Z){
+                    test();
+                }
             }
         }
 
@@ -247,7 +270,7 @@ int main(void) {
 
                             direction d = edge.getDirection();
 
-                            if( (v.getType() == road && v.getEdgesTo().size() > 2 /*) || (v.getType() == building && v.getEdgesTo().size() > 2*/ ) ) { // should be 2, now 1 due to debug purposes
+                            if( (v.getType() == road && v.getEdgesTo().size() > 2 /*) || (v.getType() == building && v.getEdgesTo().size() > 2*/ ) ) { // set to 1 if want to debug
                                     if(v.passable_from[d]) {
                                             light.setFillColor(sf::Color::Green);
                                     } else {

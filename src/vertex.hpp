@@ -19,29 +19,28 @@ class Vertex
 {
 public:
 
-	///Constructor
+    ///Constructor
     Vertex(int x, int y, tileType type);
 
-	///Member functions
+    ///Member functions
     Pos getPos();
-	Pos getIndex();
+    Pos getIndex();
     const tileType& getType();
     void setType(tileType t);
     void addEdge(Pos position, Graph& graph, int weight);
     void removeEdge(Pos position);
-	void removeEdgesTo(Pos position);
+    void removeEdgesTo(Pos position);
     const std::vector<Edge>& getEdgesTo();
     const std::string getTexture();
     bool hasEdgeTo(int x, int y);
     Edge getSingleEdge(std::pair<int,int> coordPair);
-	void togglePassable();
+    void togglePassable();
     void sendVehicle();
 
-	///Operator overloading
-	bool operator==(Vertex a);
+    ///Operator overloading
+    bool operator==(Vertex a);
 
-	///TODO
-    std::vector<bool> passable_from;    //move to private
+    std::vector<bool> passable_from;
 
 private:
     ///Private members
