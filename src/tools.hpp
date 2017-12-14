@@ -12,8 +12,7 @@ typedef enum
     north,
     east,
     south,
-    west,
-    noDir
+    west
 } direction;
 
 //enumerations for different tiles (vertices)
