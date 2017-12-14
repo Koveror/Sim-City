@@ -13,6 +13,19 @@ void Graph::addCar(Pos p) {
     //Vehicle* c = new Car;
     c->setPosition(p);
     c->setNextPosition(p);
+    
+    //chooose random building for destination
+    std::vector<Pos> destinations = {};
+    for(auto row : vertices){
+        for(auto vertex : row) {
+            if(vertex.getType() == building){
+                destinations.push_back(vertex.getPos());
+            }
+        }
+    }
+    int i = rand() % destinations.size();
+    c->setDestination( destinations[i] );
+    
     vehicles.push_back(c);
     std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
     std::cout << "Vehicles size: " << vehicles.size() << std::endl;

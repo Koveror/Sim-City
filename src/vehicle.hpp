@@ -31,10 +31,11 @@ public:
     ///Member functions
     void moveTowards(Pos givenPos);
     void move(Graph& graph);
-    void setPosition(Pos givenPos);
     void moveAlong();
+    void setPosition(Pos givenPos);
     void setNextPosition(Pos givenPos);
     void setPath(std::vector<Edge> givenPath);
+    void setDestination(Pos dest);
     Pos getPosition() const;
     int getWidth() const;
     int getHeight() const;

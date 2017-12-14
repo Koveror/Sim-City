@@ -94,6 +94,10 @@ void Vehicle::setPosition(Pos givenPos) {
 	position = givenPos;
 }
 
+void Vehicle::setDestination(Pos dest){
+    destination = dest;
+}
+
 //Get current position. Used for drawing for example.
 Pos Vehicle::getPosition() const{
 	return position;
