@@ -21,10 +21,10 @@ public:
 
     ///Destructor
     virtual ~Vehicle() {}
-    
+
     ///Copy constructor, Ro3
     Vehicle(const Vehicle& copyFrom) = default;
-    
+
     ///Copy assignment, Ro3
     Vehicle& operator=(const Vehicle& copyFrom) = default;
 
@@ -43,7 +43,11 @@ public:
     virtual std::string getType() const {return "(nothing)";}
     Pos getDestination() const;
     bool atDestination() const;
+<<<<<<< HEAD
+    direction turningTo();
+=======
     bool checkFront(Graph& graph) const;
+>>>>>>> ed9e7cd946be3f09912ee94ec2ab911b733dce16
 
 private:
     ///Private members
