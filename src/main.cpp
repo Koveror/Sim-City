@@ -340,8 +340,22 @@ int main(void) {
                         i++;
                     }
                 Pos got = vehicle -> getPosition();
+                direction dir = vehicle -> getDirection();
                 model.setOrigin(6.0, 6.0);
-                model.setPosition(got.x, got.y);
+                //set position according to direction
+                if(dir == south){
+                    model.setPosition(got.x-14, got.y);
+                } 
+                else if(dir == north){
+                    model.setPosition(got.x+14, got.y);
+                } 
+                else if(dir == east){
+                    model.setPosition(got.x, got.y-14);
+                } 
+                else if(dir == west){
+                    model.setPosition(got.x, got.y+14);
+                }
+                
                 window.draw(model);
             }
 

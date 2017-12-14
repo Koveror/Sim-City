@@ -118,6 +118,10 @@ Pos Vehicle::getDestination() const{
     return destination;
 }
 
+direction Vehicle::getDirection() const{
+    return comingFrom;
+}
+
 bool Vehicle::atDestination() const{
     auto posGrid = Pos(position.x/64, position.y/64);
     auto destGrid = Pos(destination.x/64, destination.y/64);

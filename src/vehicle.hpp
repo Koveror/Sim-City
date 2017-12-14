@@ -37,6 +37,7 @@ public:
     void setPath(std::vector<Edge> givenPath);
     void setDestination(Pos dest);
     Pos getPosition() const;
+    direction getDirection() const;
     int getWidth() const;
     int getHeight() const;
     virtual std::string getType() const {return "(nothing)";}
