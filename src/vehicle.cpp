@@ -119,9 +119,12 @@ Pos Vehicle::getDestination() const{
 }
 
 bool Vehicle::atDestination() const{
-    auto temp = Pos(position.x/64, position.y/64);
-    //std::cout << "DEBUG temp pos: " << temp.x << ", " << temp.y << std::endl;
+    auto posGrid = Pos(position.x/64, position.y/64);
+    auto destGrid = Pos(destination.x/64, destination.y/64);
+    //std::cout << "DEBUG position pos: " << position.x << ", " << position.y << std::endl;
     //std::cout << "DEBUG destination pos " << destination.x << ", " << destination.y << std::endl;
+    //std::cout << "DEBUG posGrid pos: " << posGrid.x << ", " << posGrid.y << std::endl;
+    //std::cout << "DEBUG destGrid pos: " << destGrid.x << ", " << destGrid.y << std::endl;
     
-    return temp == destination;
+    return posGrid == destGrid;
 }
