@@ -46,6 +46,7 @@ int main(void) {
     int speedUp = 1;
     float refreshSpeed = 1.0 / 60.0;
     float ticker = 0.0;
+    float rate = 1.0;
     int changeSpeed = 6;
     sf::Clock clock;
     sf::Clock timer;
@@ -64,7 +65,7 @@ int main(void) {
     {
         //Automatic traffic light changing
 
-        if (autoTrafficLight && timer.getElapsedTime().asSeconds() > changeSpeed) {
+        if (autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > changeSpeed) {
             timer.restart();
             for (auto& row : testGraph.getVertices()) {
                 for (Vertex& light : row) {
@@ -169,6 +170,39 @@ int main(void) {
                     std::cout << "Now at: Normal speed" << std::endl;
                     speedUp = 1;
                 }
+                else if(event.key.code == sf::Keyboard::I){
+                    float newRate;
+                    while (1) {
+                        std::cout << "Give a floating point number for how fast buildings should send vehicles (MIN = 0.25, MAX = 4.0)" << std::endl;
+                        std::cout << "Type -1 to cancel" << std::endl;
+                        std::cin >> newRate;
+                        try {
+                            if(std::cin.fail()){
+                                throw "You did not give a valid floating point number!";
+                            }
+
+                            if (newRate > 4.0) {
+                                throw "Value exceeds maximum!";
+                            }
+                            else if (newRate < 0.25 && newRate != -1) {
+                                throw "Value falls below minimum!";
+                            }
+                            else if (newRate == -1) {
+                                std::cout << "Input cancelled." << std::endl;
+                                break;
+                            }
+                            else {
+                                rate = newRate;
+                            }
+                            std::cout << "Current rate is: " << rate << std::endl;
+                            break;
+                        } catch (const char* error) {
+                            std::cin.clear();
+                            std::cin.ignore(std::numeric_limits<int>::max(),'\n');
+                            std::cerr << "Error! " << error << std::endl;
+                        }
+                    }
+                }
                 else if(event.key.code == sf::Keyboard::O){
                     int newRate;
                     while (1) {
@@ -208,12 +242,14 @@ int main(void) {
                 }
                 else if(event.key.code == sf::Keyboard::H){ ///TODO
                     std::cout << "Instructions:" << std::endl;
+                    std::cout << "- Click Right Mouse Button (RMB) to toggle individual road intersection traffic light" << std::endl;
                     std::cout << "- Press R, G or B to select which kind of tile to add." << std::endl;
                     std::cout << "  R = road, G = grass and B = building." << std::endl;
                     std::cout << "- Press S or L to save or load." << std::endl;
                     std::cout << "  Follow further instructions on the console." << std::endl;
                     std::cout << "- Press T to toggle automatic traffic light control." << std::endl;
                     std::cout << "  Note that even if you're on automatic mode, you can still manually change individual lights." << std::endl;
+                    std::cout << "- Press I to change the rate that buildings spawn cars." << std::endl;
                     std::cout << "- Press O (not zero) to change the rate that automatic traffic light control changes lights." << std::endl;
                     std::cout << "  Further instructions will appear on the console." << std::endl;
                     std::cout << "- Press 1, 2 or 3 to change game speed." << std::endl;
@@ -243,7 +279,7 @@ int main(void) {
                     //Send vehicles
                     if(vehicleSendBoolean){
                         if(v.getType() == building){
-                            testGraph.sendVehicle(a);
+                            testGraph.sendVehicle(a, speedUp, rate);
                         }
                     }
 

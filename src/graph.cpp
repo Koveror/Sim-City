@@ -273,12 +273,12 @@ bool Graph::addVertex(int x, int y)
 	return true;
 }
 
-void Graph::sendVehicle(Pos position){
+void Graph::sendVehicle(Pos position, int multipler, float rate){
     std::random_device rd;
     std::mt19937 generator(rd());
     std::exponential_distribution<double> distribution(1.0 / 5.0);
     //std::cout << "gen: " << distribution(generator) << std::endl;
-    if(distribution(generator) < 0.00665){
+    if(distribution(generator) < 0.00665 * multipler * rate){
         std::cout << "Send vehicle from: " << "(" << position.x/64 << "," << position.y/64 << ")" << std::endl; //96?
         this->addCar(position);
     }
