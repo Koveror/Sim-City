@@ -20,13 +20,15 @@ run the executable. The executable can be found in the src directory. The progra
 there or you can simply use the 'make run-main' command again. You can clean the src directory using the 'make clean'
 command, which will remove object files and executables from the src directory.
 
-## Simulator instructions
+## Simulation instructions
 
-TBA
+To get started, simply run the program and read the welcome message on the console. That should get you started!
 
-## Course instructions
+Detailed instructions is included in the `readme.md`, which can be found in the `doc` folder.
 
-The project root directory should contain the following folders:
+## Other foldiers and files
+
+The project root directory contains the following folders:
 
   * `plan/` -- Here is our project plan.
 
@@ -37,3 +39,10 @@ The project root directory should contain the following folders:
   * `README.md` -- The file you are now reading.
 
   * `Makefile`	-- Makefile to be used with the unix program called make.
+  
+## Credits
+- Harti Hänninen, Industrial Engineering and Management
+- Risto Koverola, Computer Science and Engineering
+- Ilari Rauhala, Engineering Physics and Mathematics
+- Tianzhong Pan, Industrial Engineering and Management
+On 15th December, 2017
