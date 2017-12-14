@@ -30,11 +30,12 @@ int test(void) {
     auto typez = testG.getVertices()[0][0].getType();
     assert(typez == road);
     std::cout << "Graph getVertices() & Vertex getType() works properly" << std::endl;
-    std::cout << testG.getVehicles().size() << std::endl;
-    testG.addCar(Pos(32,32));
-    std::cout << testG.getVehicles().size() << std::endl;
-    //assert(testG.getVehicles().size() == 1);
-    //std::cout << "Graph getVehicles & addCar() works properly" << std::endl;
+    assert(testG.getVehicles().size() == 0);
+    std::cout << "Graph getVehicles is 0." << std::endl;
+    auto position = Pos(0,0);
+    assert(position.x == 0 && position.y == 0);
+    std::cout << "created Position Pos(0,0)." << std::endl;
+    testG.addCar(position);
     
     return 0;
 }

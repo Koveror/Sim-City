@@ -8,11 +8,6 @@
 }*/
 
 void Graph::addCar(Pos p) {
-
-    std::shared_ptr<Vehicle> c = std::make_shared<Car>();
-    //Vehicle* c = new Car;
-    c->setPosition(p);
-    c->setNextPosition(p);
     
     //chooose random building for destination
     std::vector<Pos> destinations = {};
@@ -23,7 +18,17 @@ void Graph::addCar(Pos p) {
             }
         }
     }
+    if (destinations.empty()) return; // No destinations or destination is self, don't add car
+    
     int i = rand() % destinations.size();
+    //std::cout << "DEBUG dest: " << destinations[i].x << ", " << destinations[i].y << std::endl;
+    //std::cout << "DEBUG p: " << p.x << ", " << p.y << std::endl;
+    if (destinations[i] == p) return; // Destination is same as self, don't add car
+
+    std::shared_ptr<Vehicle> c = std::make_shared<Car>();
+    //Vehicle* c = new Car;
+    c->setPosition(p);
+    c->setNextPosition(p);
     c->setDestination( destinations[i] );
     
     vehicles.push_back(c);
@@ -32,7 +37,7 @@ void Graph::addCar(Pos p) {
 }
 
 std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
-	return vehicles;
+    return vehicles;
 }
 
 int Graph::getSize()
