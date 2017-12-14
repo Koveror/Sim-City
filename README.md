@@ -20,9 +20,11 @@ run the executable. The executable can be found in the src directory. The progra
 there or you can simply use the 'make run-main' command again. You can clean the src directory using the 'make clean'
 command, which will remove object files and executables from the src directory.
 
-## Simulator instructions
+## Simulation instructions
 
-TBA
+To get started, simply run the program and read the welcome message. That should get you started!
+
+Detailed instructions is also included in the `documentation.md`, which can be found in the `doc` folder.
 
 ## Course instructions
 
