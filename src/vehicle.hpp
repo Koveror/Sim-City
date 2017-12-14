@@ -61,7 +61,7 @@ class Car : public Vehicle
 {
 public:
     ///Constructor
-    Car() : Vehicle(60, 28, 18) { }
+    Car() : Vehicle(60, 6, 12) { }
 
     ///Member functions
     virtual std::string getType() const { return "Car"; }
