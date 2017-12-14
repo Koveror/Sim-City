@@ -16,12 +16,25 @@ int test(void) {
     std::cout << "Begin unit tests..." << std::endl;
     Graph testG = Graph(4, 3);
     testG.addVertices();
+    
+    //
     assert(testG.getSize() == 12);
-    std::cout << "Graph getSize() works properly" << std::endl;
+    std::cout << "Graph addVertices() and getSize() works properly" << std::endl;
     assert(testG.getSizeX() == 4);
     std::cout << "Graph getSizeX() works properly" << std::endl;
     assert(testG.getSizeY() == 3);
     std::cout << "Graph getSizeY() works properly" << std::endl;
+    
+    //
+    testG.setVertex(0,0,road);
+    auto typez = testG.getVertices()[0][0].getType();
+    assert(typez == road);
+    std::cout << "Graph getVertices() & Vertex getType() works properly" << std::endl;
+    std::cout << testG.getVehicles().size() << std::endl;
+    testG.addCar(Pos(32,32));
+    std::cout << testG.getVehicles().size() << std::endl;
+    //assert(testG.getVehicles().size() == 1);
+    //std::cout << "Graph getVehicles & addCar() works properly" << std::endl;
     
     return 0;
 }
