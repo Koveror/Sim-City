@@ -42,7 +42,7 @@ public:
     void setVertex(int x, int y, tileType type);
     std::vector<std::vector<Vertex>>& getVertices();
     std::list<std::shared_ptr<Vehicle>>& getVehicles();
-    void sendVehicle(Pos position);
+    void sendVehicle(Pos position, int multipler, float rate);
     bool saveGraph(std::string filename);
     bool loadGraph(std::string filename);
     std::vector<Edge> getPath(Vertex source, Vertex target);
