@@ -43,6 +43,7 @@ public:
     virtual std::string getType() const {return "(nothing)";}
     Pos getDestination() const;
     bool atDestination() const;
+    bool checkFront(Graph& graph) const;
 
 private:
     ///Private members
