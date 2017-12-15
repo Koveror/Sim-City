@@ -8,7 +8,7 @@
 }*/
 
 void Graph::addCar(Pos p) {
-    
+
     //chooose random building for destination
     std::vector<Pos> destinations = {};
     for(auto row : vertices){
@@ -19,7 +19,7 @@ void Graph::addCar(Pos p) {
         }
     }
     if (destinations.empty()) return; // No destinations or destination is self, don't add car
-    
+
     int i = rand() % destinations.size();
     //std::cout << "DEBUG dest: " << destinations[i].x << ", " << destinations[i].y << std::endl;
     //std::cout << "DEBUG p: " << p.x << ", " << p.y << std::endl;
@@ -30,11 +30,11 @@ void Graph::addCar(Pos p) {
     c->setPosition(p);
     c->setNextPosition(p);
     c->setDestination( destinations[i] );
-    
+
     int sourceX = p.x / 64;
     int sourceY = p.y / 64;
     Vertex source = getVertices()[sourceY][sourceX];
-    
+
     Pos destination = c->getDestination();
     int targetX = destination.x / 64;
     int targetY = destination.y / 64;
@@ -42,11 +42,11 @@ void Graph::addCar(Pos p) {
 
     auto route = getPath(source, target);
     c->setPath(route);
-    
+
     vehicles.push_back(c);
     std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
     std::cout << "Vehicles size: " << vehicles.size() << std::endl;
-    
+
 }
 
 std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
@@ -451,7 +451,7 @@ std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
     //return std::vector<std::pair<int,int>>();
 }
 void Graph::setRoutes() {
-    for(auto it = vehicles.begin(); it != vehicles.end(); ) {
+    for(auto it = vehicles.begin(); it != vehicles.end(); it++) {
 
         Pos CurrentPosition = (*it)->getPosition();
 
@@ -466,6 +466,8 @@ void Graph::setRoutes() {
 
         auto route = getPath(source, target);
         (*it)->setPath(route);
+
+
 
     }
 }
