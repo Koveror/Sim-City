@@ -1,5 +1,20 @@
 #include "edge.hpp"
 
+void Edge::addVehicle() {
+    cars++;
+}
+
+void Edge::removeVehicle() {
+    cars--;
+    if(cars < 0) {
+        cars = 0;
+    }
+}
+
+bool Edge::isFull() {
+    return cars > 2;
+}
+
 //Operator overload for comparing two edges
 bool Edge::operator==(Edge a) {
 	Vertex tv1 = getVertices().first;

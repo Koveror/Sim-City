@@ -20,18 +20,22 @@ public:
     ///Member functions
     int getWeight(); // { return weight;}
     std::pair<Vertex,Vertex> getVertices(); // { return both verticers the edge connects;}
-	Pos getMiddlePos();
-	direction getDirection();
-	void swapVertices();
+    Pos getMiddlePos();
+    direction getDirection();
+    void swapVertices();
+    bool isFull();
+    void addVehicle();
+    void removeVehicle();
 
-	///Operator overloading
-	bool operator==(Edge a);
+    ///Operator overloading
+    bool operator==(Edge a);
 
 private:
     ///Private members
     std::shared_ptr<Vertex> vertex_1;
     std::shared_ptr<Vertex> vertex_2;
     int weight;
+    int cars;
     //std::vector<Vehicle> vehicles;
 };
 
