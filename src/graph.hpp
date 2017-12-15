@@ -46,6 +46,7 @@ public:
     bool saveGraph(std::string filename);
     bool loadGraph(std::string filename);
     std::vector<Edge> getPath(Vertex source, Vertex target);
+    void setRoutes();
     void update();
 
 private:

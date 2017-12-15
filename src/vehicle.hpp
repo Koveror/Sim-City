@@ -41,6 +41,7 @@ public:
     direction getDirection() const;
     int getWidth() const;
     int getHeight() const;
+    const std::vector<Edge>& getPath();
     virtual std::string getType() const {return "(nothing)";}
     Pos getDestination() const;
     bool atDestination() const;

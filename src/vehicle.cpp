@@ -144,6 +144,10 @@ int Vehicle::getHeight() const{
     return height;
 }
 
+const std::vector<Edge>& Vehicle::getPath() {
+    return path;
+}
+
 // get destination
 Pos Vehicle::getDestination() const{
     return destination;
