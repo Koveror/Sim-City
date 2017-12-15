@@ -100,14 +100,9 @@ int main(void) {
 
     TextureManager texmanager;
 
-    //Testing data structures
-    Graph testGraph = Graph(16, 12);
-    testGraph.addVertices();
-
-    //add single cars for testing
-    //testGraph.addCar(Pos(300, 300));
-    //testGraph.addCar(Pos(113, 122));
-    //testGraph.addCar(Pos(300, 400));
+    //Map
+    Graph theMap = Graph(16, 12);
+    theMap.addVertices();
 
     //Variables for GUI loop
     tileType vertex_to_add;
@@ -139,7 +134,7 @@ int main(void) {
 
         if (trafficLightsOn && timer.getElapsedTime().asSeconds() * speedUp > changeSpeed) {
             timer.restart();
-            for (auto& row : testGraph.getVertices()) {
+            for (auto& row : theMap.getVertices()) {
                 for (Vertex& light : row) {
                     light.togglePassable(!trafficLightsOn);
                 }
@@ -148,7 +143,7 @@ int main(void) {
         }
         if (!trafficLightsOn && timer.getElapsedTime().asSeconds() * speedUp > waitTime) {
             timer.restart();
-            for (auto& row : testGraph.getVertices()) {
+            for (auto& row : theMap.getVertices()) {
                 for (Vertex& light : row) {
                     light.togglePassable(!trafficLightsOn);
                 }
@@ -159,7 +154,7 @@ int main(void) {
         /*sf::Clock callUpdate;
         if (callUpdate.getElapsedTime().asSeconds() > waitTime) {
             callUpdate.restart();
-            testGraph.update();
+            theMap.update();
         }*/
 
         sf::Event event;
@@ -177,21 +172,21 @@ int main(void) {
                 int mx = x / 64;
                 int my = y / 64;
                 if (z == sf::Mouse::Left){
-                    testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
-                    testGraph.setRoutes();
-                    testGraph.updateAfterSetVertex();
+                    theMap.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
+                    theMap.setRoutes();
+                    theMap.updateAfterSetVertex();
                 } /*else if(z == sf::Mouse::Right) {
-                    testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
+                    theMap.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
                     sf::Clock wait;
                     //sf::Time waitTime = wait.restart();
                     if (wait.getElapsedTime().asSeconds() * speedUp > waitTime) {
-                        testGraph.getVertices()[my][mx].togglePassable();
+                        theMap.getVertices()[my][mx].togglePassable();
                     }
                 }*/
 
                 /*
                 //DEBUG: print all current edges
-                std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+                std::vector<std::vector<Vertex>> v1 = theMap.getVertices();
                 std::cout << "\nCurrent edges:" << std::endl;
                 for(auto row : v1){
                     for(auto vertex : row) {
@@ -209,7 +204,7 @@ int main(void) {
                 */
 
                 //DEBUG: Dijkstra
-                //auto test = getPath(testGraph, v1[1][0], v1[0][1]);
+                //auto test = getPath(theMap, v1[1][0], v1[0][1]);
 
             }
                 //Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
@@ -240,14 +235,14 @@ int main(void) {
                     std::cout << "Type the full filename to save the map. File-extension not required." << std::endl;
                     std::cout << "Type -1 to cancel" << std::endl;
                     std::cin >> name;
-                    testGraph.saveGraph(name);
+                    theMap.saveGraph(name);
                 }
                 else if(event.key.code == sf::Keyboard::L){ // loadGraph
                     std::string name;
                     std::cout << "Type the full filename to load the map. File-extension not required." << std::endl;
                     std::cout << "Type -1 to cancel" << std::endl;
                     std::cin >> name;
-                    testGraph.loadGraph(name);
+                    theMap.loadGraph(name);
                 }
                 /*else if(event.key.code == sf::Keyboard::T){
                     autoTrafficLight = !autoTrafficLight;
@@ -371,7 +366,7 @@ int main(void) {
             window.clear();
 
             //Go through all vertices
-            std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
+            std::vector<std::vector<Vertex>> v1 = theMap.getVertices();
             for(auto row : v1){
                 for(auto v : row) {
                     Pos a = v.getPos();
@@ -381,7 +376,7 @@ int main(void) {
                     //Send vehicles
                     if(vehicleSendBoolean){
                         if(v.getType() == building){
-                            testGraph.sendVehicle(a, speedUp, rate);
+                            theMap.sendVehicle(a, speedUp, rate);
                         }
                     }
 
@@ -438,14 +433,14 @@ int main(void) {
 
 
             //Go through all the vehicles
-            testGraph.update();
-            for(auto vehicle : testGraph.getVehicles()) {
+            theMap.update();
+            for(auto vehicle : theMap.getVehicles()) {
                 sf::RectangleShape model(sf::Vector2f(vehicle->getWidth(), vehicle->getHeight()));
                 model.setTexture(&texmanager.getRef(vehicle->getType()));
                     int i = 0;
                     while(i < speedUp) {
                         //std::cout << "calling move" << std::endl;
-                        vehicle -> move(testGraph);
+                        vehicle -> move(theMap);
                         i++;
                     }
 
