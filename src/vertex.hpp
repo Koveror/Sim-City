@@ -49,6 +49,7 @@ private:
     tileType vertex_type;
     std::vector<Edge> edges_to;
     int sendVehicleTime;
+    direction lastTrafficDirection;
 };
 
 #endif // VERTEX_HPP_INCLUDED

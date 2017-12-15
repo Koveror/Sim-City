@@ -11,6 +11,7 @@ Vertex::Vertex(int x, int y, tileType type){
 	passable_from.push_back(true);
 	passable_from.push_back(true);
 	passable_from.push_back(true);
+        lastTrafficDirection = north;
 }
 
 //Boolean operator for comparing two vertices
@@ -34,24 +35,34 @@ void Vertex::togglePassable() {
     }
     else {
         if(!passable_from[0] && !passable_from[1] && !passable_from[2] && !passable_from[3]) {
-        passable_from[0] = true;
-        }
-        else if(passable_from[0]){
-            passable_from[0] = false;
-            passable_from[1] = true;
-        }
-        else if(passable_from[1]){
-            passable_from[1] = false;
-            passable_from[2] = true;
-        }
-        else if(passable_from[2]){
-            passable_from[2] = false;
-            passable_from[3] = true;
+            if(lastTrafficDirection == north){
+                passable_from[0] = false;
+                passable_from[1] = true;
+                lastTrafficDirection = east;
+            }
+            else if(lastTrafficDirection == east){
+                passable_from[1] = false;
+                passable_from[2] = true;
+                lastTrafficDirection = south;
+            }
+            else if(lastTrafficDirection == south){
+                passable_from[2] = false;
+                passable_from[3] = true;
+                lastTrafficDirection = west;
+            }
+            else {
+                passable_from[3] = false;
+                passable_from[0] = true;
+                lastTrafficDirection = north;
+            }
         }
         else {
+            passable_from[0] = false;
+            passable_from[1] = false;
+            passable_from[2] = false;
             passable_from[3] = false;
-            passable_from[0] = true;
         }
+
     }
 }
 

@@ -111,6 +111,7 @@ int main(void) {
     float ticker = 0.0;
     float rate = 1.0;
     int changeSpeed = 6;
+    bool trafficLightsOn = false;
     sf::Clock clock;
     sf::Clock timer;
     sf::Time time = clock.restart() + sf::seconds(4);
@@ -128,13 +129,23 @@ int main(void) {
     {
         //Automatic traffic light changing
 
-        if (autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > changeSpeed) {
+        if (trafficLightsOn && autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > changeSpeed) {
             timer.restart();
             for (auto& row : testGraph.getVertices()) {
                 for (Vertex& light : row) {
                     light.togglePassable();
                 }
             }
+            trafficLightsOn = false;
+        }
+        if (!trafficLightsOn && autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > 1) {
+            timer.restart();
+            for (auto& row : testGraph.getVertices()) {
+                for (Vertex& light : row) {
+                    light.togglePassable();
+                }
+            }
+            trafficLightsOn = true;
         }
         testGraph.update();
 
