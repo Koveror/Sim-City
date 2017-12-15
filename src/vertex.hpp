@@ -29,11 +29,11 @@ public:
     void removeEdgesTo(Pos position);
     bool hasEdgeTo(int x, int y);
     void togglePassable(bool green);
-	const tileType& getType();
-    const Pos& getIndex();
-    const Pos& getPos();
+    const tileType& getType();
+    Pos getIndex();
+    Pos getPos();
     const std::vector<Edge>& getEdgesTo();
-    const Edge& getSingleEdge(std::pair<int,int> coordPair);
+    Edge getSingleEdge(std::pair<int,int> coordPair);
     const std::string getTexture();
 
 

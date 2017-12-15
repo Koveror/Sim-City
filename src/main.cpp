@@ -113,7 +113,7 @@ int main(void) {
     tileType vertex_to_add;
     float waitTime = 1.0;
     bool vehicleSendBoolean = false;
-    bool autoTrafficLight = true;
+    //bool autoTrafficLight = true;
     int speedUp = 1;
     float refreshSpeed = 1.0 / 60.0;
     float ticker = 0.0;
@@ -137,7 +137,7 @@ int main(void) {
     {
         //Automatic traffic light changing
 
-        if (trafficLightsOn && autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > changeSpeed) {
+        if (trafficLightsOn && timer.getElapsedTime().asSeconds() * speedUp > changeSpeed) {
             timer.restart();
             for (auto& row : testGraph.getVertices()) {
                 for (Vertex& light : row) {
@@ -146,7 +146,7 @@ int main(void) {
             }
             trafficLightsOn = false;
         }
-        if (!trafficLightsOn && autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > waitTime) {
+        if (!trafficLightsOn && timer.getElapsedTime().asSeconds() * speedUp > waitTime) {
             timer.restart();
             for (auto& row : testGraph.getVertices()) {
                 for (Vertex& light : row) {
@@ -346,10 +346,11 @@ int main(void) {
                     std::cout << "- Press R, G or B to select which kind of tile to add." << std::endl;
                     std::cout << "  Once the tile type has been selected, use left mouse button to add the tile by clicking on the screen." << std::endl;
                     std::cout << "  R = road, G = grass and B = building." << std::endl;
+                    std::cout << "- Press V to toggle vehicle spawning." << std::endl;
                     std::cout << "- Press S or L to save or load." << std::endl;
                     std::cout << "  Follow further instructions on the console." << std::endl;
                     //std::cout << "- Press T to toggle automatic traffic light control." << std::endl;
-                    std::cout << "  Note that even if you're on automatic mode, you can still manually change individual lights." << std::endl;
+                    //std::cout << "  Note that even if you're on automatic mode, you can still manually change individual lights." << std::endl;
                     std::cout << "- Press I to change the rate that buildings spawn cars." << std::endl;
                     std::cout << "- Press O (not zero) to change the rate that automatic traffic light control changes lights." << std::endl;
                     std::cout << "  Further instructions will appear on the console." << std::endl;

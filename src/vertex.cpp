@@ -133,13 +133,13 @@ const tileType& Vertex::getType()
 }
 
 //Get index in vertices data structure
-const Pos& Vertex::getIndex()
+Pos Vertex::getIndex()
 {
     return Pos(x_loc, y_loc);
 }
 
 //Get position for drawing on the screen
-const Pos& Vertex::getPos()
+Pos Vertex::getPos()
 {
     return Pos(x_loc * 64 + 32, y_loc * 64 + 32);
 }
@@ -150,7 +150,7 @@ const std::vector<Edge>& Vertex::getEdgesTo(){
 }
 
 //Return a single edge, if such edge exists.
-const Edge& Vertex::getSingleEdge(std::pair<int,int> coordPair) {
+Edge Vertex::getSingleEdge(std::pair<int,int> coordPair) {
     for (auto it = edges_to.begin(); it != edges_to.end(); it++) {
 		Edge e = *it;
 		Vertex end = e.getVertices().second;
