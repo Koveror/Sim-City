@@ -17,13 +17,11 @@
 int test(void) {
     std::cout << "Begin unit tests..." << std::endl;
 
-    ///Graph
-    std::cout << " " << std::endl;
-    std::cout << "Testing GRAPH" << std::endl;
+    //Init Graph
     Graph testG = Graph(4, 3);
     testG.addVertices();
 
-    //addVertices, getSize, getSizeX, getsizeY
+    //Graph addVertices, getSize, getSizeX, getsizeY
     assert(testG.getSize() == 12);
     std::cout << "Graph addVertices() and getSize() works properly" << std::endl;
     assert(testG.getSizeX() == 4);
@@ -31,7 +29,7 @@ int test(void) {
     assert(testG.getSizeY() == 3);
     std::cout << "Graph getSizeY() works properly" << std::endl;
 
-    //setVertex, getVertices, setType, getType
+    //Graph setVertex, getVertices; Vertex setType, getType
     testG.setVertex(0,1,building);
     auto type = testG.getVertices()[1][0].getType();
     assert(type == building);
@@ -46,7 +44,7 @@ int test(void) {
     assert(position.x == 0 && position.y == 0);
     std::cout << "created Position Pos(0,0). Now testing sendVehicle (and addVehicle)..." << std::endl;
 
-    //getVehicles, sendVehicle
+    //Graph getVehicles, sendVehicle
     testG.setVertex(0,0,building);
     testG.setVertex(0,2,building);
     testG.sendVehicle(position, 1, 10000.0); //unusually high rate to ensure that vehicle DEFINITELY spawns
@@ -55,13 +53,10 @@ int test(void) {
     assert(testG.getVehicles().size() == 1);
     std::cout << "Graph getVehicles is 1. Both Graph getVehicles() and sendVehicle (and addVehicle) works." << std::endl;
 
-    //
+    //Graph getPath, Vertex getPos & getIndex
     assert(testG.getPath(testG.getVertices()[0][0],testG.getVertices()[2][0]).size() == 2);
     std::cout << "Graph getPath works." << std::endl;
 
-    ///Vertex
-    std::cout << " " << std::endl;
-    std::cout << "Testing VERTEX" << std::endl;
     Vertex a = Vertex(1, 1, road);
     assert(a.getPos() == Pos(96,96) && a.getIndex() == Pos(1,1));
     std::cout << "Vertex getPos() and getIndex() works." << std::endl;
@@ -78,12 +73,6 @@ int test(void) {
     assert(testG.getVertices()[0][0].getTexture() == "grass");
     std::cout << "Vertex getTexture() works." << std::endl;
 
-    ///Edge
-    std::cout << " " << std::endl;
-    std::cout << "Testing EDGE" << std::endl;
-
-    ///Vehicle
-    std::cout << "Testing VEHICLE" << std::endl;
     Vehicle testVehA = Vehicle(50, 4, 6);
     Vehicle testVehB = Vehicle(60, 6, 8);
     Vehicle copyVehA = Vehicle(testVehA);
@@ -99,9 +88,9 @@ int test(void) {
     assert(c->getHeight() == 12);
     delete c;
     std::cout << "Derived class Car works." << std::endl;
-    c = new Truck();
-    assert(c->getHeight() == 16);
-    delete c;
+    Vehicle *t = new Truck();
+    assert(t->getHeight() == 16);
+    delete t;
     std::cout << "Derived class Truck works." << std::endl;
 
     return 0;

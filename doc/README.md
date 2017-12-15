@@ -17,150 +17,81 @@ Users can save and load their created maps. Currently the map size is limited to
 In this section, we will have a detailed look on our software structure.
 
 ### Class structure
-Our class structure roughly follows the initial architecture described in the project plan. As stated in the project plan, the software uses `SFML 2.3.2` graphics (external) library
+Our class structure roughly follows the initial architecture described in the project plan. As stated in the project plan, the software uses `SFML 2.3.2` graphics (external) library.
+
+Newer versions of SFML will most likely work as well, but we chose 2.3.2 due to the fact that the university's Linux machines have 2.3.2 already installed.
 
 We've made some small changes, and currently our class structure can be figured out from the software architecture:
 
 ![architecture](doc/architecture.png)
 
 #### main
-Main function is responsible for GUI loop. It simulates time, handles user input and calls objects to update themselves. In `main.cpp` file there is also `test` function for testing.
+Main function is responsible for **GUI loop**. It simulates time, handles user input and calls objects to update themselves. In `main.cpp` file there is also `test` function for unit testing. Due to scheduling problems, unit testing is not provided in a separate source file.
 
 #### graph
-Grahp class stores information about game world. It stores vertices and vehicles and updates them when called. The class also finds paths for cars using Dijkstra's algorithm.
-
-Graph class has following member functions:
-- `Graph(int n, int m)`: Constructor, generates graph with dimensions `n` x `m`
-- `bool addVertex(int x, int y)` adds vertex to graph and returns `true` if sicceeded
-- `int getSize()` returns number of tiles in graph i.e. n * m
-- `int getSizeX()` returs number of columns
-- `int getSizeY()` returns number of rows
-- `void addVertices()` adds vertex to graph
-- `void addEdge()` adds edge
-- `void addVehicle(Pos p)` adds vehicle to position `p`
-- `void setVertex(int x, int y, tileType type)` sets tile type of vertex at position (x, y) into `type`
-- `std::vector<std::vector<Vertex>>& getVertices()` returns a table of all vertices on the graph
-- `std::list<std::shared_ptr<Vehicle>>& getVehicles()` returns list of all vehicles on the graph
-- `void sendVehicle(Pos position, int multipler, float rate)` **TODO**
-- `bool saveGraph(std::string filename)` saves current graph structure to `filename.txt`
-- `bool loadGraph(std::string filename)` loads graph from `filename.txt`
-- `std::vector<Edge> getPath(Vertex source, Vertex target)` finds path from `source` vertex to `target` vertex and returns it
-- `void setRoutes()` finds path for all vehicles stored in graph and updates them into vehicles
-- `void update()` **TODO**
-- `void updateAfterSetVertex()`**TODO**
+Graph class stores information about game world. It stores vertices and vehicles and updates them when called. The class also finds paths for cars using **Dijkstra's algorithm**.
 
 #### vertex
-Vertex object represents one tile in game world and a vertex in graph sturcture. Vertices are linked together by edges and represent one tiletype so it can be drawn to screen. Vertex also stores information about traffic lights and updates them with help from tools.
-
-Vertex class has following member functions and public variable:
-- `Vertex(int x, int y, tileType type)`: Constructor, generates vertex at (`x`, `y`) and type `type`
-- `Pos getPos()` returns absolute pixel position of vertexes center point
-- `Pos getIndex()` returns grid coordinates of vertex
-- `const tileType& getType()` returns type of the vertex
-- `void setType(tileType t)` sets type of vertex to `t`
-- `void addEdge(Pos position, Graph& graph, int weight)`
-- `void removeEdge(Pos position)` **TODO**
-- `void removeEdgesTo(Pos position)` **TODO**
-- `const std::vector<Edge>& getEdgesTo()` returns edges leading to the vertex
-- `const std::string getTexture()` returns string that can be used to call Texturemanager
-- `bool hasEdgeTo(int x, int y)` returns whether the vertex has edge to another vertex at (`x`, `y`)
-- `Edge getSingleEdge(std::pair<int,int> coordPair)` **TODO**
-- `void togglePassable(bool green)` toggles traffic lights of the vertex. If `green` is false all edges are set to not passable.
-- `void sendVehicle()` sends vehicle from vertex
-- `bool operator==(Vertex a)` returns whether two vertices are same or not
-- `std::vector<bool> passable_from` tells from which directions vertex is passable
+Vertex object represents one tile in game world and a vertex in graph structure. Vertices are linked together by edges and represent one tile type (tileType) so it can be drawn to screen. Vertex also stores information about traffic lights and updates them with help from tools.
 
 #### edge
-Edge objects represent relations beteween vertices. Each edge is set between two vertices, and it also have weight.
-
-Edge class has following member functions:
-- `Edge(std::shared_ptr<Vertex> V_start, std::shared_ptr<Vertex> V_end, int w)` Constructor: generates edge from `V_start` to `V_end` with weight `w`
-- `int getWeight()` returns weight of the edge
-- `std::pair<Vertex,Vertex> getVertices()` returns vertices the ebge is connecting
-- `Pos getMiddlePos()` returns coordinates of the edges center
-- `direction getDirection()` returns direction of the edge
-- `void swapVertices()` **TODO**
-- `bool operator==(Edge a)` returns whether two edges are the same **TODO**
+Edge objects represent relations between vertices. Each edge is set between two vertices, and it also have weight.
 
 #### vehicle
 Each Vehicle object stores size, position, destination and route of single vehicle. Vehicle is moved when `move` method is called.
 
-Vehicle class has following member functions:
-- `void moveTowards(Pos givenPos)`
-- `void move(Graph& graph)`
-- `void moveAlong()`
-- `void setPosition(Pos givenPos)`
-- `void setNextPosition(Pos givenPos)`
-- `void setPath(std::vector<Edge> givenPath)`
-- `void setDestination(Pos dest)`
-- `Pos getPosition() const`
-- `direction getDirection() const`
-- `int getWidth() const` returns width of the vehicle
-- `int getHeight() const` returns height of the vehicle
-- `const std::vector<Edge>& getPath()`
-- `virtual std::string getType() const`
-- `Pos getDestination() const`
-- `bool atDestination() const`
-- `bool checkFront(Graph& graph) const`
-- `direction turningTo()`
-
 #### texturemanager
 TextureManager class loads textures for tile types (grass, road, building) and returns them when called.
 
-TextureManager class has following member functions:
-- `void addTexture(const std::string& name, const std::string &filename)` generates new texture that can be found using `name` as key
-- `sf::Texture& getRef(const std::string& texture)` returns reference tu texture with key `texture`
-
 #### tools
-In `tools.cpp` file there are some additional enumaration and class Pos to easily store and compare coordinates elsewhere in the program.
+In `tools.hpp` file there are some additional enumeration and class Pos to easily store and compare coordinates elsewhere in the program.
 
 
 
 ## Instructions for building and using the software
 To run Sim-city-1, simply navigate to the project root directory using your unix terminal and then run `make run-main` command. This command will compile the source files and make an executable called **sim-city-1**. The command will also run the executable. The executable can be found in the src directory. The program can be run again from there or you can simply use the `make run-main` command again. You can clean the src directory using the `make clean` command, which will remove object files and executables from the src directory.
 
-To use our software you have to have SFML library installed on your machine.
+To use our software, you should have SFML library installed on your machine, preferably `SFML 2.3.2`. For your convenience, please use Linux systems found in Maarintalo, in classrooms Maari-A and Maari-C, for example.
 
 ### How to use the software
-Once the software is running, the console will print out a welcome message. You can press **H** to have all available commands printed out to the console. Detailed instructions are also below this paragraph:
+Once the software is running, the console will print out a welcome message. You can press **H** to have all available commands printed out to the console.
 
 To add tiles on map, first choose which kind of tile you want to add using keyboard. Pressing **R** adds roads, **B** buildings and **G** grass (empty tile). When you have map ready and want cars to start spawning press **V**.
 
-Press **T** to toggle automatic traffic light control, and letter **O** changes the rate that automatic traffic light control changes lights and **I** changes the rate that buildings spawn vehicles.
+Press *letter* **O** to change the rate that automatic traffic light control changes lights and **I**  to change the rate that buildings spawn vehicles.
 
-Game speed can be changed using numbers **1** (1x), **2** (4x) and **3** (8x).
+Game speed can be changed using numbers **1** (1x), **2** (4x) and **3** (8x). To pause, press **P**, and to unpause, simply set the new game speed.
 
 To save your current map press **S** and follow instructions on the console. To load press **L** and also follow instructions on the console.
 
+**It is important to know that when typing in input, be careful with not attempting to type while the console is NOT selected, as key inputs might be registered to the GUI loop, prompting other commands and risking crashing the software. Again, due to scheduling issues, polishing the GUI loop will be done in later versions, if and when it is done.**
+
 ### Use of C++ features
-In this section we will quickly go through of use of C++ features that were required in the project.
+In this section, we will quickly go through of use of C++ features that were required in the project.
 
 #### Containers
-For containers, we used mainly `std::vector` standard containers. Vectors provide random access, which is very useful, and our code does not require too much memory. Container `std::list` was also used in Graph when storing vehicles. In addition to vector and list, we used `std::priority_queue` for Dijkstra's algorithm for vehicle pathfinding. Priority queue is required in order to get Dijkstra's algorithm to work slightly more efficient than using other methods.
+For containers, we used mainly `std::vector` standard containers. Vectors provide random access, which is very useful, and our code does not require too much memory. Container `std::list` was also used in Graph when storing vehicles because random access was not required for them. In addition to vector and list, we used `std::priority_queue` for Dijkstra's algorithm for vehicle pathfinding. Priority queue is required to get Dijkstra's algorithm to work slightly more efficient than using other methods.
 
 #### Smart Pointers
 We use smart pointers (`std::shared_ptr`) for storing vehicles as our graph class stores vehicles. With shared pointers, we don't have to manually manage memory, which is notorious in C++.
 
 #### Exception handling
-Exception handling is used when user wants to change the rates that 1) change lights and 2) buildings spawn vehicles, as both of these require user input. The try catch loop ensures that if user enters invalid argument or invalid value, the software throws an error, forcing to retry, or type -1 to cancel the operation. Exception handling is also used when the user wants to load a map.
+Exception handling is used when user wants to change the rates that 1) change lights and 2) buildings spawn vehicles, as both require user input. The try catch loop ensures that if user enters invalid argument or invalid value, the software throws an error, forcing to retry, or type -1 to cancel the operation. Exception handling is also used when the user wants to load a map.
 
 #### Rule of three
-Rule of three (and rule of zero) is enforced in every part of our software: For example, vehicle class has a (virtual) destructor, copy constructor and copy assignment.
+Rule of three (and rule of zero) is enforced in every part of our software, most notably in our vehicle class. For example, vehicle has a (virtual) destructor, which leads to it also having copy constructor and copy assignment.
 
 #### Dynamic binding and virtual classes/functions
 Vehicle class uses dynamic binding, as we have derived classes for vehicles. For example, virtual destructor is required for base class Vehicle.
 
-### Known bugs
-- Collision detection is still buggy, cars can run past each other e.g. at intersections.
-- Different vehicles do not have textures, the only aspect to distinguish the difference is the vehicle size.
-
 
 
 ## Testing
-Due to scheduling problems, unit testing was done using <cassert> and in a separate test function in main.cpp, which can be called while running the main program (instructions can be found in main.cpp). Unit testing was used to ensure that individual functions work appropriately.
+Due to scheduling problems, unit testing was done using `<cassert>` and in a separate test function in main.cpp, which can be called while running the main program (instructions can be found in main.cpp). Unit testing was used to ensure that most of the most important individual functions work appropriately.
+
 Unfortunately, there was no time to set third-party unit testing C++ frameworks such as google test or CPPunit. However, as our software evolved from the beginning to the end, debugging was very intensive as the codes was being developed.
 
-In addition to unit testing, Valgrind was used to check for memory leaks. We concluded that only SFML parts are leaking memory, and only 10 bytes in 1 block was definitely lost. Rest are still reachable. Below is the latest valgrind with `--leak-check=full`.
+To verify that our code works properly, in addition to unit testing, Valgrind was used to check for memory leaks. We concluded that only SFML parts are leaking memory, and only 10 bytes in 1 block was definitely lost. Rest are still reachable. Below is the latest Valgrind with `--leak-check=full`.
 
 ```
 ==18565== HEAP SUMMARY:
@@ -195,10 +126,12 @@ In addition to unit testing, Valgrind was used to check for memory leaks. We con
 
 
 ## Work log
-Work log is updated until 15th December, 2017 due to the project deadline. Below you can find the detailed description of division of work and everyone's responsibilities.
+Work log is updated until 15th December 2017 due to the project deadline. Below you can find the detailed description of division of work and everyone's responsibilities.
 In addition, there is a description (for each week) of what was done and roughly how many hours were used, for each project member.
 
-In general, every single one of us were busy throughout the entire II period, and workload might be slightly biased towards the end of the course.
+In general, every single one of us were busy throughout the entire II period, and workload might be slightly biased towards the end of the course. This can be confirmed with how the git commits are distributed throughout the project development, in II period.
+
+All in all, we are all satisfied with our efforts as a group. Despite the week 50 panic, we were able to pull this off together!
 
 ### Week 44 (30th Oct. - 5th Nov.)
 **Project kick-off**
@@ -206,41 +139,49 @@ In general, every single one of us were busy throughout the entire II period, an
 
 ### Week 45 (6.Nov. - 12.Nov.)
 **Project plan**
-- [ALL MEMBERS]: At least 3 hours spent on another meeting, this time working on the project plan
+- [ALL MEMBERS]: At least 3 hours spent on working with the project plan.
 
 ### Week 46 (13th Nov. - 19th Nov.)
 **Finalizing Project plan, initial git commits, working with makefiles**
-- [ALL MEMBERS]: At least 3 hours spent on finalizing the project plan and setting up the project in Maari. Setting up the make file proved to be most laborous.
+- [ALL MEMBERS]: At least 3 hours spent on finalizing the project plan and setting up the project in Maari. Setting up the make file proved to be most laborious.
 - [Tianzhong]: At least 2 hours spent on working with first versions of graph, vertex and edge.
-- [Risto]: 4 hours spent on making a makefile and hello world program.
+- [Risto]: At least 2 hours spent on making a makefile and hello world program.
+- [Ilari]: About least 2 hours spent on making makefile.
 
 ### Week 47 (20th Nov. - 26th Nov.)
 **Working on peer review. For our own project: creating essential classes (graph, vertex, edge and vehicle) & main.cpp and learning to work with SFML-graphics to draw something on screen.**
 - [ALL MEMBERS]: At least 3 hours spent on working together in Maari and doing midterm peer review.
 - [Tianzhong]: At least 5 hours spent on working with first versions of graph, vertex and edge, and then with vehicle.
-- [Harti]: About 5 hours spent on creating initial versions of edges and vehicles and moving the weights from vertices to edges and creating the datastructure for vertices.
-- [Risto]: 10 hours spent: 4 hours on researching SFML and creating a gui loop. 6 hours on dynamic adding and removing of vertices.
+- [Harti]: About 5 hours spent on creating initial versions of edges and vehicles and moving the weights from vertices to edges and creating the data structure for vertices.
+- [Risto]: 10 hours spent: 4 hours on researching SFML and creating a GUI loop. 6 hours on dynamic adding and removing of vertices.
+- [Ilari]: About 5 hours spent on  researching SFML and working with graphics.
 
 ### Week 48 (27th Nov. - 3rd Dec.)
 **Added separate files for vertex and edge (before vertex and edge were declared and implemented in graph.hpp & graph.cpp); Modified the graph so that roads, when added, connect to each other with edges.**
 - [ALL MEMBERS]: At least 4 hours spent on working together in Maari.
 - [Tianzhong]: At least 2 hours spent on issue #7 (const correctness problem).
-- [Harti]: About 4 hours spent on modifying the vertice-datastructure and automizing the creation of edges between vertices (buildings and roads).
-- [Risto]: 10 hours spent: 4 hours on adding a tools.hpp file and moving vehicles on the graph. 6 hours on adding edges on vertices.
+- [Harti]: About 4 hours spent on modifying the vertices data structure and automatizing the creation of edges between vertices (buildings and roads).
+- [Risto]: 6 hours spent: 3 hours on adding a tools.hpp file and moving vehicles on the graph. 3 hours on adding edges on vertices.
+- [Ilari]: 5 hours spent working with managing textures and drawing logic.
 
 ### Week 49 (4th Dec. - 10th Dec.)
 **Implementing Dijkstra's algorithm, fixing segmentation fault (e.g. when removing edges), making buildings  to create cars automatically, implemented traffic lights and implemented vehicle track their own direction when moving.**
 - [Tianzhong]: At least 10 hours spent working on texture files and Dijkstra's algorithm. At least 90% of the time was used at working on Dijkstra's algorithm. While the algorithm itself was relatively easy to implement and could've taken less than a few hours, a lot more time was spent due to the inexperience with C++.
-- [Harti]: About 10 hours spent on making map modofoication more user friendly, improving the updating of the gui, nade vehicles spawn randomly to buildings, modified edge weights to suite djkstras algorithm (cars use roads and only start and finish by driving throught buildings), improved the functions of traffic lights and gave vehicles a sense of direction.
+- [Harti]: About 10 hours spent on making map modification more user friendly, improving the updating of the GUI, made vehicles spawn randomly to buildings, modified edge weights to suite Dijkstra’s algorithm (cars use roads and only start and finish by driving through buildings), improved the functions of traffic lights and gave vehicles a sense of direction.
 - [Risto]: 16,5 hours spent: 4 hours on making the vehicles to move between vertices. 5,5 hours on dynamic adding and removing of edges and trafficlights. 7 hours on making multiple cars move on the graph, fast forward functionality and modifying constructors and destructors on vehicles.
 
 ### Week 50 (11th Dec. - 17th Dec.)
-**Finalized Dijkstra's algorithm, fixed vehicle movement logic, implemented ability to save and load maps, fixed segmentation faults when spawning vehicles, implemented Graph::update() to update their route from source to target and, in addition, fixed Dijkstra's algorithm. Last but not least, added some unittesting.**
-- [ALL MEMBERS]: At least 6 hours working together at Maari with **everyone** to finalize the project.
+**Finalized Dijkstra's algorithm, fixed vehicle movement logic, implemented ability to save and load maps, fixed segmentation faults when spawning vehicles, implemented Graph::update() to update their route from source to target and, in addition, fixed Dijkstra's algorithm. In addition to aforementioned, vehicles now turn correctly in corners. Last but not least, added some unittesting.**
+- [ALL MEMBERS]: At least 6 hours working together at Maari together to finalize the project.
 - [Tianzhong]: At least 30 hours spent: at least 7 hours with finalizing Dijkstra's algorithm, 3 hours with fixing (weird) segmentation fault when creating vehicles to the Graph and 4 hours with adding console commands for user input. Time was also spent on working with documentation, unit test and fixing minor bugs, not to mention with constant debugging.
-- [Harti]:Maby 30-40 hours of finishing off (further improving traffic lights, applying dijkstras algorithm to vehicles, improving the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes)
-- [Risto]: 8,5 hours spent: 2,5 hours on collision detection and 6 hours on finalizing the project.
+- [Harti]: Maybe 30-40 hours of finishing off (more improvements on traffic lights, applying Dijkstra's algorithm to vehicles, improved the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes).
+- [Risto]: 2,5 hours spent: 2,5 hours on collision detection
+- [Ilari]: About 10 hours spent working with documentation, save/load, refining vehicle movement and fixing bugs.
 
 ### Week 51 (18th Dec. - 20th Dec.)
-**Not much left to do except demonstration and reviewing stuff. Below is (predicted) work & duration**
-- [ALL MEMBERS]: At least 4 hours spent on 1) demonstrating the project to responsible teacher and peer groups and 2) doing review of other group members, own project and finally peer project.
+**Not much left to do except demonstration and reviewing stuff. Below is (predicted) work & duration.**
+- [ALL MEMBERS]: At least 4 hours spent on 1) demonstrating the project to responsible teacher and peer groups and 2) doing review of other group members, own project and finally peer project. **The reviewing process will be finished on 20th December at latest.**
+
+## Known bugs
+- Collision detection slightly buggy, cars can run past each other after turns.
+- User input for controlling traffic light and spawn rates may be unstable.

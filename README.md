@@ -39,10 +39,11 @@ The project root directory contains the following folders:
   * `README.md` -- The file you are now reading.
 
   * `Makefile`	-- Makefile to be used with the unix program called make.
-  
+
 ## Credits
 - Harti Hänninen, Industrial Engineering and Management
 - Risto Koverola, Computer Science and Engineering
 - Ilari Rauhala, Engineering Physics and Mathematics
 - Tianzhong Pan, Industrial Engineering and Management
-On 15th December, 2017
+
+On 15th December, 2017 at Espoo, Otaniemi.
