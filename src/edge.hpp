@@ -8,6 +8,7 @@
 #include "tools.hpp"
 
 class Vehicle;
+
 class Vertex;
 
 class Edge
@@ -18,8 +19,8 @@ public:
     vertex_1(V_start), vertex_2(V_end), weight(w) {}
 
     ///Member functions
-    int getWeight(); // { return weight;}
-    std::pair<Vertex,Vertex> getVertices(); // { return both verticers the edge connects;}
+    int getWeight();
+    std::pair<Vertex,Vertex> getVertices();
     Pos getMiddlePos();
     direction getDirection();
     void swapVertices();
@@ -36,7 +37,6 @@ private:
     std::shared_ptr<Vertex> vertex_2;
     int weight;
     int vehAmount;
-    //std::vector<Vehicle> vehicles;
 };
 
 #endif // EDGE_HPP_INCLUDED

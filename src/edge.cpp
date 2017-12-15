@@ -1,23 +1,5 @@
 #include "edge.hpp"
 
-//Add car to edge
-void Edge::addVehicle() {
-    vehAmount++;
-}
-
-//Remove car from edge
-void Edge::removeVehicle() {
-    vehAmount--;
-    if(vehAmount < 0) {
-        vehAmount = 0;
-    }
-}
-
-//Return true if edge is "full", that is, has more than 2 vehicles, false if not
-bool Edge::isFull() {
-    return vehAmount > 2;
-}
-
 //Operator overload for comparing two edges
 bool Edge::operator==(Edge a) {
 	Vertex tv1 = getVertices().first;
@@ -73,4 +55,22 @@ void Edge::swapVertices() {
     std::shared_ptr<Vertex> temp = vertex_1;
     vertex_1 = vertex_2;
     vertex_2 = temp;
+}
+
+//Return true if edge is "full", that is, has more than 2 vehicles, false if not
+bool Edge::isFull() {
+    return vehAmount > 2;
+}
+
+//Add car to edge
+void Edge::addVehicle() {
+    vehAmount++;
+}
+
+//Remove car from edge
+void Edge::removeVehicle() {
+    vehAmount--;
+    if(vehAmount < 0) {
+        vehAmount = 0;
+    }
 }

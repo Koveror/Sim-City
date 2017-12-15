@@ -4,12 +4,10 @@
 
 //Helper method used for collision checking. Checks every single vehicle to see that p0 doesn't contain a vehicle.
 //Returns true if there is a vehicle in front, otherwise returns false.
-//TODO: Performance!!!
-//TODO: In turns vehicles can go inside each other
 bool Vehicle::checkFront(Graph& graph) const {
 
-    int length = height + 8;    //The distance of the front position from the vehicle. TODO: Use vehicle width and length
-    Pos p0;     //A position in front of the current vehicle.
+    int length = height + 8; 	//The distance of the front position from the vehicle.
+    Pos p0; 	//A position in front of the current vehicle.
 
     //Get current direction and figure out front position.
     direction d0 = getDirection();
@@ -28,10 +26,27 @@ bool Vehicle::checkFront(Graph& graph) const {
     }
 }
 
-//Set the position to where this vehicle tries to move
-//when the method move() is called.
-void Vehicle::setNextPosition(Pos givenPos) {
-	nextPosition = givenPos;
+//Move towards a given position. Called by other move methods.
+void Vehicle::moveTowards(Pos givenPos) {
+	int newX = 0;
+	int newY = 0;
+
+	if(givenPos.y > position.y) {
+		newY = position.y + 1;
+	} else if(givenPos.y == position.y){
+		newY = position.y;
+	} else {
+		newY = position.y - 1;
+	}
+
+	if(givenPos.x > position.x) {
+		newX = position.x + 1;
+	} else if(givenPos.x == position.x) {
+		newX = position.x;
+	} else {
+		newX = position.x - 1;
+	}
+	position = Pos(newX, newY);
 }
 
 //Move the vehicle on the graph. This is the main move method that calls
@@ -84,11 +99,6 @@ void Vehicle::move(Graph& graph) {
 	}
 }
 
-//Set a path for this vehicle to move on.
-void Vehicle::setPath(std::vector<Edge> givenPath) {
-	path = givenPath;
-}
-
 //Move along an edge.
 void Vehicle::moveAlong() {
 	if(path.size() > 0) {
@@ -100,32 +110,20 @@ void Vehicle::moveAlong() {
 	}
 }
 
-//Move towards a given position. Called by other move methods.
-void Vehicle::moveTowards(Pos givenPos) {
-	int newX = 0;
-	int newY = 0;
-
-	if(givenPos.y > position.y) {
-		newY = position.y + 1;
-	} else if(givenPos.y == position.y){
-		newY = position.y;
-	} else {
-		newY = position.y - 1;
-	}
-
-	if(givenPos.x > position.x) {
-		newX = position.x + 1;
-	} else if(givenPos.x == position.x) {
-		newX = position.x;
-	} else {
-		newX = position.x - 1;
-	}
-	position = Pos(newX, newY);
-}
-
 //Set vehicles position. Call this after making a vehicle to place it somewhere.
 void Vehicle::setPosition(Pos givenPos) {
 	position = givenPos;
+}
+
+//Set the position to where this vehicle tries to move
+//when the method move() is called.
+void Vehicle::setNextPosition(Pos givenPos) {
+	nextPosition = givenPos;
+}
+
+//Set a path for this vehicle to move on.
+void Vehicle::setPath(std::vector<Edge> givenPath) {
+	path = givenPath;
 }
 
 void Vehicle::setDestination(Pos dest){
@@ -137,36 +135,34 @@ Pos Vehicle::getPosition() const{
 	return position;
 }
 
+//Get next position.
 Pos Vehicle::getNextPosition() const{
 	return nextPosition;
 }
 
+//Get last position.
 Pos Vehicle::getLastPosition() const{
 	return lastPosition;
 }
 
-//Get length variable. Currently not used.
+//Get width variable.
 int Vehicle::getWidth() const{
     return width;
 }
 
-//Get width. Currently not in use.
+//Get height variable.
 int Vehicle::getHeight() const{
     return height;
 }
 
-const std::vector<Edge>& Vehicle::getPath() {
+//Return the path that vehicle is going to take.
+std::vector<Edge>& Vehicle::getPath() const {
     return path;
 }
 
 //Get destination
 Pos Vehicle::getDestination() const{
     return destination;
-}
-
-//Get destination
-direction Vehicle::getDirection() const{
-    return comingFrom;
 }
 
 //Check if arrived
@@ -186,7 +182,12 @@ bool Vehicle::atDestination() const{
     return posGrid == destGrid;
 }
 
-direction Vehicle::turningTo(){
+//Get destination
+direction Vehicle::getDirection() const{
+    return comingFrom;
+}
+
+direction Vehicle::turningTo() const{
     if(path.size() > 0) {
         direction dir = noDir;
         Edge e = path.front();
@@ -206,6 +207,7 @@ direction Vehicle::getTurningFrom() const{
     return turningFrom;
 }
 
+//Return position of vehicle when vehicle is starting to turn left
 Pos Vehicle::leftTurnBeginning(Pos position, int distance, direction dir){
     if(dir == north){
         float s = 48.0;
@@ -245,6 +247,7 @@ Pos Vehicle::leftTurnBeginning(Pos position, int distance, direction dir){
     
 }
 
+//Return position of vehicle when vehicle has finished turning left
 Pos Vehicle::leftTurnEnd(Pos position, int distance, direction dir){
     if(dir == west){
         float s = 48.0;
@@ -284,6 +287,7 @@ Pos Vehicle::leftTurnEnd(Pos position, int distance, direction dir){
     
 }
 
+//Return position of vehicle when vehicle is starting to turn right
 Pos Vehicle::rightTurnBeginning(Pos position, int distance, direction dir){
 
     if(dir == north){
@@ -324,6 +328,7 @@ Pos Vehicle::rightTurnBeginning(Pos position, int distance, direction dir){
     
 }
 
+//Return position of vehicle when vehicle has finished turning right
 Pos Vehicle::rightTurnEnd(Pos position, int distance, direction dir){
 
     if(dir == east){
@@ -364,6 +369,7 @@ Pos Vehicle::rightTurnEnd(Pos position, int distance, direction dir){
     
 }
 
+//Check if next turn is going to be left or right.
 bool Vehicle::nextTurnIsLeft(){
     if(comingFrom == north && turningTo() == west) return true;
     if(comingFrom == south && turningTo() == east) return true;
@@ -372,6 +378,7 @@ bool Vehicle::nextTurnIsLeft(){
     return false;
 }
 
+//Check if last turn is going to be left or right.
 bool Vehicle::lastTurnWasLeft(){
     if(turningFrom == north && comingFrom == east) return true;
     if(turningFrom == south && comingFrom == west) return true;

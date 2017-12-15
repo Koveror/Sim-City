@@ -31,6 +31,7 @@ public:
     Vehicle& operator=(const Vehicle& copyFrom) = default;
 
     ///Member functions
+	bool checkFront(Graph& graph) const;
     void moveTowards(Pos givenPos);
     void move(Graph& graph);
     void moveAlong();
@@ -41,22 +42,22 @@ public:
     Pos getPosition() const;
     Pos getNextPosition() const;
     Pos getLastPosition() const;
-    bool nextTurnIsLeft();
-    bool lastTurnWasLeft();
-    direction getDirection() const;
-    direction getTurningFrom() const;
-    int getWidth() const;
+	int getWidth() const;
     int getHeight() const;
-    const std::vector<Edge>& getPath();
-    virtual std::string getType() const {return "(nothing)";}
-    Pos getDestination() const;
+	std::vector<Edge>& getPath() const;
+	Pos getDestination() const;
     bool atDestination() const;
-    bool checkFront(Graph& graph) const;
-    direction turningTo();
+	direction getDirection() const;
+	direction turningTo() const;
+    direction getTurningFrom() const;
     Pos leftTurnBeginning(Pos position, int distance, direction dir);
     Pos leftTurnEnd(Pos position, int distance, direction dir);
     Pos rightTurnBeginning(Pos position, int distance, direction dir);
     Pos rightTurnEnd(Pos position, int distance, direction dir);
+	bool nextTurnIsLeft();
+    bool lastTurnWasLeft();
+
+	virtual std::string getType() const {return "(nothing)";}
 
 private:
     ///Private members
@@ -66,8 +67,8 @@ private:
     Pos lastPosition;
     int width;
     int height;
-    direction comingFrom = north; //Must assign to avoid segfault
-    direction turningFrom = north;
+    direction comingFrom = noDir; //Must assign to avoid segfault
+    direction turningFrom = noDir; //Must assign to avoid segfault
     Pos destination;
 };
 
