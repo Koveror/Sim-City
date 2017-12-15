@@ -50,6 +50,7 @@ void Vertex::togglePassable() {
         }
         else {
             passable_from[3] = false;
+            passable_from[0] = true;
         }
     }
 }
