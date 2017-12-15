@@ -505,10 +505,10 @@ int Graph::getSizeY()
     return latitude;
 }
 
-const std::vector<std::vector<Vertex>>& Graph::getVertices(){
+std::vector<std::vector<Vertex>>& Graph::getVertices(){
     return vertices;
 }
 
-const std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
+std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
     return vehicles;
 }

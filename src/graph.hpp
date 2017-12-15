@@ -43,8 +43,8 @@ public:
 	int getSize();
     int getSizeX();
     int getSizeY();
-    const std::vector<std::vector<Vertex>>& getVertices();
-    const std::list<std::shared_ptr<Vehicle>>& getVehicles();
+    std::vector<std::vector<Vertex>>& getVertices();
+    std::list<std::shared_ptr<Vehicle>>& getVehicles();
 
 private:
     ///Private members
