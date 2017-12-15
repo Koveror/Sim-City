@@ -172,9 +172,9 @@ All in all, we are all satisfied with our efforts as a group. Despite the week 5
 
 ### Week 50 (11th Dec. - 17th Dec.)
 **Finalized Dijkstra's algorithm, fixed vehicle movement logic, implemented ability to save and load maps, fixed segmentation faults when spawning vehicles, implemented Graph::update() to update their route from source to target and, in addition, fixed Dijkstra's algorithm. In addition to aforementioned, vehicles now turn correctly in corners. Last but not least, added some unittesting.**
-- [ALL MEMBERS]: At least 6 hours working together at Maari together to finalize the project.
+- [ALL MEMBERS]: At least 10 hours working together at Maari together to finalize the project.
 - [Tianzhong]: At least 30 hours spent: at least 7 hours with finalizing Dijkstra's algorithm, 3 hours with fixing (weird) segmentation fault when creating vehicles to the Graph and 4 hours with adding console commands for user input. Time was also spent on working with documentation, unit test and fixing minor bugs, not to mention with constant debugging.
-- [Harti]: Maybe 30-40 hours of finishing off (more improvements on traffic lights, applying Dijkstra's algorithm to vehicles, improved the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes).
+- [Harti]: Maybe 40+ hours of finishing off (more improvements on traffic lights, applying Dijkstra's algorithm to vehicles, improved the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes). Special note: Used 10 hours on friday to create smooth turns, hopefully the course personel enjoys them more then I did creating them.
 - [Risto]: 2,5 hours spent: 2,5 hours on collision detection
 - [Ilari]: About 10 hours spent working with documentation, save/load, refining vehicle movement and fixing bugs.
 
