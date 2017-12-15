@@ -21,7 +21,7 @@ int test(void) {
     Graph testG = Graph(4, 3);
     testG.addVertices();
 
-    //
+    //addVertices, getSize, getSizeX, getsizeY
     assert(testG.getSize() == 12);
     std::cout << "Graph addVertices() and getSize() works properly" << std::endl;
     assert(testG.getSizeX() == 4);
@@ -29,29 +29,29 @@ int test(void) {
     assert(testG.getSizeY() == 3);
     std::cout << "Graph getSizeY() works properly" << std::endl;
 
-    //
+    //setVertex, getVertices, setType, getType
     testG.setVertex(0,1,building);
     auto type = testG.getVertices()[1][0].getType();
     assert(type == building);
     testG.getVertices()[1][0].setType(road);
     type = testG.getVertices()[1][0].getType();
     assert(type == road);
-    std::cout << "Graph getVertices() & Vertex getType() and setType() works properly" << std::endl;
+    std::cout << "Graph getVertices() (and setVertex() ) & Vertex getType() and setType() works properly" << std::endl;
 
     assert(testG.getVehicles().size() == 0);
     std::cout << "Graph getVehicles is: " << testG.getVehicles().size() << std::endl;
     auto position = Pos(0,0);
     assert(position.x == 0 && position.y == 0);
-    std::cout << "created Position Pos(0,0). Now testing addCar..." << std::endl;
+    std::cout << "created Position Pos(0,0). Now testing sendVehicle (and addVehicle)..." << std::endl;
 
-    //
+    //getVehicles, sendVehicle
     testG.setVertex(0,0,building);
     testG.setVertex(0,2,building);
     testG.sendVehicle(position, 1, 10000.0); //unusually high rate to ensure that vehicle DEFINITELY spawns
-    //testG.addCar(position);
+    //testG.addVehicle(position);
     //std::cout << "Graph getVehicles is: " << testG.getVehicles().size() << std::endl;
     assert(testG.getVehicles().size() == 1);
-    std::cout << "Graph getVehicles is 1. Both Graph getVehicles() and sendVehicle (and addCar) works." << std::endl;
+    std::cout << "Graph getVehicles is 1. Both Graph getVehicles() and sendVehicle (and addVehicle) works." << std::endl;
 
     //
     assert(testG.getPath(testG.getVertices()[0][0],testG.getVertices()[2][0]).size() == 2);
@@ -63,6 +63,18 @@ int test(void) {
     Vertex a = Vertex(1, 1, road);
     assert(a.getPos() == Pos(96,96) && a.getIndex() == Pos(1,1));
     std::cout << "Vertex getPos() and getIndex() works." << std::endl;
+    
+    //hasEdgeTo, getEdgesTo (and confirming removeEdge works aswell) & getTexture
+    auto u = testG.getVertices()[0][0];
+    assert(u.getEdgesTo().size() == 1);
+    assert(u.hasEdgeTo(0,1));
+    std::cout << "Vertex hasEdgeTo() and getEdgesTo() works." << std::endl;
+    testG.setVertex(0,0,grass);
+    u = testG.getVertices()[0][0];
+    assert(u.getEdgesTo().size() == 0);
+    std::cout << "Removing edges works." << std::endl;
+    assert(testG.getVertices()[0][0].getTexture() == "grass");
+    std::cout << "Vertex getTexture() works." << std::endl;
 
     ///Edge
     std::cout << " " << std::endl;
@@ -85,6 +97,10 @@ int test(void) {
     assert(c->getHeight() == 12);
     delete c;
     std::cout << "Derived class Car works." << std::endl;
+    c = new Truck();
+    assert(c->getHeight() == 16);
+    delete c;
+    std::cout << "Derived class Truck works." << std::endl;
 
     return 0;
 }
@@ -155,7 +171,6 @@ int main(void) {
             testGraph.update();
         }*/
 
-
         sf::Event event;
         //Event loop listens for events and reacts
         while (window.pollEvent(event))
@@ -172,8 +187,8 @@ int main(void) {
                 int my = y / 64;
                 if (z == sf::Mouse::Left){
                     testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
-                    testGraph.update();
                     testGraph.setRoutes();
+                    testGraph.updateAfterSetVertex();
                 } /*else if(z == sf::Mouse::Right) {
                     testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
                     sf::Clock wait;
@@ -422,7 +437,7 @@ int main(void) {
             testGraph.update();
             for(auto vehicle : testGraph.getVehicles()) {
                 sf::RectangleShape model(sf::Vector2f(vehicle->getWidth(), vehicle->getHeight()));
-                model.setTexture(&texmanager.getRef("car"));
+                model.setTexture(&texmanager.getRef(vehicle->getType()));
                     int i = 0;
                     while(i < speedUp) {
                         //std::cout << "calling move" << std::endl;
@@ -432,22 +447,22 @@ int main(void) {
 
                 Pos got = vehicle -> getPosition();
                 direction dir = vehicle -> getDirection();
-                model.setOrigin(6.0, 6.0);
+                model.setOrigin(6.0, 6.0); //(6.0, 6.0), 14
                 //set position according to direction
                 if(dir == south){
-                    model.setPosition(got.x-14, got.y);
+                    model.setPosition(got.x - 14, got.y);
                     model.setRotation(180);
                 }
                 else if(dir == north){
-                    model.setPosition(got.x+14, got.y);
+                    model.setPosition(got.x + 14, got.y);
                     model.setRotation(0);
                 }
                 else if(dir == east){
-                    model.setPosition(got.x, got.y-14);
+                    model.setPosition(got.x, got.y - 14);
                     model.setRotation(-90);
                 }
                 else if(dir == west){
-                    model.setPosition(got.x, got.y+14);
+                    model.setPosition(got.x, got.y + 14);
                     model.setRotation(90);
                 }
 

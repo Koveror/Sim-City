@@ -35,7 +35,6 @@ public:
     bool hasEdgeTo(int x, int y);
     Edge getSingleEdge(std::pair<int,int> coordPair);
     void togglePassable(bool green);
-    void sendVehicle();
 
     ///Operator overloading
     bool operator==(Vertex a);

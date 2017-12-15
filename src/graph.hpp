@@ -38,7 +38,7 @@ public:
     int getSizeY();
     void addVertices();
     void addEdge();
-    void addCar(Pos p);
+    void addVehicle(Pos p);
     void setVertex(int x, int y, tileType type);
     std::vector<std::vector<Vertex>>& getVertices();
     std::list<std::shared_ptr<Vehicle>>& getVehicles();
@@ -48,6 +48,7 @@ public:
     std::vector<Edge> getPath(Vertex source, Vertex target);
     void setRoutes();
     void update();
+    void updateAfterSetVertex();
 
 private:
     ///Private members
