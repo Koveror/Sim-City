@@ -7,7 +7,7 @@
     }
 }*/
 
-void Graph::addCar(Pos p) {
+void Graph::addVehicle(Pos p) {
 
     //chooose random building for destination
     std::vector<Pos> destinations = {};
@@ -25,7 +25,19 @@ void Graph::addCar(Pos p) {
     //std::cout << "DEBUG p: " << p.x << ", " << p.y << std::endl;
     if (destinations[i] == p) return; // Destination is same as self, don't add car
 
-    std::shared_ptr<Vehicle> c = std::make_shared<Car>();
+    int j = rand() % 3;
+    std::shared_ptr<Vehicle> c;
+    
+    if (j == 0) {
+        c = std::make_shared<Car>();
+    }
+    else if (j == 1) {
+        c = std::make_shared<Truck>();
+    }
+    else {
+        c = std::make_shared<Bike>();
+    }
+    //std::shared_ptr<Vehicle> c = std::make_shared<Car>();
     //Vehicle* c = new Car;
     c->setPosition(p);
     c->setNextPosition(p);
@@ -44,8 +56,8 @@ void Graph::addCar(Pos p) {
     c->setPath(route);
 
     vehicles.push_back(c);
-    std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
-    std::cout << "Vehicles size: " << vehicles.size() << std::endl;
+    //std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
+    //std::cout << "Vehicles size: " << vehicles.size() << std::endl;
 
 }
 
@@ -76,12 +88,12 @@ void Graph::addVertices()
         vertices.push_back(row);
         for (int i = 0; i < longitude; i++) {
             Vertex v1(i,j, grass);
-            std::cout << "--- pushing ---" << std::endl;
+            //std::cout << "--- pushing ---" << std::endl;
             vertices[j].push_back(v1);
             //DEBUG:
-            std::cout << "Adding: " << "Grass: " << j << ", " << i << std::endl;
-            std::cout << "x: " << vertices[j][i].getPos().x << std::endl;
-            std::cout << "y: " << vertices[j][i].getPos().y << std::endl;
+            //std::cout << "Adding: " << "Grass: " << j << ", " << i << std::endl;
+            //std::cout << "x: " << vertices[j][i].getPos().x << std::endl;
+            //std::cout << "y: " << vertices[j][i].getPos().y << std::endl;
         }
     }
     return;
@@ -285,10 +297,10 @@ std::vector<std::vector<Vertex>>& Graph::getVertices(){
 
 bool Graph::addVertex(int x, int y)
 {
-	tileType t = grass;
-        Vertex new_vertex(x,y, t);
-	vertices[y][x] = new_vertex;
-	return true;
+    tileType t = grass;
+    Vertex new_vertex(x,y, t);
+    vertices[y][x] = new_vertex;
+    return true;
 }
 
 void Graph::sendVehicle(Pos position, int multipler, float rate){
@@ -297,8 +309,8 @@ void Graph::sendVehicle(Pos position, int multipler, float rate){
     std::exponential_distribution<double> distribution(1.0 / 5.0);
     //std::cout << "gen: " << distribution(generator) << std::endl;
     if(distribution(generator) < 0.00665 * multipler * rate){
-        std::cout << "Send vehicle from: " << "(" << position.x/64 << "," << position.y/64 << ")" << std::endl; //96?
-        this->addCar(position);
+        //std::cout << "Send vehicle from: " << "(" << position.x/64 << "," << position.y/64 << ")" << std::endl; //96?
+        addVehicle(position);
     }
 
 }
@@ -374,42 +386,29 @@ std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
 
     std::priority_queue<std::pair<Vertex,int>,std::vector<std::pair<Vertex,int>>,CompareWeight> Q;
 
-    /*for (auto &rows : g.getVertices()) {
-        for (auto &v: rows) {
-            //std::cout << "DIJKSTRA debug: " << v.getIndex().x << ", " << v.getIndex().y << std::endl;
-            if (v.getType() == road ||v.getType() == building) {
-                Q.push(std::make_pair(v, dist[v.getIndex().y][v.getIndex().x]));
-            }
-        }
-    }*/
-
-    //std::cout << "DIJKSTRA debug source index: " << source.getIndex().x << ", " << source.getIndex().y << ", dist: " << dist[s.y][s.x] << std::endl;
-    //std::cout << "DIJKSTRA debug target index: " << target.getIndex().x << ", " << target.getIndex().y << std::endl;
-
     Q.push(std::make_pair(start, dist[source.getIndex().y][source.getIndex().x]));
-    //std::cout << "DIJKSTRA debug Q size (start): " << Q.size() << std::endl;
+    
     while (!Q.empty()) {
         Vertex u = Q.top().first;
         visited[u.getIndex().y][u.getIndex().x] = true;
-        //std::cout << "Now at: " << u.getIndex().x << ", " << u.getIndex().y << std::endl;
+
         Q.pop();
 
         ///If we find the target
         if (u == target) {
-            //std::cout << "Found target, printing path..." << std::endl;
 
             auto route = std::vector<std::pair<int,int>>();
             auto routeEdges = std::vector<Edge>();
             std::pair<int,int> u = std::make_pair(target.getIndex().y, target.getIndex().x);
-            //std::cout << "bool begin: " << (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) << std::endl;
+
             while (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) {
-                //std::cout << "Route: " << u.first << ", " << u.second << std::endl;
+
                 Vertex temp = getVertices()[u.first][u.second];
                 Edge tempEdge = temp.getSingleEdge(prev[u.first][u.second]);
                 route.push_back(u);
                 routeEdges.push_back(tempEdge);
                 u = prev[u.first][u.second];
-                //std::cout << "bool: " << (prev[u.first][u.second] != std::pair<int,int>(-1,-1)) << std::endl;
+
             }
             route.push_back(u);
             //std::cout << "Route last: " << u.first << ", " << u.second << std::endl;
@@ -423,32 +422,24 @@ std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
         }
 
         std::vector<Edge> neighbors = u.getEdgesTo();
-        //std::cout << "DIJKSTRA debug neighbors size: " << neighbors.size() << std::endl;
+
         for (Edge &edge : neighbors) {
             auto v_pos = edge.getVertices().second.getIndex(); ///Bug here?
             Vertex v = getVertices()[v_pos.y][v_pos.x];
-            //std::cout << "Neighbor v: " << v.getIndex().x << ", " << v.getIndex().y << std::endl;
-            //std::cout << "edge weight: " << edge.getWeight() << std::endl;
-            //std::cout << "visited? " << (visited[v.getIndex().y][v.getIndex().x]) << std::endl;
             if (!visited[v.getIndex().y][v.getIndex().x]) {
                 int alt = dist[u.getIndex().y][u.getIndex().x] + edge.getWeight();
                 if (alt < dist[v.getIndex().y][v.getIndex().x]) {
                     dist[v.getIndex().y][v.getIndex().x] = alt;
                     prev[v.getIndex().y][v.getIndex().x] = std::make_pair(u.getIndex().y,u.getIndex().x);
-                    //std::cout << "prev[x]: " << v.getIndex().x << "; prev[y]: " << v.getIndex().y << std::endl;
-                    //std::cout << "u [x]: " << u.getIndex().x << "; u [y]: " << u.getIndex().y << std::endl;
                 }
-                //std::cout << "Pushing in v..." << std::endl;
                 Q.push(std::make_pair(v, dist[v.getIndex().y][v.getIndex().x]));
             }
 
         }
-        //std::cout << "DIJKSTRA debug Q size: " << Q.size() << std::endl;
     }
 
-    //std::cout << "No suitable route has been found, returning empty route" << std::endl;
+    ///No suitable route has been found, returning empty route
     return std::vector<Edge>();
-    //return std::vector<std::pair<int,int>>();
 }
 void Graph::setRoutes() {
     for(auto it = vehicles.begin(); it != vehicles.end(); it++) {
@@ -466,8 +457,6 @@ void Graph::setRoutes() {
 
         auto route = getPath(source, target);
         (*it)->setPath(route);
-
-
 
     }
 }
@@ -489,7 +478,33 @@ void Graph::update() {
         Vertex target = getVertices()[targetY][targetX];
 
         auto route = (*it)->getPath();
-        if (route.empty() || (*it)->atDestination()) {
+        if ((*it)->atDestination()) {
+            it = vehicles.erase(it);
+        } else {
+            ++it;
+        }
+
+    }
+}
+
+void Graph::updateAfterSetVertex() {
+    for(auto it = vehicles.begin(); it != vehicles.end(); ) {
+
+    //for(auto vehicle : vehicles) {
+        //std::cout << "Car path: " << std::endl;
+        Pos CurrentPosition = (*it)->getPosition();
+
+        int sourceX = CurrentPosition.x / 64;
+        int sourceY = CurrentPosition.y / 64;
+        Vertex source = getVertices()[sourceY][sourceX];
+
+        Pos destination = (*it)->getDestination();
+        int targetX = destination.x / 64;
+        int targetY = destination.y / 64;
+        Vertex target = getVertices()[targetY][targetX];
+
+        auto route = (*it)->getPath();
+        if (route.empty()) {
             it = vehicles.erase(it);
         } else {
             ++it;

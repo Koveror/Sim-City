@@ -65,30 +65,30 @@ class Car : public Vehicle
 {
 public:
     ///Constructor
-    Car() : Vehicle(60, 6, 12) { }
+    Car() : Vehicle(60, 8, 12) { } // 6, 12
 
     ///Member functions
-    virtual std::string getType() const { return "Car"; }
+    virtual std::string getType() const { return "car"; }
 };
 
 class Truck : public Vehicle
 {
 public:
     ///Constructor
-    Truck() : Vehicle(40, 38, 20) { }
+    Truck() : Vehicle(40, 10, 16) { }
 
     ///Member functions
-    virtual std::string getType() const { return "Truck"; }
+    virtual std::string getType() const { return "truck"; }
 };
 
 class Bike : public Vehicle
 {
 public:
     ///Constructor
-    Bike() : Vehicle(70, 14, 6) { }
+    Bike() : Vehicle(70, 6, 10) { }
 
     ///Member functions
-    virtual std::string getType() const { return "Bike"; }
+    virtual std::string getType() const { return "bike"; }
 };
 
 #endif // VEHICLE_HPP_INCLUDED

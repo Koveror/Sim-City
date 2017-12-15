@@ -7,7 +7,7 @@
 //TODO: In turns vehicles can go inside each other
 bool Vehicle::checkFront(Graph& graph) const {
 
-    int length = 15;    //The distance of the front position from the vehicle. TODO: Use vehicle width and length
+    int length = height + 8;    //The distance of the front position from the vehicle. TODO: Use vehicle width and length
     Pos p0;     //A position in front of the current vehicle.
 
     //Get current direction and figure out front position.
@@ -148,36 +148,43 @@ const std::vector<Edge>& Vehicle::getPath() {
     return path;
 }
 
-// get destination
+//Get destination
 Pos Vehicle::getDestination() const{
     return destination;
 }
 
+//Get destination
 direction Vehicle::getDirection() const{
     return comingFrom;
 }
 
+//Check if arrived
 bool Vehicle::atDestination() const{
     auto posGrid = Pos(position.x/64, position.y/64);
     auto destGrid = Pos(destination.x/64, destination.y/64);
+    
+    //Debug
+    //auto posGrid = Pos(position.x, position.y);
+    //auto destGrid = Pos(destination.x, destination.y);
     //std::cout << "DEBUG position pos: " << position.x << ", " << position.y << std::endl;
     //std::cout << "DEBUG destination pos " << destination.x << ", " << destination.y << std::endl;
     //std::cout << "DEBUG posGrid pos: " << posGrid.x << ", " << posGrid.y << std::endl;
     //std::cout << "DEBUG destGrid pos: " << destGrid.x << ", " << destGrid.y << std::endl;
+    //std::cout << "DEBUG path size: " << path.size() << std::endl;
 
     return posGrid == destGrid;
 }
 
 direction Vehicle::turningTo(){
-  if(path.size() > 0) {
-    Edge e = path.front();
-    std::pair<Vertex, Vertex> pair = e.getVertices();
-    Pos start = pair.first.getIndex();
-    Pos end = pair.second.getIndex();
-    if (start.x < end.x) return west;
-    if (start.x > end.x) return east;
-    if (start.y < end.y) return south;
-    if (start.y > end.y) return north;
-  }
-  return noDir;
+    if(path.size() > 0) {
+        Edge e = path.front();
+        std::pair<Vertex, Vertex> pair = e.getVertices();
+        Pos start = pair.first.getIndex();
+        Pos end = pair.second.getIndex();
+        if (start.x < end.x) return west;
+        if (start.x > end.x) return east;
+        if (start.y < end.y) return south;
+        if (start.y > end.y) return north;
+    }
+    return noDir;
 }

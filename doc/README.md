@@ -62,7 +62,7 @@ Once the software is running, the console will print out a welcome message. You 
 
 To add tiles on map, first choose which kind of tile you want to add using keyboard. Pressing **R** adds roads, **B** buildings and **G** grass (empty tile). When you have map ready and want cars to start spawning press **V**.
 
-Press **T** to toggle automatic traffic light control. You can also use right mouse button to manually switch traffic lights in any intersection. Letter **O** changes the rate that automatic traffic light control changes lights and **I** changes the rate that buildings spawn vehicles.
+Press **T** to toggle automatic traffic light control, and letter **O** changes the rate that automatic traffic light control changes lights and **I** changes the rate that buildings spawn vehicles.
 
 Game speed can be changed using numbers **1** (1x), **2** (4x) and **3** (8x).
 
