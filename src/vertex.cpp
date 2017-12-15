@@ -26,7 +26,7 @@ bool Vertex::operator==(Vertex a) {
 }
 
 //Toggle the boolean values of the passable_from vector
-void Vertex::togglePassable() {
+void Vertex::togglePassable(bool green) {
     if (this->edges_to.size() < 3) {
         passable_from[0] = true;
         passable_from[1] = true;
@@ -34,7 +34,7 @@ void Vertex::togglePassable() {
         passable_from[3] = true;
     }
     else {
-        if(!passable_from[0] && !passable_from[1] && !passable_from[2] && !passable_from[3]) {
+        if(green) {
             if(lastTrafficDirection == north){
                 passable_from[0] = false;
                 passable_from[1] = true;

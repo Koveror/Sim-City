@@ -34,7 +34,7 @@ public:
     const std::string getTexture();
     bool hasEdgeTo(int x, int y);
     Edge getSingleEdge(std::pair<int,int> coordPair);
-    void togglePassable();
+    void togglePassable(bool green);
     void sendVehicle();
 
     ///Operator overloading

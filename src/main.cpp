@@ -104,8 +104,9 @@ int main(void) {
 
     //Variables for GUI loop
     tileType vertex_to_add;
+    float waitTime = 1.0;
     bool vehicleSendBoolean = false;
-    bool autoTrafficLight = false;
+    bool autoTrafficLight = true;
     int speedUp = 1;
     float refreshSpeed = 1.0 / 60.0;
     float ticker = 0.0;
@@ -133,21 +134,27 @@ int main(void) {
             timer.restart();
             for (auto& row : testGraph.getVertices()) {
                 for (Vertex& light : row) {
-                    light.togglePassable();
+                    light.togglePassable(!trafficLightsOn);
                 }
             }
             trafficLightsOn = false;
         }
-        if (!trafficLightsOn && autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > 1) {
+        if (!trafficLightsOn && autoTrafficLight && timer.getElapsedTime().asSeconds() * speedUp > waitTime) {
             timer.restart();
             for (auto& row : testGraph.getVertices()) {
                 for (Vertex& light : row) {
-                    light.togglePassable();
+                    light.togglePassable(!trafficLightsOn);
                 }
             }
             trafficLightsOn = true;
         }
-        testGraph.update();
+        
+        /*sf::Clock callUpdate;
+        if (callUpdate.getElapsedTime().asSeconds() > waitTime) {
+            callUpdate.restart();
+            testGraph.update();
+        }*/
+        
 
         sf::Event event;
         //Event loop listens for events and reacts
@@ -165,9 +172,15 @@ int main(void) {
                 int my = y / 64;
                 if (z == sf::Mouse::Left){
                     testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
-                } else if(z == sf::Mouse::Right) {
+                    testGraph.update();
+                } /*else if(z == sf::Mouse::Right) {
                     testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
-                }
+                    sf::Clock wait;
+                    //sf::Time waitTime = wait.restart();
+                    if (wait.getElapsedTime().asSeconds() * speedUp > waitTime) {
+                        testGraph.getVertices()[my][mx].togglePassable();
+                    }
+                }*/
 
                 //DEBUG: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
@@ -223,7 +236,7 @@ int main(void) {
                     std::cin >> name;
                     testGraph.loadGraph(name);
                 }
-                else if(event.key.code == sf::Keyboard::T){
+                /*else if(event.key.code == sf::Keyboard::T){
                     autoTrafficLight = !autoTrafficLight;
                     if (autoTrafficLight) {
                         std::cout << "Traffic light control: automatic" << std::endl;
@@ -231,7 +244,7 @@ int main(void) {
                     else {
                         std::cout << "Traffic light control: manual (right mouse button, RMB)" << std::endl;
                     }
-                }
+                }*/
                 else if(event.key.code == sf::Keyboard::Num3){
                     std::cout << "Now at: 8x speed" << std::endl;
                     speedUp = 8;
@@ -321,7 +334,7 @@ int main(void) {
                     std::cout << "  R = road, G = grass and B = building." << std::endl;
                     std::cout << "- Press S or L to save or load." << std::endl;
                     std::cout << "  Follow further instructions on the console." << std::endl;
-                    std::cout << "- Press T to toggle automatic traffic light control." << std::endl;
+                    //std::cout << "- Press T to toggle automatic traffic light control." << std::endl;
                     std::cout << "  Note that even if you're on automatic mode, you can still manually change individual lights." << std::endl;
                     std::cout << "- Press I to change the rate that buildings spawn cars." << std::endl;
                     std::cout << "- Press O (not zero) to change the rate that automatic traffic light control changes lights." << std::endl;

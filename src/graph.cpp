@@ -31,9 +31,22 @@ void Graph::addCar(Pos p) {
     c->setNextPosition(p);
     c->setDestination( destinations[i] );
     
+    int sourceX = p.x / 64;
+    int sourceY = p.y / 64;
+    Vertex source = getVertices()[sourceY][sourceX];
+    
+    Pos destination = c->getDestination();
+    int targetX = destination.x / 64;
+    int targetY = destination.y / 64;
+    Vertex target = getVertices()[targetY][targetX];
+
+    auto route = getPath(source, target);
+    c->setPath(route);
+    
     vehicles.push_back(c);
     std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
     std::cout << "Vehicles size: " << vehicles.size() << std::endl;
+    
 }
 
 std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
@@ -288,13 +301,6 @@ void Graph::sendVehicle(Pos position, int multipler, float rate){
         this->addCar(position);
     }
 
-//     int summa = 0.0;
-//     for(int i = 0; i < 10000000; i++){
-//         double number = distribution(generator);
-//         if(number < (1.0 / 30.0) ){
-//             summa += 1;
-//         }
-//     }
 }
 
 bool Graph::saveGraph(std::string filename) {
@@ -463,15 +469,11 @@ void Graph::update() {
 
         auto route = getPath(source, target);
         (*it)->setPath(route);
-
-        if ( (*it)->atDestination() ) {
-            //std::cout << "atDestination!" << std::endl;
+        if (route.empty() || (*it)->atDestination()) {
             it = vehicles.erase(it);
         } else {
-            //std::cout << "nope" << std::endl;
             ++it;
         }
-
 
     }
 }
