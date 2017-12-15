@@ -29,87 +29,17 @@ Main function is responsible for GUI loop. It simulates time, handles user input
 #### graph
 Grahp class stores information about game world. It stores vertices and vehicles and updates them when called. The class also finds paths for cars using Dijkstra's algorithm.
 
-Graph class has following member functions:
-- `Graph(int n, int m)`: Constructor, generates graph with dimensions `n` x `m`
-- `bool addVertex(int x, int y)` adds vertex to graph and returns `true` if sicceeded
-- `int getSize()` returns number of tiles in graph i.e. n * m
-- `int getSizeX()` returs number of columns
-- `int getSizeY()` returns number of rows
-- `void addVertices()` adds vertex to graph
-- `void addEdge()` adds edge
-- `void addVehicle(Pos p)` adds vehicle to position `p`
-- `void setVertex(int x, int y, tileType type)` sets tile type of vertex at position (x, y) into `type`
-- `std::vector<std::vector<Vertex>>& getVertices()` returns a table of all vertices on the graph
-- `std::list<std::shared_ptr<Vehicle>>& getVehicles()` returns list of all vehicles on the graph
-- `void sendVehicle(Pos position, int multipler, float rate)` **TODO**
-- `bool saveGraph(std::string filename)` saves current graph structure to `filename.txt`
-- `bool loadGraph(std::string filename)` loads graph from `filename.txt`
-- `std::vector<Edge> getPath(Vertex source, Vertex target)` finds path from `source` vertex to `target` vertex and returns it
-- `void setRoutes()` finds path for all vehicles stored in graph and updates them into vehicles
-- `void update()` **TODO**
-- `void updateAfterSetVertex()`**TODO**
-
 #### vertex
 Vertex object represents one tile in game world and a vertex in graph sturcture. Vertices are linked together by edges and represent one tiletype so it can be drawn to screen. Vertex also stores information about traffic lights and updates them with help from tools.
-
-Vertex class has following member functions and public variable:
-- `Vertex(int x, int y, tileType type)`: Constructor, generates vertex at (`x`, `y`) and type `type`
-- `Pos getPos()` returns absolute pixel position of vertexes center point
-- `Pos getIndex()` returns grid coordinates of vertex
-- `const tileType& getType()` returns type of the vertex
-- `void setType(tileType t)` sets type of vertex to `t`
-- `void addEdge(Pos position, Graph& graph, int weight)`
-- `void removeEdge(Pos position)` **TODO**
-- `void removeEdgesTo(Pos position)` **TODO**
-- `const std::vector<Edge>& getEdgesTo()` returns edges leading to the vertex
-- `const std::string getTexture()` returns string that can be used to call Texturemanager
-- `bool hasEdgeTo(int x, int y)` returns whether the vertex has edge to another vertex at (`x`, `y`)
-- `Edge getSingleEdge(std::pair<int,int> coordPair)` **TODO**
-- `void togglePassable(bool green)` toggles traffic lights of the vertex. If `green` is false all edges are set to not passable.
-- `void sendVehicle()` sends vehicle from vertex
-- `bool operator==(Vertex a)` returns whether two vertices are same or not
-- `std::vector<bool> passable_from` tells from which directions vertex is passable
 
 #### edge
 Edge objects represent relations beteween vertices. Each edge is set between two vertices, and it also have weight.
 
-Edge class has following member functions:
-- `Edge(std::shared_ptr<Vertex> V_start, std::shared_ptr<Vertex> V_end, int w)` Constructor: generates edge from `V_start` to `V_end` with weight `w`
-- `int getWeight()` returns weight of the edge
-- `std::pair<Vertex,Vertex> getVertices()` returns vertices the ebge is connecting
-- `Pos getMiddlePos()` returns coordinates of the edges center
-- `direction getDirection()` returns direction of the edge
-- `void swapVertices()` **TODO**
-- `bool operator==(Edge a)` returns whether two edges are the same **TODO**
-
 #### vehicle
 Each Vehicle object stores size, position, destination and route of single vehicle. Vehicle is moved when `move` method is called.
 
-Vehicle class has following member functions:
-- `void moveTowards(Pos givenPos)`
-- `void move(Graph& graph)`
-- `void moveAlong()`
-- `void setPosition(Pos givenPos)`
-- `void setNextPosition(Pos givenPos)`
-- `void setPath(std::vector<Edge> givenPath)`
-- `void setDestination(Pos dest)`
-- `Pos getPosition() const`
-- `direction getDirection() const`
-- `int getWidth() const` returns width of the vehicle
-- `int getHeight() const` returns height of the vehicle
-- `const std::vector<Edge>& getPath()`
-- `virtual std::string getType() const`
-- `Pos getDestination() const`
-- `bool atDestination() const`
-- `bool checkFront(Graph& graph) const`
-- `direction turningTo()`
-
 #### texturemanager
 TextureManager class loads textures for tile types (grass, road, building) and returns them when called.
-
-TextureManager class has following member functions:
-- `void addTexture(const std::string& name, const std::string &filename)` generates new texture that can be found using `name` as key
-- `sf::Texture& getRef(const std::string& texture)` returns reference tu texture with key `texture`
 
 #### tools
 In `tools.cpp` file there are some additional enumaration and class Pos to easily store and compare coordinates elsewhere in the program.
@@ -145,22 +75,22 @@ We use smart pointers (`std::shared_ptr`) for storing vehicles as our graph clas
 Exception handling is used when user wants to change the rates that 1) change lights and 2) buildings spawn vehicles, as both of these require user input. The try catch loop ensures that if user enters invalid argument or invalid value, the software throws an error, forcing to retry, or type -1 to cancel the operation. Exception handling is also used when the user wants to load a map.
 
 #### Rule of three
-Rule of three (and rule of zero) is enforced in every part of our software: For example, vehicle class has a (virtual) destructor, copy constructor and copy assignment.
+Rule of three (and rule of zero) is enforced in every part of our software, most notably in our vehicle class. For example, vehicle has a (virtual) destructor, which leads to it also having copy constructor and copy assignment.
 
 #### Dynamic binding and virtual classes/functions
 Vehicle class uses dynamic binding, as we have derived classes for vehicles. For example, virtual destructor is required for base class Vehicle.
 
 ### Known bugs
-- Collision detection is still buggy, cars can run past each other e.g. at intersections.
-- Different vehicles do not have textures, the only aspect to distinguish the difference is the vehicle size.
+- Collision detection slightly buggy, cars can run past each other e.g. at intersections.
 
 
 
 ## Testing
 Due to scheduling problems, unit testing was done using <cassert> and in a separate test function in main.cpp, which can be called while running the main program (instructions can be found in main.cpp). Unit testing was used to ensure that individual functions work appropriately.
+
 Unfortunately, there was no time to set third-party unit testing C++ frameworks such as google test or CPPunit. However, as our software evolved from the beginning to the end, debugging was very intensive as the codes was being developed.
 
-In addition to unit testing, Valgrind was used to check for memory leaks. We concluded that only SFML parts are leaking memory, and only 10 bytes in 1 block was definitely lost. Rest are still reachable. Below is the latest valgrind with `--leak-check=full`.
+To verify that our code works properly, in addition to unit testing, Valgrind was used to check for memory leaks. We concluded that only SFML parts are leaking memory, and only 10 bytes in 1 block was definitely lost. Rest are still reachable. Below is the latest valgrind with `--leak-check=full`.
 
 ```
 ==18565== HEAP SUMMARY:
