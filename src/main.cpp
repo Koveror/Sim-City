@@ -148,13 +148,13 @@ int main(void) {
             }
             trafficLightsOn = true;
         }
-        
+
         /*sf::Clock callUpdate;
         if (callUpdate.getElapsedTime().asSeconds() > waitTime) {
             callUpdate.restart();
             testGraph.update();
         }*/
-        
+
 
         sf::Event event;
         //Event loop listens for events and reacts
@@ -172,7 +172,8 @@ int main(void) {
                 int my = y / 64;
                 if (z == sf::Mouse::Left){
                     testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
-                    testGraph.update(); testGraph.setRoutes();
+                    testGraph.update();
+                    testGraph.setRoutes();
                 } /*else if(z == sf::Mouse::Right) {
                     testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
                     sf::Clock wait;
