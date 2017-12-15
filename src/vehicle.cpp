@@ -64,7 +64,7 @@ void Vehicle::move(Graph& graph) {
                 else{
                     nextPosition = position;
                 }
-                //reset comingFrom -direction 
+                //reset comingFrom -direction
                 if(position.x < nextPosition.x){
                     comingFrom = west;
                 } else if(position.x > nextPosition.x){
@@ -160,6 +160,20 @@ bool Vehicle::atDestination() const{
     //std::cout << "DEBUG destination pos " << destination.x << ", " << destination.y << std::endl;
     //std::cout << "DEBUG posGrid pos: " << posGrid.x << ", " << posGrid.y << std::endl;
     //std::cout << "DEBUG destGrid pos: " << destGrid.x << ", " << destGrid.y << std::endl;
-    
+
     return posGrid == destGrid;
+}
+
+direction Vehicle::turningTo(){
+  if(path.size() > 0) {
+    Edge e = path.front();
+    std::pair<Vertex, Vertex> pair = e.getVertices();
+    Pos start = pair.first.getIndex();
+    Pos end = pair.second.getIndex();
+    if (start.x < end.x) return west;
+    if (start.x > end.x) return east;
+    if (start.y < end.y) return south;
+    if (start.y > end.y) return north;
+  }
+  return noDir;
 }
