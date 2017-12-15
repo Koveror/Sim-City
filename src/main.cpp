@@ -60,7 +60,7 @@ int test(void) {
     Vertex a = Vertex(1, 1, road);
     assert(a.getPos() == Pos(96,96) && a.getIndex() == Pos(1,1));
     std::cout << "Vertex getPos() and getIndex() works." << std::endl;
-    
+
     //hasEdgeTo, getEdgesTo (and confirming removeEdge works aswell) & getTexture
     auto u = testG.getVertices()[0][0];
     assert(u.getEdgesTo().size() == 1);
@@ -189,6 +189,7 @@ int main(void) {
                     }
                 }*/
 
+                /*
                 //DEBUG: print all current edges
                 std::vector<std::vector<Vertex>> v1 = testGraph.getVertices();
                 std::cout << "\nCurrent edges:" << std::endl;
@@ -204,6 +205,8 @@ int main(void) {
                         }
                     }
                 }
+
+                */
 
                 //DEBUG: Dijkstra
                 //auto test = getPath(testGraph, v1[1][0], v1[0][1]);
@@ -384,6 +387,7 @@ int main(void) {
                     node.setPosition(x, y);
                     window.draw(node);
 
+                    /* DEBUG
                     //Draw middle points of nodes
                     sf::CircleShape coord;
                     coord.setOrigin(3.0, 3.0);
@@ -392,15 +396,19 @@ int main(void) {
                     coord.setFillColor(sf::Color::Yellow);
                     window.draw(coord);
 
+                    */
+
                     //Draw middle points of all edges
                     for(Edge edge : v.getEdgesTo()) {
                         Pos p1 = edge.getMiddlePos();
+                        /* DEBUG
                         sf::CircleShape middle;
                         middle.setOrigin(3.0, 3.0);
                         middle.setPosition(p1.x, p1.y);
                         middle.setRadius(3.0);
                         middle.setFillColor(sf::Color::Red);
                         window.draw(middle);
+                        */
 
                         //Draw traffic lights
                         sf::RectangleShape light(sf::Vector2f(18, 2));
@@ -456,7 +464,7 @@ int main(void) {
                 if(vehicle->turningTo() != dir && vehicle->turningTo() != noDir && (curPos.x)/64 == (nextPos.x)/64 && (curPos.y)/64 == (nextPos.y)/64){
                     Pos anglePosition;
                     int distance = 32 - std::max( abs(curPos.x-nextPos.x) ,  abs(curPos.y-nextPos.y) );
-                    
+
                     if(vehicle->nextTurnIsLeft()){
                          if(dir == north){
                             anglePosition = Pos(curPos.x/64*64, curPos.y/64*64 + 64);
@@ -474,13 +482,13 @@ int main(void) {
                             anglePosition = Pos(curPos.x/64*64 + 64, curPos.y/64*64 + 64);
                             Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
                             model.setPosition(drawPosition.x, drawPosition.y);
-                            model.setRotation(90 - 45.0*((distance)/32.0));
+                            model.setRotation(-90 - 45.0*((distance)/32.0));
                         }
                         if(dir == east){
                             anglePosition = Pos(curPos.x/64*64, curPos.y/64*64);
                             Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
                             model.setPosition(drawPosition.x, drawPosition.y);
-                            model.setRotation(-90 - 45.0*((distance)/32.0));
+                            model.setRotation(90 - 45.0*((distance)/32.0));
                         }
                     }
                     else{
@@ -514,7 +522,7 @@ int main(void) {
                 else if(coming != dir && ( (curPos.x)/64 != (nextPos.x)/64 || (curPos.y)/64 != (nextPos.y)/64 ) ){
                     Pos anglePosition;
                     int distance = std::max( abs(lastPos.x-curPos.x) ,  abs(lastPos.y-curPos.y) );
-                    
+
                     if(vehicle->lastTurnWasLeft()){
                         if(dir == west){
                             anglePosition = Pos( (curPos.x)/64*64, (curPos.y)/64*64 + 64 );
@@ -532,13 +540,13 @@ int main(void) {
                             anglePosition = Pos( (curPos.x)/64*64 + 64, (curPos.y)/64*64 + 64 );
                             Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
                             model.setPosition(drawPosition.x, drawPosition.y);
-                            model.setRotation(90 - 45.0*((distance)/32.0) - 45);
+                            model.setRotation(-90 - 45.0*((distance)/32.0) - 45);
                         }
                         if(dir == north){
                             anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64 );
                             Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
                             model.setPosition(drawPosition.x, drawPosition.y);
-                            model.setRotation(-90 - 45.0*((distance)/32.0) - 45);
+                            model.setRotation(90 - 45.0*((distance)/32.0) - 45);
                         }
                     }
                     else{

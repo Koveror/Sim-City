@@ -64,8 +64,6 @@ private:
     Pos nextPosition;
     Pos position;
     Pos lastPosition;
-    int max_speed;
-    float speed = 0;
     int width;
     int height;
     direction comingFrom = north; //Must assign to avoid segfault
