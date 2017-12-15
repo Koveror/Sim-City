@@ -172,7 +172,7 @@ int main(void) {
                 int my = y / 64;
                 if (z == sf::Mouse::Left){
                     testGraph.setVertex(mx, my, vertex_to_add);	//Set vertex types with mouse 1
-                    testGraph.update();
+                    testGraph.update(); testGraph.setRoutes();
                 } /*else if(z == sf::Mouse::Right) {
                     testGraph.getVertices()[my][mx].togglePassable();	//Toggle traffic lights with mouse 2
                     sf::Clock wait;
@@ -387,30 +387,30 @@ int main(void) {
 
                     //Draw middle points of all edges
                     for(Edge edge : v.getEdgesTo()) {
-                            Pos p1 = edge.getMiddlePos();
-                            sf::CircleShape middle;
-                            middle.setOrigin(3.0, 3.0);
-                            middle.setPosition(p1.x, p1.y);
-                            middle.setRadius(3.0);
-                            middle.setFillColor(sf::Color::Red);
-                            window.draw(middle);
+                        Pos p1 = edge.getMiddlePos();
+                        sf::CircleShape middle;
+                        middle.setOrigin(3.0, 3.0);
+                        middle.setPosition(p1.x, p1.y);
+                        middle.setRadius(3.0);
+                        middle.setFillColor(sf::Color::Red);
+                        window.draw(middle);
 
-                            //Draw traffic lights
-                            sf::RectangleShape light(sf::Vector2f(18, 2));
-                            light.setOrigin(-4, 2);
+                        //Draw traffic lights
+                        sf::RectangleShape light(sf::Vector2f(18, 2));
+                        light.setOrigin(-4, 2);
 
-                            direction d = edge.getDirection();
+                        direction d = edge.getDirection();
 
-                            if( (v.getType() == road && v.getEdgesTo().size() > 2 /*) || (v.getType() == building && v.getEdgesTo().size() > 2*/ ) ) { // set to 1 if want to debug
-                                    if(v.passable_from[d]) {
-                                            light.setFillColor(sf::Color::Green);
-                                    } else {
-                                            light.setFillColor(sf::Color::Red);
-                                    }
-                                    light.setRotation(-d * 90);
-                                    light.setPosition(p1.x, p1.y);
-                                    window.draw(light);
+                        if( (v.getType() == road && v.getEdgesTo().size() > 2 /*) || (v.getType() == building && v.getEdgesTo().size() > 2*/ ) ) { // set to 1 if want to debug
+                            if(v.passable_from[d]) {
+                                    light.setFillColor(sf::Color::Green);
+                            } else {
+                                    light.setFillColor(sf::Color::Red);
                             }
+                            light.setRotation(-d * 90);
+                            light.setPosition(p1.x, p1.y);
+                            window.draw(light);
+                        }
                     }
 
                 }
@@ -418,6 +418,7 @@ int main(void) {
 
 
             //Go through all the vehicles
+            testGraph.update();
             for(auto vehicle : testGraph.getVehicles()) {
                 sf::RectangleShape model(sf::Vector2f(vehicle->getWidth(), vehicle->getHeight()));
                 model.setTexture(&texmanager.getRef("car"));

@@ -450,6 +450,25 @@ std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
     return std::vector<Edge>();
     //return std::vector<std::pair<int,int>>();
 }
+void Graph::setRoutes() {
+    for(auto it = vehicles.begin(); it != vehicles.end(); ) {
+
+        Pos CurrentPosition = (*it)->getPosition();
+
+        int sourceX = CurrentPosition.x / 64;
+        int sourceY = CurrentPosition.y / 64;
+        Vertex source = getVertices()[sourceY][sourceX];
+
+        Pos destination = (*it)->getDestination();
+        int targetX = destination.x / 64;
+        int targetY = destination.y / 64;
+        Vertex target = getVertices()[targetY][targetX];
+
+        auto route = getPath(source, target);
+        (*it)->setPath(route);
+
+    }
+}
 
 void Graph::update() {
     for(auto it = vehicles.begin(); it != vehicles.end(); ) {
@@ -467,8 +486,7 @@ void Graph::update() {
         int targetY = destination.y / 64;
         Vertex target = getVertices()[targetY][targetX];
 
-        auto route = getPath(source, target);
-        (*it)->setPath(route);
+        auto route = (*it)->getPath();
         if (route.empty() || (*it)->atDestination()) {
             it = vehicles.erase(it);
         } else {
