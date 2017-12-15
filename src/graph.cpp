@@ -1,86 +1,15 @@
 #include "graph.hpp"
 
-/*Graph::~Graph() {
-    for(auto it : vehicles) {
-        std::cout << "Deleting vehicles" << std::endl;
-        it.reset();
-    }
-}*/
-
-void Graph::addVehicle(Pos p) {
-
-    //chooose random building for destination
-    std::vector<Pos> destinations = {};
-    for(auto row : vertices){
-        for(auto vertex : row) {
-            if(vertex.getType() == building){
-                destinations.push_back(vertex.getPos());
-            }
-        }
-    }
-    if (destinations.empty()) return; // No destinations or destination is self, don't add car
-
-    int i = rand() % destinations.size();
-    //std::cout << "DEBUG dest: " << destinations[i].x << ", " << destinations[i].y << std::endl;
-    //std::cout << "DEBUG p: " << p.x << ", " << p.y << std::endl;
-    if (destinations[i] == p) return; // Destination is same as self, don't add car
-
-    int j = rand() % 3;
-    std::shared_ptr<Vehicle> c;
-    
-    if (j == 0) {
-        c = std::make_shared<Car>();
-    }
-    else if (j == 1) {
-        c = std::make_shared<Truck>();
-    }
-    else {
-        c = std::make_shared<Bike>();
-    }
-    //std::shared_ptr<Vehicle> c = std::make_shared<Car>();
-    //Vehicle* c = new Car;
-    c->setPosition(p);
-    c->setNextPosition(p);
-    c->setDestination( destinations[i] );
-
-    int sourceX = p.x / 64;
-    int sourceY = p.y / 64;
-    Vertex source = getVertices()[sourceY][sourceX];
-
-    Pos destination = c->getDestination();
-    int targetX = destination.x / 64;
-    int targetY = destination.y / 64;
-    Vertex target = getVertices()[targetY][targetX];
-
-    auto route = getPath(source, target);
-    c->setPath(route);
-
-    vehicles.push_back(c);
-    //std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
-    //std::cout << "Vehicles size: " << vehicles.size() << std::endl;
-
-}
-
-std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
-    return vehicles;
-}
-
-int Graph::getSize()
+//Add single vertex to desired grid location.
+bool Graph::addVertex(int x, int y)
 {
-    auto size = longitude * latitude;
-    return size;
+    tileType t = grass;
+    Vertex new_vertex(x,y, t);
+    vertices[y][x] = new_vertex;
+    return true;
 }
 
-int Graph::getSizeX()
-{
-    return longitude;
-}
-
-int Graph::getSizeY()
-{
-    return latitude;
-}
-
+//Automatically allocate all vertices to the graph, once the graph has been created in main.
 void Graph::addVertices()
 {
     for (int j = 0; j < latitude; j++) {
@@ -99,7 +28,7 @@ void Graph::addVertices()
     return;
 }
 
-
+//Set the vertex to have a specific tileType type (grass, road or building).
 void Graph::setVertex(int x, int y, tileType type)
 {
     Graph& graph = *this;
@@ -291,18 +220,61 @@ void Graph::setVertex(int x, int y, tileType type)
     return;
 }
 
-std::vector<std::vector<Vertex>>& Graph::getVertices(){
-    return vertices;
+//Function to add a single vehicle to the graph. Is used in Graph::sendVehicle function.
+void Graph::addVehicle(Pos p) {
+
+    //chooose random building for destination
+    std::vector<Pos> destinations = {};
+    for(auto row : vertices){
+        for(auto vertex : row) {
+            if(vertex.getType() == building){
+                destinations.push_back(vertex.getPos());
+            }
+        }
+    }
+    if (destinations.empty()) return; // No destinations or destination is self, don't add car
+
+    int i = rand() % destinations.size();
+    //std::cout << "DEBUG dest: " << destinations[i].x << ", " << destinations[i].y << std::endl;
+    //std::cout << "DEBUG p: " << p.x << ", " << p.y << std::endl;
+    if (destinations[i] == p) return; // Destination is same as self, don't add car
+
+    int j = rand() % 3;
+    std::shared_ptr<Vehicle> c;
+    
+    if (j == 0) {
+        c = std::make_shared<Car>();
+    }
+    else if (j == 1) {
+        c = std::make_shared<Truck>();
+    }
+    else {
+        c = std::make_shared<Bike>();
+    }
+    //std::shared_ptr<Vehicle> c = std::make_shared<Car>();
+    //Vehicle* c = new Car;
+    c->setPosition(p);
+    c->setNextPosition(p);
+    c->setDestination( destinations[i] );
+
+    int sourceX = p.x / 64;
+    int sourceY = p.y / 64;
+    Vertex source = getVertices()[sourceY][sourceX];
+
+    Pos destination = c->getDestination();
+    int targetX = destination.x / 64;
+    int targetY = destination.y / 64;
+    Vertex target = getVertices()[targetY][targetX];
+
+    auto route = getPath(source, target);
+    c->setPath(route);
+
+    vehicles.push_back(c);
+    //std::cout << "Added car to: (" << p.x << "," << p.y << ")" << std::endl;
+    //std::cout << "Vehicles size: " << vehicles.size() << std::endl;
 }
 
-bool Graph::addVertex(int x, int y)
-{
-    tileType t = grass;
-    Vertex new_vertex(x,y, t);
-    vertices[y][x] = new_vertex;
-    return true;
-}
-
+//Adds a vehicle to the graph using exponential distribution. Rate can also be modified by user input.
 void Graph::sendVehicle(Pos position, int multipler, float rate){
     std::random_device rd;
     std::mt19937 generator(rd());
@@ -312,7 +284,6 @@ void Graph::sendVehicle(Pos position, int multipler, float rate){
         //std::cout << "Send vehicle from: " << "(" << position.x/64 << "," << position.y/64 << ")" << std::endl; //96?
         addVehicle(position);
     }
-
 }
 
 bool Graph::saveGraph(std::string filename) {
@@ -365,6 +336,7 @@ bool Graph::loadGraph(std::string filename) {
     return true;
 }
 
+//Dijkstra's algorithm to find the path for vehicles.
 std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
     class CompareWeight
     {
@@ -441,6 +413,8 @@ std::vector<Edge> Graph::getPath(Vertex source, Vertex target) {
     ///No suitable route has been found, returning empty route
     return std::vector<Edge>();
 }
+
+//Sets the route for vehicle when user makes changes to the map (graph). Called in main.
 void Graph::setRoutes() {
     for(auto it = vehicles.begin(); it != vehicles.end(); it++) {
 
@@ -461,6 +435,7 @@ void Graph::setRoutes() {
     }
 }
 
+//Delete the vehicle once it arrives at the destination. Called in main.
 void Graph::update() {
     for(auto it = vehicles.begin(); it != vehicles.end(); ) {
 
@@ -487,6 +462,7 @@ void Graph::update() {
     }
 }
 
+//Checks if the route still exists for vehicle after user makes changes to the map (graph). If not, delete the vehicle to avoid traffic jams. Called in main.
 void Graph::updateAfterSetVertex() {
     for(auto it = vehicles.begin(); it != vehicles.end(); ) {
 
@@ -511,4 +487,28 @@ void Graph::updateAfterSetVertex() {
         }
 
     }
+}
+
+int Graph::getSize()
+{
+    auto size = longitude * latitude;
+    return size;
+}
+
+int Graph::getSizeX()
+{
+    return longitude;
+}
+
+int Graph::getSizeY()
+{
+    return latitude;
+}
+
+const std::vector<std::vector<Vertex>>& Graph::getVertices(){
+    return vertices;
+}
+
+const std::list<std::shared_ptr<Vehicle>>& Graph::getVehicles() {
+    return vehicles;
 }

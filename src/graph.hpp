@@ -28,20 +28,11 @@ public:
     Graph(int n, int m) :
     longitude(n), latitude(m) { }
 
-    ///Destructor
-    //~Graph();
-
     ///Member functions
     bool addVertex(int x, int y);
-    int getSize();
-    int getSizeX();
-    int getSizeY();
     void addVertices();
-    void addEdge();
-    void addVehicle(Pos p);
     void setVertex(int x, int y, tileType type);
-    std::vector<std::vector<Vertex>>& getVertices();
-    std::list<std::shared_ptr<Vehicle>>& getVehicles();
+    void addVehicle(Pos p);
     void sendVehicle(Pos position, int multipler, float rate);
     bool saveGraph(std::string filename);
     bool loadGraph(std::string filename);
@@ -49,6 +40,11 @@ public:
     void setRoutes();
     void update();
     void updateAfterSetVertex();
+	int getSize();
+    int getSizeX();
+    int getSizeY();
+    const std::vector<std::vector<Vertex>>& getVertices();
+    const std::list<std::shared_ptr<Vehicle>>& getVehicles();
 
 private:
     ///Private members
