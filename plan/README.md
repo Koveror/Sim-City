@@ -1,1 +1,1 @@
-Place project plan here.
+Project plan can be found here, in the PDF file.
