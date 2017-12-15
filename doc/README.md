@@ -144,6 +144,7 @@ In general, every single one of us were busy throughout the entire II period, an
 - [ALL MEMBERS]: At least 3 hours spent on finalizing the project plan and setting up the project in Maari. Setting up the make file proved to be most laborous.
 - [Tianzhong]: At least 2 hours spent on working with first versions of graph, vertex and edge.
 - [Risto]: At least 2 hours spent on making a makefile and hello world program.
+- [Ilari]: About least 2 hours spent on making makefile.
 
 ### Week 47 (20th Nov. - 26th Nov.)
 **Working on peer review. For our own project: creating essential classes (graph, vertex, edge and vehicle) & main.cpp and learning to work with SFML-graphics to draw something on screen.**
@@ -151,6 +152,7 @@ In general, every single one of us were busy throughout the entire II period, an
 - [Tianzhong]: At least 5 hours spent on working with first versions of graph, vertex and edge, and then with vehicle.
 - [Harti]: About 5 hours spent on creating initial versions of edges and vehicles and moving the weights from vertices to edges and creating the datastructure for vertices.
 - [Risto]: 10 hours spent: 4 hours on researching SFML and creating a gui loop. 6 hours on dynamic adding and removing of vertices.
+- [Ilari]: About 5 hours spent on  researching SFML and working with graphics.
 
 ### Week 48 (27th Nov. - 3rd Dec.)
 **Added separate files for vertex and edge (before vertex and edge were declared and implemented in graph.hpp & graph.cpp); Modified the graph so that roads, when added, connect to each other with edges.**
@@ -158,6 +160,7 @@ In general, every single one of us were busy throughout the entire II period, an
 - [Tianzhong]: At least 2 hours spent on issue #7 (const correctness problem).
 - [Harti]: About 4 hours spent on modifying the vertice-datastructure and automizing the creation of edges between vertices (buildings and roads).
 - [Risto]: 6 hours spent: 3 hours on adding a tools.hpp file and moving vehicles on the graph. 3 hours on adding edges on vertices.
+- [Ilari]: 5 hours spent working with managing textures and drawing logic.
 
 ### Week 49 (4th Dec. - 10th Dec.)
 **Implementing Dijkstra's algorithm, fixing segmentation fault (e.g. when removing edges), making buildings  to create cars automatically, implemented traffic lights and implemented vehicle track their own direction when moving.**
@@ -171,6 +174,7 @@ In general, every single one of us were busy throughout the entire II period, an
 - [Tianzhong]: At least 30 hours spent: at least 7 hours with finalizing Dijkstra's algorithm, 3 hours with fixing (weird) segmentation fault when creating vehicles to the Graph and 4 hours with adding console commands for user input. Time was also spent on working with documentation, unit test and fixing minor bugs, not to mention with constant debugging.
 - [Harti]:Maby 30-40 hours of finishing off (further improving traffic lights, applying dijkstras algorithm to vehicles, improving the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes)
 - [Risto]: 2,5 hours spent: 2,5 hours on collision detection
+- [Ilari]: About 10 hours spent working with documentatation, save/load, refining vehicle movement and fixing bugs.
 
 ### Week 51 (18th Dec. - 20th Dec.)
 **Not much left to do except demonstration and reviewing stuff. Below is (predicted) work & duration**
