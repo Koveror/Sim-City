@@ -22,10 +22,10 @@ public:
 
     ///Destructor
     virtual ~Vehicle() {}
-    
+
     ///Copy constructor, Ro3
     Vehicle(const Vehicle& copyFrom) = default;
-    
+
     ///Copy assignment, Ro3
     Vehicle& operator=(const Vehicle& copyFrom) = default;
 
@@ -45,6 +45,7 @@ public:
     Pos getDestination() const;
     bool atDestination() const;
     bool checkFront(Graph& graph) const;
+    direction turningTo();
 
 private:
     ///Private members
