@@ -41,6 +41,8 @@ public:
     Pos getPosition() const;
     Pos getNextPosition() const;
     Pos getLastPosition() const;
+    bool nextTurnIsLeft();
+    bool lastTurnWasLeft();
     direction getDirection() const;
     direction getTurningFrom() const;
     int getWidth() const;
@@ -53,6 +55,8 @@ public:
     direction turningTo();
     Pos leftTurnBeginning(Pos position, int distance, direction dir);
     Pos leftTurnEnd(Pos position, int distance, direction dir);
+    Pos rightTurnBeginning(Pos position, int distance, direction dir);
+    Pos rightTurnEnd(Pos position, int distance, direction dir);
 
 private:
     ///Private members

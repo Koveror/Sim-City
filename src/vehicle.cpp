@@ -188,14 +188,16 @@ bool Vehicle::atDestination() const{
 
 direction Vehicle::turningTo(){
     if(path.size() > 0) {
+        direction dir = noDir;
         Edge e = path.front();
         std::pair<Vertex, Vertex> pair = e.getVertices();
         Pos start = pair.first.getIndex();
         Pos end = pair.second.getIndex();
-        if (start.x < end.x) return west;
-        if (start.x > end.x) return east;
-        if (start.y < end.y) return south;
-        if (start.y > end.y) return north;
+        if (start.x < end.x) dir = east;
+        if (start.x > end.x) dir = west;
+        if (start.y < end.y) dir = south;
+        if (start.y > end.y) dir = north;
+        return dir;
     }
     return noDir;
 }
@@ -205,16 +207,37 @@ direction Vehicle::getTurningFrom() const{
 }
 
 Pos Vehicle::leftTurnBeginning(Pos position, int distance, direction dir){
-    std::cout << "turn1" << std::endl;
     if(dir == north){
-        float s = 46.0;
+        float s = 48.0;
         float progress = distance/32.0;
         float alpha = progress * 45.0;
         float y = s * std::sin(alpha*PI/180.0);
         float x = s * std::cos(alpha*PI/180.0);
-        std::cout << distance << std::endl;
-        std::cout << "(" << x << "," << y << ")" << std::endl;
-        return Pos( int(position.x + x), int(position.y + 64 - y) );
+        return Pos( int(position.x + x), int(position.y - y) );
+    }
+    if(dir == south){
+        float s = 48.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::sin(alpha*PI/180.0);
+        float x = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y + y) );
+    }
+    if(dir == west){
+        float s = 48.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::sin(alpha*PI/180.0);
+        float y = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y - y) );
+    }
+    if(dir == east){
+        float s = 48.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::sin(alpha*PI/180.0);
+        float y = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x + x), int(position.y + y) );
     }
     else{
         return Pos(100, 100);
@@ -223,21 +246,138 @@ Pos Vehicle::leftTurnBeginning(Pos position, int distance, direction dir){
 }
 
 Pos Vehicle::leftTurnEnd(Pos position, int distance, direction dir){
-    std::cout << "turn1" << std::endl;
-    if(dir == east){
-        float s = 46.0;
+    if(dir == west){
+        float s = 48.0;
         float progress = (32.0-distance)/32.0;
         float alpha = progress * 45.0;
         float y = s * std::cos(alpha*PI/180.0);
         float x = s * std::sin(alpha*PI/180.0);
-        std::cout << distance << std::endl;
-        std::cout << "(" << x << "," << y << ")" << std::endl;
-        return Pos( int(position.x + x), int(position.y + 64 - y) );
+        return Pos( int(position.x + x), int(position.y - y) );
+    }
+    if(dir == east){
+        float s = 48.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::cos(alpha*PI/180.0);
+        float x = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y + y) );
+    }
+    if(dir == south){
+        float s = 48.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::cos(alpha*PI/180.0);
+        float y = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y - y) );
+    }
+    if(dir == north){
+        float s = 48.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::cos(alpha*PI/180.0);
+        float y = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x + x), int(position.y + y) );
     }
     else{
         return Pos(100, 100);
     }
     
+}
+
+Pos Vehicle::rightTurnBeginning(Pos position, int distance, direction dir){
+
+    if(dir == north){
+        float s = 16.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::sin(alpha*PI/180.0);
+        float x = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y - y) );
+    }
+    if(dir == south){
+        float s = 16.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::sin(alpha*PI/180.0);
+        float x = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x + x), int(position.y + y) );
+    }
+    if(dir == east){
+        float s = 16.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::sin(alpha*PI/180.0);
+        float y = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x + x), int(position.y - y) );
+    }
+    if(dir == west){
+        float s = 16.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::sin(alpha*PI/180.0);
+        float y = s * std::cos(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y + y) );
+    }
+    else{
+        return Pos(100, 100);
+    }
+    
+}
+
+Pos Vehicle::rightTurnEnd(Pos position, int distance, direction dir){
+
+    if(dir == east){
+        float s = 16.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::cos(alpha*PI/180.0);
+        float x = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y - y) );
+    }
+    if(dir == west){
+        float s = 16.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::cos(alpha*PI/180.0);
+        float x = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x + x), int(position.y + y) );
+    }
+    if(dir == south){
+        float s = 16.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::cos(alpha*PI/180.0);
+        float y = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x + x), int(position.y - y) );
+    }
+    if(dir == north){
+        float s = 16.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float x = s * std::cos(alpha*PI/180.0);
+        float y = s * std::sin(alpha*PI/180.0);
+        return Pos( int(position.x - x), int(position.y + y) );
+    }
+    else{
+        return Pos(100, 100);
+    }
+    
+}
+
+bool Vehicle::nextTurnIsLeft(){
+    if(comingFrom == north && turningTo() == west) return true;
+    if(comingFrom == south && turningTo() == east) return true;
+    if(comingFrom == west && turningTo() == north) return true;
+    if(comingFrom == east && turningTo() == south) return true;
+    return false;
+}
+
+bool Vehicle::lastTurnWasLeft(){
+    if(turningFrom == north && comingFrom == east) return true;
+    if(turningFrom == south && comingFrom == west) return true;
+    if(turningFrom == west && comingFrom == north) return true;
+    if(turningFrom == east && comingFrom == south) return true;
+    return false;
 }
 
 

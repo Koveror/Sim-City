@@ -449,56 +449,154 @@ int main(void) {
 
                 Pos got = vehicle -> getPosition();
                 direction dir = vehicle->getDirection();
+                if(dir == east){
+                    dir = west;
+                } else if(dir == west){
+                    dir = east;
+                }
+                direction coming = vehicle->getTurningFrom();
+                if(coming == east){
+                    coming = west;
+                } else if(coming == west){
+                    coming = east;
+                }
                 Pos nextPos = vehicle->getNextPosition();
                 Pos lastPos = vehicle->getLastPosition();
                 Pos curPos = vehicle->getPosition();
                 model.setOrigin(6.0, 6.0);
-                if(vehicle->turningTo() != dir && (curPos.x)/64 == (nextPos.x)/64 && (curPos.y)/64 == (nextPos.y)/64){
+                if(vehicle->turningTo() != dir && vehicle->turningTo() != noDir && (curPos.x)/64 == (nextPos.x)/64 && (curPos.y)/64 == (nextPos.y)/64){
                     Pos anglePosition;
                     int distance = 32 - std::max( abs(curPos.x-nextPos.x) ,  abs(curPos.y-nextPos.y) );
-                    if(dir == north){
-                        anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64+1 );
-                        Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
-                        model.setPosition(drawPosition.x, drawPosition.y);
-                        model.setRotation(-45.0*((distance)/32.0));
+                    
+                    if(vehicle->nextTurnIsLeft()){
+                         if(dir == north){
+                            anglePosition = Pos(curPos.x/64*64, curPos.y/64*64 + 64);
+                            Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(-45.0*((distance)/32.0));
+                        }
+                        if(dir == south){
+                            anglePosition = Pos(curPos.x/64*64 + 64, curPos.y/64*64);
+                            Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(180 - 45.0*((distance)/32.0));
+                        }
+                        if(dir == west){
+                            anglePosition = Pos(curPos.x/64*64 + 64, curPos.y/64*64 + 64);
+                            Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(90 - 45.0*((distance)/32.0));
+                        }
+                        if(dir == east){
+                            anglePosition = Pos(curPos.x/64*64, curPos.y/64*64);
+                            Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(-90 - 45.0*((distance)/32.0));
+                        }
                     }
-                    if(dir == south){
-                        anglePosition = Pos( (curPos.x)/64*64+1 , (curPos.y)/64*64+1 );
+                    else{
+                        if(dir == north){
+                            anglePosition = Pos(curPos.x/64*64 + 64, curPos.y/64*64 + 64);
+                            Pos drawPosition = vehicle->rightTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(45.0*((distance)/32.0));
+                        }
+                        if(dir == south){
+                            anglePosition = Pos(curPos.x/64*64, curPos.y/64*64);
+                            Pos drawPosition = vehicle->rightTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(180 + 45.0*((distance)/32.0));
+                        }
+                        if(dir == east){
+                            anglePosition = Pos(curPos.x/64*64 , curPos.y/64*64 + 64);
+                            Pos drawPosition = vehicle->rightTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(90 + 45.0*((distance)/32.0));
+                        }
+                        if(dir == west){
+                            anglePosition = Pos(curPos.x/64*64 + 64, curPos.y/64*64 );
+                            Pos drawPosition = vehicle->rightTurnBeginning(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(-90 + 45.0*((distance)/32.0));
+                        }
                     }
-                    if(dir == west){
-                        anglePosition = Pos( (curPos.x)/64*64+1 , (curPos.y)/64*64 );
-                    }
-                    if(dir == east){
-                        anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64 );
-                    }
+
                 }
-                else if(vehicle->getTurningFrom() != dir && ( (curPos.x)/64 != (nextPos.x)/64 || (curPos.y)/64 != (nextPos.y)/64 ) ){
+                else if(coming != dir && ( (curPos.x)/64 != (nextPos.x)/64 || (curPos.y)/64 != (nextPos.y)/64 ) ){
                     Pos anglePosition;
                     int distance = std::max( abs(lastPos.x-curPos.x) ,  abs(lastPos.y-curPos.y) );
-                    if(dir == east){
-                        anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64+1 );
-                        Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
-                        model.setPosition(drawPosition.x, drawPosition.y);
-                        model.setRotation(-45.0*((distance)/32.0) - 45);
+                    
+                    if(vehicle->lastTurnWasLeft()){
+                        if(dir == west){
+                            anglePosition = Pos( (curPos.x)/64*64, (curPos.y)/64*64 + 64 );
+                            Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(-45.0*((distance)/32.0) - 45);
+                        }
+                        if(dir == east){
+                            anglePosition = Pos( (curPos.x)/64*64 + 64, (curPos.y)/64*64 );
+                            Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(180 - 45.0*((distance)/32.0) - 45);
+                        }
+                        if(dir == south){
+                            anglePosition = Pos( (curPos.x)/64*64 + 64, (curPos.y)/64*64 + 64 );
+                            Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(90 - 45.0*((distance)/32.0) - 45);
+                        }
+                        if(dir == north){
+                            anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64 );
+                            Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(-90 - 45.0*((distance)/32.0) - 45);
+                        }
                     }
+                    else{
+                        if(dir == east){
+                            anglePosition = Pos( (curPos.x)/64*64 + 64, (curPos.y)/64*64 + 64 );
+                            Pos drawPosition = vehicle->rightTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(45.0*((distance)/32.0) + 45);
+                        }
+                        if(dir == west){
+                            anglePosition = Pos( (curPos.x)/64*64, (curPos.y)/64*64 );
+                            Pos drawPosition = vehicle->rightTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(180 + 45.0*((distance)/32.0) + 45);
+                        }
+                        if(dir == south){
+                            anglePosition = Pos( (curPos.x)/64*64, (curPos.y)/64*64 + 64 );
+                            Pos drawPosition = vehicle->rightTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(90 + 45.0*((distance)/32.0) + 45);
+                        }
+                        if(dir == north){
+                            anglePosition = Pos( (curPos.x)/64*64 + 64, (curPos.y)/64*64 );
+                            Pos drawPosition = vehicle->rightTurnEnd(anglePosition, distance, dir);
+                            model.setPosition(drawPosition.x, drawPosition.y);
+                            model.setRotation(-90 + 45.0*((distance)/32.0) + 45);
+                        }
+                    }
+
                 }
                 else{
                     //set position according to direction
                     if(dir == south){
-                        model.setPosition(got.x-14, got.y);
+                        model.setPosition(got.x-16, got.y);
                         model.setRotation(180);
                     }
                     else if(dir == north){
-                        model.setPosition(got.x+14, got.y);
+                        model.setPosition(got.x+16, got.y);
                         model.setRotation(0);
                     }
                     else if(dir == east){
-                        model.setPosition(got.x, got.y-14);
-                        model.setRotation(-90);
+                        model.setPosition(got.x, got.y+16);
+                        model.setRotation(90);
                     }
                     else if(dir == west){
-                        model.setPosition(got.x, got.y+14);
-                        model.setRotation(90);
+                        model.setPosition(got.x, got.y-16);
+                        model.setRotation(-90);
                     }
                 }
 
