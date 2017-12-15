@@ -407,12 +407,14 @@ int main(void) {
             //Go through all the vehicles
             for(auto vehicle : testGraph.getVehicles()) {
                 sf::RectangleShape model(sf::Vector2f(vehicle->getWidth(), vehicle->getHeight()));
+                model.setTexture(&texmanager.getRef("car"));
                     int i = 0;
                     while(i < speedUp) {
                         //std::cout << "calling move" << std::endl;
                         vehicle -> move(testGraph);
                         i++;
                     }
+
                 Pos got = vehicle -> getPosition();
                 direction dir = vehicle -> getDirection();
                 model.setOrigin(6.0, 6.0);
@@ -423,15 +425,15 @@ int main(void) {
                 }
                 else if(dir == north){
                     model.setPosition(got.x+14, got.y);
-                    model.setRotation(-180);
+                    model.setRotation(0);
                 }
                 else if(dir == east){
                     model.setPosition(got.x, got.y-14);
-                    model.setRotation(90);
+                    model.setRotation(-90);
                 }
                 else if(dir == west){
                     model.setPosition(got.x, got.y+14);
-                    model.setRotation(-90);
+                    model.setRotation(90);
                 }
 
                 window.draw(model);

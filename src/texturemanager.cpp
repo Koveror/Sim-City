@@ -39,4 +39,7 @@ TextureManager::TextureManager() {
     addTexture("roadNESW", "img/roadNESW.png");
     addTexture("building", "img/building0.png");
     addTexture("grass", "img/grass1.png");
+    addTexture("car", "img/vehCar.png");
+    addTexture("bike", "img/vehBike.png");
+    addTexture("truck", "img/vehTruck.png");
 }
