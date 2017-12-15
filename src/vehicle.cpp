@@ -1,4 +1,5 @@
 #include "vehicle.hpp"
+#define PI 3.14159265
 
 
 //Helper method used for collision checking. Checks every single vehicle to see that p0 doesn't contain a vehicle.
@@ -58,6 +59,8 @@ void Vehicle::move(Graph& graph) {
                 //std::cout << "Getting new" << std::endl;
             } else {
                 if(path.size() > 0){
+                    turningFrom = comingFrom;
+                    lastPosition = nextPosition;
                     nextPosition = path.front().getVertices().second.getPos();
                     path.erase(path.begin());
                 }
@@ -134,6 +137,14 @@ Pos Vehicle::getPosition() const{
 	return position;
 }
 
+Pos Vehicle::getNextPosition() const{
+	return nextPosition;
+}
+
+Pos Vehicle::getLastPosition() const{
+	return lastPosition;
+}
+
 //Get length variable. Currently not used.
 int Vehicle::getWidth() const{
     return width;
@@ -181,3 +192,45 @@ direction Vehicle::turningTo(){
   }
   return noDir;
 }
+
+direction Vehicle::getTurningFrom() const{
+    return turningFrom;
+}
+
+Pos Vehicle::leftTurnBeginning(Pos position, int distance, direction dir){
+    std::cout << "turn1" << std::endl;
+    if(dir == north){
+        float s = 46.0;
+        float progress = distance/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::sin(alpha*PI/180.0);
+        float x = s * std::cos(alpha*PI/180.0);
+        std::cout << distance << std::endl;
+        std::cout << "(" << x << "," << y << ")" << std::endl;
+        return Pos( int(position.x + x), int(position.y + 64 - y) );
+    }
+    else{
+        return Pos(100, 100);
+    }
+    
+}
+
+Pos Vehicle::leftTurnEnd(Pos position, int distance, direction dir){
+    std::cout << "turn1" << std::endl;
+    if(dir == east){
+        float s = 46.0;
+        float progress = (32.0-distance)/32.0;
+        float alpha = progress * 45.0;
+        float y = s * std::cos(alpha*PI/180.0);
+        float x = s * std::sin(alpha*PI/180.0);
+        std::cout << distance << std::endl;
+        std::cout << "(" << x << "," << y << ")" << std::endl;
+        return Pos( int(position.x + x), int(position.y + 64 - y) );
+    }
+    else{
+        return Pos(100, 100);
+    }
+    
+}
+
+
