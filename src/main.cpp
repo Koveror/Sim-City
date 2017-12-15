@@ -10,6 +10,8 @@
 #include <cmath>
 #include <exception>
 #include <cassert>
+#include <algorithm>
+#include <math.h>
 
 ///To run tests, uncomment (event.key.code == sf::Keyboard::Z) in the if else block.
 int test(void) {
@@ -446,24 +448,58 @@ int main(void) {
                     }
 
                 Pos got = vehicle -> getPosition();
-                direction dir = vehicle -> getDirection();
-                model.setOrigin(6.0, 6.0); //(6.0, 6.0), 14
-                //set position according to direction
-                if(dir == south){
-                    model.setPosition(got.x - 14, got.y);
-                    model.setRotation(180);
+                direction dir = vehicle->getDirection();
+                Pos nextPos = vehicle->getNextPosition();
+                Pos lastPos = vehicle->getLastPosition();
+                Pos curPos = vehicle->getPosition();
+                model.setOrigin(6.0, 6.0);
+                if(vehicle->turningTo() != dir && (curPos.x)/64 == (nextPos.x)/64 && (curPos.y)/64 == (nextPos.y)/64){
+                    Pos anglePosition;
+                    int distance = 32 - std::max( abs(curPos.x-nextPos.x) ,  abs(curPos.y-nextPos.y) );
+                    if(dir == north){
+                        anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64+1 );
+                        Pos drawPosition = vehicle->leftTurnBeginning(anglePosition, distance, dir);
+                        model.setPosition(drawPosition.x, drawPosition.y);
+                        model.setRotation(-45.0*((distance)/32.0));
+                    }
+                    if(dir == south){
+                        anglePosition = Pos( (curPos.x)/64*64+1 , (curPos.y)/64*64+1 );
+                    }
+                    if(dir == west){
+                        anglePosition = Pos( (curPos.x)/64*64+1 , (curPos.y)/64*64 );
+                    }
+                    if(dir == east){
+                        anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64 );
+                    }
                 }
-                else if(dir == north){
-                    model.setPosition(got.x + 14, got.y);
-                    model.setRotation(0);
+                else if(vehicle->getTurningFrom() != dir && ( (curPos.x)/64 != (nextPos.x)/64 || (curPos.y)/64 != (nextPos.y)/64 ) ){
+                    Pos anglePosition;
+                    int distance = std::max( abs(lastPos.x-curPos.x) ,  abs(lastPos.y-curPos.y) );
+                    if(dir == east){
+                        anglePosition = Pos( (curPos.x)/64*64 , (curPos.y)/64*64+1 );
+                        Pos drawPosition = vehicle->leftTurnEnd(anglePosition, distance, dir);
+                        model.setPosition(drawPosition.x, drawPosition.y);
+                        model.setRotation(-45.0*((distance)/32.0) - 45);
+                    }
                 }
-                else if(dir == east){
-                    model.setPosition(got.x, got.y - 14);
-                    model.setRotation(-90);
-                }
-                else if(dir == west){
-                    model.setPosition(got.x, got.y + 14);
-                    model.setRotation(90);
+                else{
+                    //set position according to direction
+                    if(dir == south){
+                        model.setPosition(got.x-14, got.y);
+                        model.setRotation(180);
+                    }
+                    else if(dir == north){
+                        model.setPosition(got.x+14, got.y);
+                        model.setRotation(0);
+                    }
+                    else if(dir == east){
+                        model.setPosition(got.x, got.y-14);
+                        model.setRotation(-90);
+                    }
+                    else if(dir == west){
+                        model.setPosition(got.x, got.y+14);
+                        model.setRotation(90);
+                    }
                 }
 
                 window.draw(model);
