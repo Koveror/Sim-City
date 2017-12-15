@@ -20,35 +20,99 @@ In this section, we will have a detailed look on our software structure.
 Our class structure roughly follows the initial architecture described in the project plan. As stated in the project plan, the software uses `SFML 2.3.2` graphics (external) library
 
 We've made some small changes, and currently our class structure can be figured out from the software architecture:
+
 ![architecture](doc/architecture.png)
 
 #### main
-- UI
-- time simulation
-- calls graph
+Main function is responsible for GUI loop. It simulates time, handles user input and calls objects to update themselves. In `main.cpp` file there is also `test` function for testing.
 
 #### graph
-- stores vertices and their relations as edges
-- stores vehicles and updates them
-- uses Dijkstra algorithm to find route for cars
+Grahp class stores information about game world. It stores vertices and vehicles and updates them when called. The class also finds paths for cars using Dijkstra's algorithm.
+
+Graph class has following member functions:
+- `Graph(int n, int m)`: Constructor, generates graph with dimensions `n` x `m`
+- `bool addVertex(int x, int y)` adds vertex to graph and returns `true` if sicceeded
+- `int getSize()` returns number of tiles in graph i.e. n * m
+- `int getSizeX()` returs number of columns
+- `int getSizeY()` returns number of rows
+- `void addVertices()` adds vertex to graph
+- `void addEdge()` adds edge
+- `void addVehicle(Pos p)` adds vehicle to position `p`
+- `void setVertex(int x, int y, tileType type)` sets tile type of vertex at position (x, y) into `type`
+- `std::vector<std::vector<Vertex>>& getVertices()` returns a table of all vertices on the graph
+- `std::list<std::shared_ptr<Vehicle>>& getVehicles()` returns list of all vehicles on the graph
+- `void sendVehicle(Pos position, int multipler, float rate)` **TODO**
+- `bool saveGraph(std::string filename)` saves current graph structure to `filename.txt`
+- `bool loadGraph(std::string filename)` loads graph from `filename.txt`
+- `std::vector<Edge> getPath(Vertex source, Vertex target)` finds path from `source` vertex to `target` vertex and returns it
+- `void setRoutes()` finds path for all vehicles stored in graph and updates them into vehicles
+- `void update()` **TODO**
+- `void updateAfterSetVertex()`**TODO**
 
 #### vertex
-- represents one tile in game world and a vertex in graph (stores tile information)
-- stores traffic light information, with the help from tools
+Vertex object represents one tile in game world and a vertex in graph sturcture. Vertices are linked together by edges and represent one tiletype so it can be drawn to screen. Vertex also stores information about traffic lights and updates them with help from tools.
+
+Vertex class has following member functions and public variable:
+- `Vertex(int x, int y, tileType type)`: Constructor, generates vertex at (`x`, `y`) and type `type`
+- `Pos getPos()` returns absolute pixel position of vertexes center point
+- `Pos getIndex()` returns grid coordinates of vertex
+- `const tileType& getType()` returns type of the vertex
+- `void setType(tileType t)` sets type of vertex to `t`
+- `void addEdge(Pos position, Graph& graph, int weight)`
+- `void removeEdge(Pos position)` **TODO**
+- `void removeEdgesTo(Pos position)` **TODO**
+- `const std::vector<Edge>& getEdgesTo()` returns edges leading to the vertex
+- `const std::string getTexture()` returns string that can be used to call Texturemanager
+- `bool hasEdgeTo(int x, int y)` returns whether the vertex has edge to another vertex at (`x`, `y`)
+- `Edge getSingleEdge(std::pair<int,int> coordPair)` **TODO**
+- `void togglePassable(bool green)` toggles traffic lights of the vertex. If `green` is false all edges are set to not passable.
+- `void sendVehicle()` sends vehicle from vertex
+- `bool operator==(Vertex a)` returns whether two vertices are same or not
+- `std::vector<bool> passable_from` tells from which directions vertex is passable
 
 #### edge
-- represents relation between two vertices
-- stores also weight
+Edge objects represent relations beteween vertices. Each edge is set between two vertices, and it also have weight.
+
+Edge class has following member functions:
+- `Edge(std::shared_ptr<Vertex> V_start, std::shared_ptr<Vertex> V_end, int w)` Constructor: generates edge from `V_start` to `V_end` with weight `w`
+- `int getWeight()` returns weight of the edge
+- `std::pair<Vertex,Vertex> getVertices()` returns vertices the ebge is connecting
+- `Pos getMiddlePos()` returns coordinates of the edges center
+- `direction getDirection()` returns direction of the edge
+- `void swapVertices()` **TODO**
+- `bool operator==(Edge a)` returns whether two edges are the same **TODO**
 
 #### vehicle
-- stores size, position, destination and route of single vehicle
-- move vehicle when `move` function is called
+Each Vehicle object stores size, position, destination and route of single vehicle. Vehicle is moved when `move` method is called.
+
+Vehicle class has following member functions:
+- `void moveTowards(Pos givenPos)`
+- `void move(Graph& graph)`
+- `void moveAlong()`
+- `void setPosition(Pos givenPos)`
+- `void setNextPosition(Pos givenPos)`
+- `void setPath(std::vector<Edge> givenPath)`
+- `void setDestination(Pos dest)`
+- `Pos getPosition() const`
+- `direction getDirection() const`
+- `int getWidth() const` returns width of the vehicle
+- `int getHeight() const` returns height of the vehicle
+- `const std::vector<Edge>& getPath()`
+- `virtual std::string getType() const`
+- `Pos getDestination() const`
+- `bool atDestination() const`
+- `bool checkFront(Graph& graph) const`
+- `direction turningTo()`
 
 #### texturemanager
-- handles loading textures for tile types (grass, road, building).
+TextureManager class loads textures for tile types (grass, road, building) and returns them when called.
+
+TextureManager class has following member functions:
+- `void addTexture(const std::string& name, const std::string &filename)` generates new texture that can be found using `name` as key
+- `sf::Texture& getRef(const std::string& texture)` returns reference tu texture with key `texture`
 
 #### tools
-- additional enumerations and class Pos to help other classes and their functions.
+In `tools.cpp` file there are some additional enumaration and class Pos to easily store and compare coordinates elsewhere in the program.
 
 
 
@@ -62,7 +126,7 @@ Once the software is running, the console will print out a welcome message. You 
 
 To add tiles on map, first choose which kind of tile you want to add using keyboard. Pressing **R** adds roads, **B** buildings and **G** grass (empty tile). When you have map ready and want cars to start spawning press **V**.
 
-Press **T** to toggle automatic traffic light control. You can also use right mouse button to manually switch traffic lights in any intersection. Letter **O** changes the rate that automatic traffic light control changes lights and **I** changes the rate that buildings spawn vehicles.
+Press **T** to toggle automatic traffic light control, and letter **O** changes the rate that automatic traffic light control changes lights and **I** changes the rate that buildings spawn vehicles.
 
 Game speed can be changed using numbers **1** (1x), **2** (4x) and **3** (8x).
 
@@ -102,7 +166,7 @@ In addition to unit testing, Valgrind was used to check for memory leaks. We con
 ==18565== HEAP SUMMARY:
 ==18565==     in use at exit: 143,697 bytes in 1,309 blocks
 ==18565==   total heap usage: 1,751 allocs, 442 frees, 334,295 bytes allocated
-==18565== 
+==18565==
 ==18565== 10 bytes in 1 blocks are definitely lost in loss record 63 of 216
 ==18565==    at 0x4C2DB8F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
 ==18565==    by 0x50C9489: strdup (strdup.c:42)
@@ -114,7 +178,7 @@ In addition to unit testing, Valgrind was used to check for memory leaks. We con
 ==18565==    by 0x420D9E: ??? (in /usr/bin/make)
 ==18565==    by 0x4210AE: update_goal_chain (in /usr/bin/make)
 ==18565==    by 0x407780: main (in /usr/bin/make)
-==18565== 
+==18565==
 ==18565== LEAK SUMMARY:
 ==18565==    definitely lost: 10 bytes in 1 blocks
 ==18565==    indirectly lost: 0 bytes in 0 blocks
@@ -123,7 +187,7 @@ In addition to unit testing, Valgrind was used to check for memory leaks. We con
 ==18565==         suppressed: 0 bytes in 0 blocks
 ==18565== Reachable blocks (those to which a pointer was found) are not shown.
 ==18565== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==18565== 
+==18565==
 ==18565== For counts of detected and suppressed errors, rerun with: -v
 ==18565== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
