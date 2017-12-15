@@ -44,7 +44,8 @@ void Vehicle::move(Graph& graph) {
 	Vertex nextV = graph.getVertices()[dY][dX];		//Get current vertex from the graph
 
         //Check traffic lights
-	if(iX == dX && iY == dY && !v.passable_from[comingFrom]) {	//TODO: figure out current direction
+        int distanceFromVertexCenter = std::max( abs(position.x-nextPosition.x) ,  abs(position.y-nextPosition.y) );
+	if(iX == dX && iY == dY && distanceFromVertexCenter > 30 && !v.passable_from[comingFrom]) {	//TODO: figure out current direction
             //Wait
         }
         //Check that fron of car is clear
