@@ -16,7 +16,7 @@ public:
     sf::Texture& getRef(const std::string& texture);
 
 private:
-    ///Private members
+    ///Private member
     std::map<std::string, sf::Texture> textures; //Array of textures used
 };
 

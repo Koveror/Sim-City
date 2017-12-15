@@ -1,11 +1,6 @@
 #ifndef TOOLS_HPP_INCLUDED
 #define TOOLS_HPP_INCLUDED
 
-//Force coordinates to a grid
-/*int forceToGrid(int a) {
-    return a / 64;
-}*/
-
 //enumerations for directions
 typedef enum
 {
@@ -24,7 +19,7 @@ typedef enum
     road
 } tileType;
 
-
+//helper class Pos to determine both grid locations and exact locations of vertices and vehicles
 class Pos {
 public:
     Pos(int givenX = 0, int givenY = 0): x(givenX), y(givenY) {};
