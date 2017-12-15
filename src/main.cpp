@@ -63,6 +63,18 @@ int test(void) {
     Vertex a = Vertex(1, 1, road);
     assert(a.getPos() == Pos(96,96) && a.getIndex() == Pos(1,1));
     std::cout << "Vertex getPos() and getIndex() works." << std::endl;
+    
+    //hasEdgeTo, getEdgesTo (and confirming removeEdge works aswell) & getTexture
+    auto u = testG.getVertices()[0][0];
+    assert(u.getEdgesTo().size() == 1);
+    assert(u.hasEdgeTo(0,1));
+    std::cout << "Vertex hasEdgeTo() and getEdgesTo() works." << std::endl;
+    testG.setVertex(0,0,grass);
+    u = testG.getVertices()[0][0];
+    assert(u.getEdgesTo().size() == 0);
+    std::cout << "Removing edges works." << std::endl;
+    assert(testG.getVertices()[0][0].getTexture() == "grass");
+    std::cout << "Vertex getTexture() works." << std::endl;
 
     ///Edge
     std::cout << " " << std::endl;
@@ -85,6 +97,10 @@ int test(void) {
     assert(c->getHeight() == 12);
     delete c;
     std::cout << "Derived class Car works." << std::endl;
+    c = new Truck();
+    assert(c->getHeight() == 16);
+    delete c;
+    std::cout << "Derived class Truck works." << std::endl;
 
     return 0;
 }
