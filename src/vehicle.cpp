@@ -156,7 +156,7 @@ int Vehicle::getHeight() const{
 }
 
 //Return the path that vehicle is going to take.
-std::vector<Edge>& Vehicle::getPath() const {
+const std::vector<Edge>& Vehicle::getPath() {
     return path;
 }
 

@@ -130,7 +130,7 @@ int main(void) {
 
     //Welcome msg on console
     std::cout << "Welcome to sim-city-1! Press H for help/instructions" << std::endl;
-    std::cout << "To run unittests, uncomment (event.key.code == sf::Keyboard::Z) if-else block." << std::endl;
+    std::cout << "This simulation is created for the Aalto University C++ programming course ELEC-A7150." << std::endl;
 
     //GUI loop
     while (window.isOpen())
@@ -215,12 +215,15 @@ int main(void) {
                 //Control what kind of vertices to add with keyboard, B: building, R: road, G: grass...
             if(event.type == sf::Event::KeyPressed){
                 if(event.key.code == sf::Keyboard::B){
+                    std::cout << "Now selected: Building" << std::endl;
                     vertex_to_add = building;
                 }
                 else if(event.key.code == sf::Keyboard::R){
+                    std::cout << "Now selected: Road" << std::endl;
                     vertex_to_add = road;
                 }
                 else if(event.key.code == sf::Keyboard::G){
+                    std::cout << "Now selected: Grass" << std::endl;
                     vertex_to_add = grass;
                 }
                 else if(event.key.code == sf::Keyboard::V){
@@ -341,6 +344,7 @@ int main(void) {
                     std::cout << "Instructions:" << std::endl;
                     std::cout << "- Click Right Mouse Button (RMB) to toggle individual road intersection traffic light" << std::endl;
                     std::cout << "- Press R, G or B to select which kind of tile to add." << std::endl;
+                    std::cout << "  Once the tile type has been selected, use left mouse button to add the tile by clicking on the screen." << std::endl;
                     std::cout << "  R = road, G = grass and B = building." << std::endl;
                     std::cout << "- Press S or L to save or load." << std::endl;
                     std::cout << "  Follow further instructions on the console." << std::endl;
@@ -351,11 +355,11 @@ int main(void) {
                     std::cout << "  Further instructions will appear on the console." << std::endl;
                     std::cout << "- Press 1, 2 or 3 to change game speed." << std::endl;
                     std::cout << "  1 = normal speed, 2 = 4x speed and 3 = 8x speed" << std::endl;
-
+                    std::cout << "- Press P to pause the game. To resume the game, press 1, 2 or 3." << std::endl;
                 }
-                else if(event.key.code == sf::Keyboard::Z){
+                /*else if(event.key.code == sf::Keyboard::Z){
                     test();
-                }
+                }*/
             }
         }
 

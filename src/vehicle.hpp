@@ -31,7 +31,7 @@ public:
     Vehicle& operator=(const Vehicle& copyFrom) = default;
 
     ///Member functions
-	bool checkFront(Graph& graph) const;
+    bool checkFront(Graph& graph) const;
     void moveTowards(Pos givenPos);
     void move(Graph& graph);
     void moveAlong();
@@ -42,22 +42,22 @@ public:
     Pos getPosition() const;
     Pos getNextPosition() const;
     Pos getLastPosition() const;
-	int getWidth() const;
+    int getWidth() const;
     int getHeight() const;
-	std::vector<Edge>& getPath() const;
-	Pos getDestination() const;
+    const std::vector<Edge>& getPath();
+    Pos getDestination() const;
     bool atDestination() const;
-	direction getDirection() const;
-	direction turningTo() const;
+    direction getDirection() const;
+    direction turningTo() const;
     direction getTurningFrom() const;
     Pos leftTurnBeginning(Pos position, int distance, direction dir);
     Pos leftTurnEnd(Pos position, int distance, direction dir);
     Pos rightTurnBeginning(Pos position, int distance, direction dir);
     Pos rightTurnEnd(Pos position, int distance, direction dir);
-	bool nextTurnIsLeft();
+    bool nextTurnIsLeft();
     bool lastTurnWasLeft();
 
-	virtual std::string getType() const {return "(nothing)";}
+    virtual std::string getType() const {return "(nothing)";}
 
 private:
     ///Private members
