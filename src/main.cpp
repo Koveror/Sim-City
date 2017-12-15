@@ -73,8 +73,8 @@ int test(void) {
     assert(testG.getVertices()[0][0].getTexture() == "grass");
     std::cout << "Vertex getTexture() works." << std::endl;
 
-    Vehicle testVehA = Vehicle(50, 4, 6);
-    Vehicle testVehB = Vehicle(60, 6, 8);
+    Vehicle testVehA = Vehicle(4, 6);
+    Vehicle testVehB = Vehicle(6, 8);
     Vehicle copyVehA = Vehicle(testVehA);
     Vehicle copyVehB = testVehB;
 

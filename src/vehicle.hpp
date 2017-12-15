@@ -18,8 +18,8 @@ class Vehicle
 {
 public:
     ///Constructor
-    Vehicle(int max_spd, int w, int h) :
-        max_speed(max_spd), width(w), height(h), destination(Pos(0,0)) {}
+    Vehicle(int w, int h) :
+        width(w), height(h), destination(Pos(0,0)) {}
 
     ///Destructor
     virtual ~Vehicle() {}
@@ -75,7 +75,7 @@ class Car : public Vehicle
 {
 public:
     ///Constructor
-    Car() : Vehicle(60, 8, 12) { } // 6, 12
+    Car() : Vehicle(8, 12) { } // 6, 12
 
     ///Member functions
     virtual std::string getType() const { return "car"; }
@@ -85,7 +85,7 @@ class Truck : public Vehicle
 {
 public:
     ///Constructor
-    Truck() : Vehicle(40, 10, 16) { }
+    Truck() : Vehicle(10, 16) { }
 
     ///Member functions
     virtual std::string getType() const { return "truck"; }
@@ -95,7 +95,7 @@ class Bike : public Vehicle
 {
 public:
     ///Constructor
-    Bike() : Vehicle(70, 6, 10) { }
+    Bike() : Vehicle(6, 10) { }
 
     ///Member functions
     virtual std::string getType() const { return "bike"; }
