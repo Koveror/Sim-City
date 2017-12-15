@@ -25,65 +25,6 @@ bool Vertex::operator==(Vertex a) {
     }
 }
 
-//Toggle the boolean values of the passable_from vector
-void Vertex::togglePassable(bool green) {
-    if (this->edges_to.size() < 3) {
-        passable_from[0] = true;
-        passable_from[1] = true;
-        passable_from[2] = true;
-        passable_from[3] = true;
-    }
-    else {
-        if(green) {
-            if(lastTrafficDirection == north){
-                passable_from[0] = false;
-                passable_from[1] = true;
-                lastTrafficDirection = east;
-            }
-            else if(lastTrafficDirection == east){
-                passable_from[1] = false;
-                passable_from[2] = true;
-                lastTrafficDirection = south;
-            }
-            else if(lastTrafficDirection == south){
-                passable_from[2] = false;
-                passable_from[3] = true;
-                lastTrafficDirection = west;
-            }
-            else {
-                passable_from[3] = false;
-                passable_from[0] = true;
-                lastTrafficDirection = north;
-            }
-        }
-        else {
-            passable_from[0] = false;
-            passable_from[1] = false;
-            passable_from[2] = false;
-            passable_from[3] = false;
-        }
-
-    }
-}
-
-//Get index in vertices data structure
-Pos Vertex::getIndex()
-{
-    return Pos(x_loc, y_loc);
-}
-
-//Get position for drawing on the screen
-Pos Vertex::getPos()
-{
-    return Pos(x_loc * 64 + 32, y_loc * 64 + 32);
-}
-
-//Get tiletype defined in tileType enumerator
-const tileType& Vertex::getType()
-{
-    return vertex_type;
-}
-
 //Set tileType to given type t. Tiletype enumerator found in tools.hpp
 void Vertex::setType(tileType t)
 {
@@ -131,11 +72,6 @@ void Vertex::removeEdgesTo(Pos position) {
     edges_to.erase(newEnd, edges_to.end());
 }
 
-//Return a list of edges that go out from this vertex
-const std::vector<Edge>& Vertex::getEdgesTo(){
-    return edges_to;
-}
-
 //Return true if this vertex has an edge to this index
 bool Vertex::hasEdgeTo(int x, int y){
     for (auto it = edges_to.begin(); it != edges_to.end(); it++) {
@@ -149,8 +85,72 @@ bool Vertex::hasEdgeTo(int x, int y){
     return false;
 }
 
+//Toggle the boolean values of the passable_from vector
+void Vertex::togglePassable(bool green) {
+    if (this->edges_to.size() < 3) {
+        passable_from[0] = true;
+        passable_from[1] = true;
+        passable_from[2] = true;
+        passable_from[3] = true;
+    }
+    else {
+        if(green) {
+            if(lastTrafficDirection == north){
+                passable_from[0] = false;
+                passable_from[1] = true;
+                lastTrafficDirection = east;
+            }
+            else if(lastTrafficDirection == east){
+                passable_from[1] = false;
+                passable_from[2] = true;
+                lastTrafficDirection = south;
+            }
+            else if(lastTrafficDirection == south){
+                passable_from[2] = false;
+                passable_from[3] = true;
+                lastTrafficDirection = west;
+            }
+            else {
+                passable_from[3] = false;
+                passable_from[0] = true;
+                lastTrafficDirection = north;
+            }
+        }
+        else {
+            passable_from[0] = false;
+            passable_from[1] = false;
+            passable_from[2] = false;
+            passable_from[3] = false;
+        }
+
+    }
+}
+
+//Get tiletype defined in tileType enumerator
+const tileType& Vertex::getType()
+{
+    return vertex_type;
+}
+
+//Get index in vertices data structure
+const Pos& Vertex::getIndex()
+{
+    return Pos(x_loc, y_loc);
+}
+
+//Get position for drawing on the screen
+const Pos& Vertex::getPos()
+{
+    return Pos(x_loc * 64 + 32, y_loc * 64 + 32);
+}
+
+//Return a list of edges that go out from this vertex
+const std::vector<Edge>& Vertex::getEdgesTo(){
+    return edges_to;
+}
+
 //Return a single edge, if such edge exists.
-Edge Vertex::getSingleEdge(std::pair<int,int> coordPair) {
+const Edge& Vertex::getSingleEdge(std::pair<int,int> coordPair) {
     for (auto it = edges_to.begin(); it != edges_to.end(); it++) {
 		Edge e = *it;
 		Vertex end = e.getVertices().second;

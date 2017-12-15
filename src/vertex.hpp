@@ -11,8 +11,8 @@
 #include "edge.hpp"
 #include "vehicle.hpp"
 
-//Forward declarations
 class Edge;
+
 class Graph;
 
 class Vertex
@@ -23,22 +23,24 @@ public:
     Vertex(int x, int y, tileType type);
 
     ///Member functions
-    Pos getPos();
-    Pos getIndex();
-    const tileType& getType();
     void setType(tileType t);
     void addEdge(Pos position, Graph& graph, int weight);
     void removeEdge(Pos position);
     void removeEdgesTo(Pos position);
-    const std::vector<Edge>& getEdgesTo();
-    const std::string getTexture();
     bool hasEdgeTo(int x, int y);
-    Edge getSingleEdge(std::pair<int,int> coordPair);
     void togglePassable(bool green);
+	const tileType& getType();
+    const Pos& getIndex();
+    const Pos& getPos();
+    const std::vector<Edge>& getEdgesTo();
+    const Edge& getSingleEdge(std::pair<int,int> coordPair);
+    const std::string getTexture();
+
 
     ///Operator overloading
     bool operator==(Vertex a);
-
+	
+	///Public member
     std::vector<bool> passable_from;
 
 private:
