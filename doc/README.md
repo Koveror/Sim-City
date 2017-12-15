@@ -170,7 +170,7 @@ In general, every single one of us were busy throughout the entire II period, an
 **Finalized Dijkstra's algorithm, fixed vehicle movement logic, implemented ability to save and load maps, fixed segmentation faults when spawning vehicles, implemented Graph::update() to update their route from source to target and, in addition, fixed Dijkstra's algorithm. Last but not least, added some unittesting.**
 - [ALL MEMBERS]: At least 6 hours working together at Maari with **everyone** to finalize the project.
 - [Tianzhong]: At least 30 hours spent: at least 7 hours with finalizing Dijkstra's algorithm, 3 hours with fixing (weird) segmentation fault when creating vehicles to the Graph and 4 hours with adding console commands for user input. Time was also spent on working with documentation, unit test and fixing minor bugs, not to mention with constant debugging.
-- [Harti]:Maby 30-40 hours of finishing off
+- [Harti]:Maby 30-40 hours of finishing off (further improving traffic lights, applying dijkstras algorithm to vehicles, improving the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes)
 
 ### Week 51 (18th Dec. - 20th Dec.)
 **Not much left to do except demonstration and reviewing stuff. Below is (predicted) work & duration**
