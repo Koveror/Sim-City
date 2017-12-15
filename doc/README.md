@@ -42,7 +42,7 @@ Each Vehicle object stores size, position, destination and route of single vehic
 TextureManager class loads textures for tile types (grass, road, building) and returns them when called.
 
 #### tools
-In `tools.cpp` file there are some additional enumaration and class Pos to easily store and compare coordinates elsewhere in the program.
+In `tools.hpp` file there are some additional enumaration and class Pos to easily store and compare coordinates elsewhere in the program.
 
 
 
@@ -66,7 +66,7 @@ To save your current map press **S** and follow instructions on the console. To 
 In this section we will quickly go through of use of C++ features that were required in the project.
 
 #### Containers
-For containers, we used mainly `std::vector` standard containers. Vectors provide random access, which is very useful, and our code does not require too much memory. Container `std::list` was also used in Graph when storing vehicles. In addition to vector and list, we used `std::priority_queue` for Dijkstra's algorithm for vehicle pathfinding. Priority queue is required in order to get Dijkstra's algorithm to work slightly more efficient than using other methods.
+For containers, we used mainly `std::vector` standard containers. Vectors provide random access, which is very useful, and our code does not require too much memory. Container `std::list` was also used in Graph when storing vehicles because random access was not required for them. In addition to vector and list, we used `std::priority_queue` for Dijkstra's algorithm for vehicle pathfinding. Priority queue is required in order to get Dijkstra's algorithm to work slightly more efficient than using other methods.
 
 #### Smart Pointers
 We use smart pointers (`std::shared_ptr`) for storing vehicles as our graph class stores vehicles. With shared pointers, we don't have to manually manage memory, which is notorious in C++.
@@ -82,6 +82,7 @@ Vehicle class uses dynamic binding, as we have derived classes for vehicles. For
 
 ### Known bugs
 - Collision detection slightly buggy, cars can run past each other e.g. at intersections.
+- User input for controlling traffic light and spawn rates may be unstable.
 
 
 
@@ -142,7 +143,7 @@ In general, every single one of us were busy throughout the entire II period, an
 **Finalizing Project plan, initial git commits, working with makefiles**
 - [ALL MEMBERS]: At least 3 hours spent on finalizing the project plan and setting up the project in Maari. Setting up the make file proved to be most laborous.
 - [Tianzhong]: At least 2 hours spent on working with first versions of graph, vertex and edge.
-- [Risto]: 4 hours spent on making a makefile and hello world program.
+- [Risto]: At least 2 hours spent on making a makefile and hello world program.
 
 ### Week 47 (20th Nov. - 26th Nov.)
 **Working on peer review. For our own project: creating essential classes (graph, vertex, edge and vehicle) & main.cpp and learning to work with SFML-graphics to draw something on screen.**
@@ -156,7 +157,7 @@ In general, every single one of us were busy throughout the entire II period, an
 - [ALL MEMBERS]: At least 4 hours spent on working together in Maari.
 - [Tianzhong]: At least 2 hours spent on issue #7 (const correctness problem).
 - [Harti]: About 4 hours spent on modifying the vertice-datastructure and automizing the creation of edges between vertices (buildings and roads).
-- [Risto]: 10 hours spent: 4 hours on adding a tools.hpp file and moving vehicles on the graph. 6 hours on adding edges on vertices.
+- [Risto]: 6 hours spent: 3 hours on adding a tools.hpp file and moving vehicles on the graph. 3 hours on adding edges on vertices.
 
 ### Week 49 (4th Dec. - 10th Dec.)
 **Implementing Dijkstra's algorithm, fixing segmentation fault (e.g. when removing edges), making buildings  to create cars automatically, implemented traffic lights and implemented vehicle track their own direction when moving.**
@@ -169,7 +170,7 @@ In general, every single one of us were busy throughout the entire II period, an
 - [ALL MEMBERS]: At least 6 hours working together at Maari with **everyone** to finalize the project.
 - [Tianzhong]: At least 30 hours spent: at least 7 hours with finalizing Dijkstra's algorithm, 3 hours with fixing (weird) segmentation fault when creating vehicles to the Graph and 4 hours with adding console commands for user input. Time was also spent on working with documentation, unit test and fixing minor bugs, not to mention with constant debugging.
 - [Harti]:Maby 30-40 hours of finishing off (further improving traffic lights, applying dijkstras algorithm to vehicles, improving the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes)
-- [Risto]: 8,5 hours spent: 2,5 hours on collision detection and 6 hours on finalizing the project.
+- [Risto]: 2,5 hours spent: 2,5 hours on collision detection
 
 ### Week 51 (18th Dec. - 20th Dec.)
 **Not much left to do except demonstration and reviewing stuff. Below is (predicted) work & duration**
