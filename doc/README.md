@@ -168,13 +168,13 @@ All in all, we are all satisfied with our efforts as a group. Despite the week 5
 **Implementing Dijkstra's algorithm, fixing segmentation fault (e.g. when removing edges), making buildings  to create cars automatically, implemented traffic lights and implemented vehicle track their own direction when moving.**
 - [Tianzhong]: At least 10 hours spent working on texture files and Dijkstra's algorithm. At least 90% of the time was used at working on Dijkstra's algorithm. While the algorithm itself was relatively easy to implement and could've taken less than a few hours, a lot more time was spent due to the inexperience with C++.
 - [Harti]: About 10 hours spent on making map modification more user friendly, improving the updating of the GUI, made vehicles spawn randomly to buildings, modified edge weights to suite Dijkstra’s algorithm (cars use roads and only start and finish by driving through buildings), improved the functions of traffic lights and gave vehicles a sense of direction.
-- [Risto]: 16,5 hours spent: 4 hours on making the vehicles to move between vertices. 5,5 hours on dynamic adding and removing of edges and trafficlights. 7 hours on making multiple cars move on the graph, fast forward functionality and modifying constructors and destructors on vehicles.
+- [Risto]: 16,5 hours spent: 4 hours on making the vehicles to move between vertices. 5,5 hours on dynamic adding and removing of edges and traffic lights. 7 hours on making multiple cars move on the graph, fast forward functionality and modifying constructors and destructors on vehicles.
 
 ### Week 50 (11th Dec. - 17th Dec.)
 **Finalized Dijkstra's algorithm, fixed vehicle movement logic, implemented ability to save and load maps, fixed segmentation faults when spawning vehicles, implemented Graph::update() to update their route from source to target and, in addition, fixed Dijkstra's algorithm. In addition to aforementioned, vehicles now turn correctly in corners. Last but not least, added some unittesting.**
 - [ALL MEMBERS]: At least 10 hours working together at Maari together to finalize the project.
 - [Tianzhong]: At least 30 hours spent: at least 7 hours with finalizing Dijkstra's algorithm, 3 hours with fixing (weird) segmentation fault when creating vehicles to the Graph and 4 hours with adding console commands for user input. Time was also spent on working with documentation, unit test and fixing minor bugs, not to mention with constant debugging.
-- [Harti]: Maybe 40+ hours of finishing off (more improvements on traffic lights, applying Dijkstra's algorithm to vehicles, improved the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes). Special note: Used 10 hours on friday to create smooth turns, hopefully the course personel enjoys them more then I did creating them.
+- [Harti]: Maybe 40+ hours of finishing off (more improvements on traffic lights, applying Dijkstra's algorithm to vehicles, improved the movement logic of vehicles, modified vehicles to choose random destinations (buildings), improved graphics to use vehicle specs instead of hard coded sizes). Special note: Used 10 hours on last day to create smooth turns, hopefully the course personnel enjoys them more than I did creating them.
 - [Risto]: 2,5 hours spent: 2,5 hours on collision detection
 - [Ilari]: About 10 hours spent working with documentation, save/load, refining vehicle movement and fixing bugs.
 
@@ -183,5 +183,7 @@ All in all, we are all satisfied with our efforts as a group. Despite the week 5
 - [ALL MEMBERS]: At least 4 hours spent on 1) demonstrating the project to responsible teacher and peer groups and 2) doing review of other group members, own project and finally peer project. **The reviewing process will be finished on 20th December at latest.**
 
 ## Known bugs
-- Collision detection slightly buggy, cars can run past each other after turns.
+Unfortunately, we did not have enough time to polish our project to 100% perfection. Some minor bugs might hurt perfectionists’ minds, and we apologize for the inconvenience
+- Collision detection is not perfect; Vehicles might overlap each other after exiting from turn.
+- When vehicles turn to right, they might overlap a little, depending on whether the vehicle type is Car, Truck or Bike.
 - User input for controlling traffic light and spawn rates may be unstable.

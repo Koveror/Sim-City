@@ -8,6 +8,10 @@ Such systems can be found at Maari-A and Maari-C classes in Maarintalo.
 To install SFML at your own system, please visit the official SFML website at
 https://www.sfml-dev.org
 
+For *Windows* users, it is advised to download Virtualbox, install Ubuntu and the necessary parts to run the software.
+
+For *Mac users*, the terminal should be sufficient, as we have also tested and ran our program in Mac OS X.
+
 ## Setup
 
 To run Sim-city-1, simply navigate to the project root directory using your unix terminal and then

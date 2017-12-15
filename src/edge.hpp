@@ -35,7 +35,7 @@ private:
     std::shared_ptr<Vertex> vertex_1;
     std::shared_ptr<Vertex> vertex_2;
     int weight;
-    int cars;
+    int vehAmount;
     //std::vector<Vehicle> vehicles;
 };
 

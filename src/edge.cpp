@@ -1,18 +1,21 @@
 #include "edge.hpp"
 
+//Add car to edge
 void Edge::addVehicle() {
-    cars++;
+    vehAmount++;
 }
 
+//Remove car from edge
 void Edge::removeVehicle() {
-    cars--;
-    if(cars < 0) {
-        cars = 0;
+    vehAmount--;
+    if(vehAmount < 0) {
+        vehAmount = 0;
     }
 }
 
+//Return true if edge is "full", that is, has more than 2 vehicles, false if not
 bool Edge::isFull() {
-    return cars > 2;
+    return vehAmount > 2;
 }
 
 //Operator overload for comparing two edges
